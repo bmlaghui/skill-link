@@ -12,7 +12,6 @@ exports.createEntreprise = async (req, res) => {
         else if(!Entreprise.schema.path('category').enumValues.includes(req.body.category)) {
             return res.status(422).json({ err: `Category is not valid. It must be one of theese options: ${Entreprise.schema.path('category').enumValues}` });
         }
-
         const entreprise = new Entreprise(req.body);
         await entreprise.save();
         return res.status(201).json(entreprise);
@@ -181,4 +180,8 @@ exports.getEntreprisesByCategoryAndNameAndAdressAndDescription = async (req, res
         return res.status(500).json({ err });
     }
 };
+
+exports.test = async (req, res) => {
+    return res.json({ msg: 'Test' });
+}
 

@@ -13,5 +13,4 @@ router.put('/entreprises/:id', entreprisesController.updateEntreprise);
 
 router.delete('/entreprises/:id', entreprisesController.deleteEntreprise);
 
-
 module.exports = router;
