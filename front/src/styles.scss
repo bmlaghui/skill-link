@@ -1,0 +1,113 @@
+/* You can add global styles to this file, and also import other style files */
+// regular style toast
+@import 'ngx-toastr/toastr';
+@import url('https://fonts.googleapis.com/css2?family=Avenir&display=swap');
+
+
+:root{
+    --bg-body: rgba(0,0,0,0.9);
+    --bg-card: #8ecae6;
+    --primary-color: #219ebc;
+    --primary-light: #fff;
+    --secondary-light: #c8c8c8;
+    --secondary-color: #023047;
+    --yellow: #f2d000;
+    --text: #fff;
+}
+
+body{
+    background-color: var(--bg-body) !important ;
+    color: var(--text) !important;
+    font-family: 'Avenir' !important;
+}
+.ml-1{
+    margin-left: 1rem;
+}
+
+.warning {
+    background: #f89200 !important;
+}
+.error {
+    background: #f44336 !important;
+}
+.ready{
+    background: #32c5e4 !important;
+}
+.running, .bgt-running {
+    background: #45efa9 !important;
+}
+.time_out, .suspended, .failed{
+    background: #f44949 !important;
+}
+.ok, .activated, .badge-success{
+    background:#74bf24 !important;
+}
+.deleted{
+    background: #ff6633 !important; 
+}
+.badge-success{
+    border-radius: 5px;
+    color: #fff;
+    padding: 5px;
+    font-size: 12px !important;
+}
+
+.bgt-to_run{
+    background: #54bd43 !important;
+
+}
+
+.bgt-ready {
+    background : #32c5e4 !important;
+}
+
+.bgt-ok, .bgt-success {
+    background: #54bd43 !important;
+}
+
+.bgt-unknown-time_out {
+    background: #f44949 !important;
+}
+
+.bgt-failed {
+    background: #ff6633 !important;
+}
+
+.bgt-suspended {
+    background: #f44949 !important;
+}
+.txt-ready{
+    color: #32c5e4 !important;
+}
+.txt-to_run{
+    color: #54bd43 !important;
+
+}
+.txt-running{
+    color: #45efa9 !important;
+
+}
+.txt-failed{
+    color: #ff6633 !important;
+
+}
+.txt-success{
+    color: #54bd43 !important;
+
+}
+.txt-unknow-time_out{
+    color: #f44949 !important;
+
+}
+.scrollable {
+    overflow-y: scroll;
+}
+
+.btn-check:checked + .btn, .btn.active, .btn.show, :not(.btn-check) + .btn:active, .btn:hover {
+    color: #000 !important;
+    background-color: var(--yellow) !important;
+    font-weight: 800 !important;
+    border: none !important;
+
+}
+

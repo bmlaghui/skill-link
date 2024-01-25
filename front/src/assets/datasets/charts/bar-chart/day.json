@@ -1,0 +1,7 @@
+{
+    "labels": ["January", "February", "March", "April", "May", "June", "July"],
+    "data":   {
+        "Last Hour A": [60.25, 40.5, 56.25, 55, 83.5, 54, 70.5],
+        "Last Hour B": [19.5, 31.5, 34, 18, 21.5, 43.5, 50.5]
+    }
+}

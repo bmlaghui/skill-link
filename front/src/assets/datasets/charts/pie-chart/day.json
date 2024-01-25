@@ -1,0 +1,4 @@
+{
+  "labels": ["Download Sales", "In Store Sales", "Mail Sales"],
+  "data":   [1300, 5000, 1000]
+}

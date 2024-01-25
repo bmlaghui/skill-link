@@ -1,0 +1,8 @@
+{
+    "labels": ["Download Sales", "In Store Sales", "Mail Sales"],
+    "data":   {
+        "Last Hour A": [51, 51, 81],
+        "Last Hour B": [91, 8, 5],
+        "Last Hour C": [20, 45, 45]
+    }
+}
