@@ -25,9 +25,9 @@ exports.createMission = async (req, res) => {
             return res.status(422).json({ err: 'Date de debut is required' });
         }
 
-        const Mission = new Mission(req.body);
-        await Mission.save();
-        return res.status(201).json(Mission);
+        const mission = new Mission(req.body);
+        await mission.save();
+        return res.status(201).json({Mission, msg: 'Mission created successfully'});
     }
     catch (err) {
         return res.status(500).json({ err });
@@ -50,8 +50,8 @@ exports.getMission = async (req, res) => {
             return res.status(422).json({ err: 'Invalid Mission ID' });
         }
         
-        const Mission = await Mission.findById(req.params.id, { __v: 0, _id: 0 });
-        return res.json(Mission);
+        const mission = await Mission.findById(req.params.id, { __v: 0, _id: 0 });
+        return res.json(mission);
     }
     catch (err) {
         return res.status(500).json({ err });
@@ -88,7 +88,7 @@ exports.updateMission = async (req, res) => {
         delete req.body._id;
         let updated = await Mission.findByIdAndUpdate(req.params.id, req.
         body, { new: true, runValidators: true });
-        return res.json(updated);
+        return res.json({ msg: 'Mission updated successfully'});
     }
     catch (err) {
         return res.status(500).json({ err });

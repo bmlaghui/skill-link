@@ -44,30 +44,27 @@ const missionSchema = new mongoose.Schema({
         type: String,
         enum: ['draft', 'published', 'archived'],
         default: 'draft'
-    }
-    // candidats: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'candidat'
-    // }],
-    // candidatsSelectionnes: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'candidat'
-    // }],
-    // candidatsRefuses: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'candidat'
-    // }],
-    // candidatsEnAttente: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'candidat'
-    // }],
-    // candidatsRetenus: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'candidat'
-    // }],
-
-
-
+    },
+    candidats: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    candidatsSelectionnes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    candidatsRefuses: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    candidatsEnAttente: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    candidatsRetenus: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 
 }, 
 {
@@ -75,4 +72,4 @@ const missionSchema = new mongoose.Schema({
     
 } );
 
-module.exports = mongoose.model('mission', missionSchema);
+module.exports = mongoose.model('Mission', missionSchema);

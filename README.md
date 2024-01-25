@@ -58,4 +58,4 @@ This repository contains a  MEAN (MongoDB, Express.js, Angular, Node.js) stack a
 
 ## Architecture
 
-![Alt text](image.png)
+![Alt text](./documentation/image.png)

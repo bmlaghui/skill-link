@@ -16,7 +16,11 @@ const entrepriseSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: ['startup', 'company']
-    }  
+    },
+    missions: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Mission'
+    }]
 }, 
 {
     timestamps: true,

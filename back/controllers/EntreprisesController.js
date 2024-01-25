@@ -14,9 +14,10 @@ exports.createEntreprise = async (req, res) => {
         }
         const entreprise = new Entreprise(req.body);
         await entreprise.save();
-        return res.status(201).json(entreprise);
+        return res.status(201).json({ msg: 'Entreprise created successfully'});
     }
     catch (err) {
+        console.log(err);
         return res.status(500).json({ err });
     }
 };
@@ -60,7 +61,7 @@ exports.updateEntreprise = async (req, res) => {
         }
 
         const entreprise = await Entreprise.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        return res.json({ msg: 'Entreprise updated successfully', entreprise});
+        return res.json({ msg: 'Entreprise updated successfully'});
     }
     catch (err) {
         return res.status(500).json({ err });
@@ -80,108 +81,113 @@ exports.deleteEntreprise = async (req, res) => {
     }
 };
 
-exports.getEntreprisesByCategory = async (req, res) => {
+exports.createMission = async (req, res) => {
     try {
-        if(!req.query.category) {
+        if(!mongoose.isValidObjectId(req.params.id)) {
+            return res.status(422).json({ err: 'Invalid Entreprise ID' });
+        }
+        if(!req.body._idEntreprise) {
+            return res.status(422).json({ err: 'Entreprise is required' });
+        }
+        if(!req.body.isFinalClient) {
+            return res.status(422).json({ err: 'isFinalClient is required' });
+        }
+        if(!req.body.category) {
             return res.status(422).json({ err: 'Category is required' });
         }
-        else if(!Entreprise.schema.path('category').enumValues.includes(req.query.category)) {
+        else if(!Entreprise.schema.path('category').enumValues.includes(req.body.category)) {
             return res.status(422).json({ err: `Category is not valid. It must be one of theese options: ${Entreprise.schema.path('category').enumValues}` });
         }
-        const entreprises = await Entreprise.find({ category: req.query.category }, { __v: 0, _id: 0 });
-        return res.json({ msg : `List of ${req.query.category} entreprises`, entreprises});
+        if(!req.body.tjm) {
+            return res.status(422).json({ err: 'TJM is required' });
+        }
+        if(!req.body.dateDebut) {
+            return res.status(422).json({ err: 'Date de debut is required' });
+        }
+        const entreprise = await Entreprise.findById(req.params.id);
+        entreprise.missions.push(req.body);
+        await entreprise.save();
+        return res.json({ msg: 'Mission added successfully'});
     }
     catch (err) {
         return res.status(500).json({ err });
     }
 };
 
-exports.getEntreprisesByCategoryAndName = async (req, res) => {
+exports.getMissions = async (req, res) => {
     try {
-        if(!req.query.category) {
-            return res.status(422).json({ err: 'Category is required' });
+        if(!mongoose.isValidObjectId(req.params.id)) {
+            return res.status(422).json({ err: 'Invalid Entreprise ID' });
         }
-        else if(!Entreprise.schema.path('category').enumValues.includes(req.query.category)) {
-            return res.status(422).json({ err: `Category is not valid. It must be one of theese options: ${Entreprise.schema.path('category').enumValues}` });
-        }
-        if(!req.query.name) {
-            return res.status(422).json({ err: 'Name is required' });
-        }
-        const entreprises = await Entreprise.find({ category: req.query.category, name: { $regex: req.query.name, $options: 'i' } }, { __v: 0, _id: 0 });
-        return res.json(entreprises);
+        const entreprise = await Entreprise.findById(req.params.id, { __v: 0, _id: 0 }).populate('missions');
+        return res.json(entreprise.missions);
     }
     catch (err) {
         return res.status(500).json({ err });
     }
 };
 
-exports.getEntreprisesByCategoryAndAdress = async (req, res) => {
+exports.getMission = async (req, res) => {
     try {
-        if(!req.query.category) {
-            return res.status(422).json({ err: 'Category is required' });
+        if(!mongoose.isValidObjectId(req.params.id)) {
+            return res.status(422).json({ err: 'Invalid Mission ID' });
         }
-        else if(!Entreprise.schema.path('category').enumValues.includes(req.query.category)) {
-            return res.status(422).json({ err: `Category is not valid. It must be one of theese options: ${Entreprise.schema.path('category').enumValues}` });
-        }
-        if(!req.query.adress) {
-            return res.status(422).json({ err: 'Adress is required' });
-        }
-        const entreprises = await Entreprise.find({ category: req.query.category, adress: { $regex: req.query.adress, $options: 'i' } }, { __v: 0, _id: 0 });
-        return res.json(entreprises);
+        const entreprise = await Entreprise.findById(req.params.id, { __v: 0, _id: 0 });
+        return res.json(entreprise.missions);
     }
     catch (err) {
         return res.status(500).json({ err });
     }
 };
 
-exports.getEntreprisesByCategoryAndNameAndAdress = async (req, res) => {
+exports.updateMission = async (req, res) => {
     try {
-        if(!req.query.category) {
+        if(!mongoose.isValidObjectId(req.params.id)) {
+            return res.status(422).json({ err: 'Invalid Mission ID' });
+        }
+        if(!req.body._idEntreprise) {
+            return res.status(422).json({ err: 'Entreprise is required' });
+        }
+        if(!req.body.isFinalClient) {
+            return res.status(422).json({ err: 'isFinalClient is required' });
+        }
+        if(!req.body.category) {
             return res.status(422).json({ err: 'Category is required' });
         }
-        else if(!Entreprise.schema.path('category').enumValues.includes(req.query.category)) {
+        else if(!Entreprise.schema.path('category').enumValues.includes(req.body.category)) {
             return res.status(422).json({ err: `Category is not valid. It must be one of theese options: ${Entreprise.schema.path('category').enumValues}` });
         }
-        if(!req.query.name) {
-            return res.status(422).json({ err: 'Name is required' });
+        if(!req.body.tjm) {
+            return res.status(422).json({ err: 'TJM is required' });
         }
-        if(!req.query.adress) {
-            return res.status(422).json({ err: 'Adress is required' });
+        if(!req.body.dateDebut) {
+            return res.status(422).json({ err: 'Date de debut is required' });
         }
-        const entreprises = await Entreprise.find({ category: req.query.category, name: { $regex: req.query.name, $options: 'i' }, adress: { $regex: req.query.adress, $options: 'i' } }, { __v: 0, _id: 0 });
-        return res.json(entreprises);
+        const entreprise = await Entreprise.findById(req.params.id);
+        const mission = entreprise.missions.id(req.body._idMission);
+        mission.set(req.body);
+        await entreprise.save();
+        return res.json({ msg: 'Mission updated successfully'});
     }
     catch (err) {
         return res.status(500).json({ err });
     }
 };
 
-exports.getEntreprisesByCategoryAndNameAndAdressAndDescription = async (req, res) => {
+exports.deleteMission = async (req, res) => {
     try {
-        if(!req.query.category) {
-            return res.status(422).json({ err: 'Category is required' });
+        if(!mongoose.isValidObjectId(req.params.id)) {
+            return res.status(422).json({ err: 'Invalid Mission ID' });
         }
-        else if(!Entreprise.schema.path('category').enumValues.includes(req.query.category)) {
-            return res.status(422).json({ err: `Category is not valid. It must be one of theese options: ${Entreprise.schema.path('category').enumValues}` });
+        if(!req.body._idMission) {
+            return res.status(422).json({ err: 'Mission is required' });
         }
-        if(!req.query.name) {
-            return res.status(422).json({ err: 'Name is required' });
-        }
-        if(!req.query.adress) {
-            return res.status(422).json({ err: 'Adress is required' });
-        }
-        if(!req.query.description) {
-            return res.status(422).json({ err: 'Description is required' });
-        }
-        const entreprises = await Entreprise.find({ category: req.query.category, name: { $regex: req.query.name, $options: 'i' }, adress: { $regex: req.query.adress, $options: 'i' }, description: { $regex: req.query.description, $options: 'i' } }, { __v: 0, _id: 0 });
-        return res.json(entreprises);
+        const entreprise = await Entreprise.findById(req.params.id);
+        entreprise.missions.pull(req.body._idMission);
+        await entreprise.save();
+        return res.json({ msg: 'Mission deleted successfully' });
     }
     catch (err) {
         return res.status(500).json({ err });
     }
 };
-
-exports.test = async (req, res) => {
-    return res.json({ msg: 'Test' });
-}
-

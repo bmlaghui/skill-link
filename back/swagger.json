@@ -1,0 +1,517 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "My API",
+    "version": "1.0.0",
+    "description": "An API for managing enterprises, users, and missions"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/"
+    }
+  ],
+  "paths": {
+    "/entreprises": {
+      "get": {
+        "summary": "Get a list of enterprises",
+        "responses": {
+          "200": {
+            "description": "A list of enterprises"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new enterprise",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Entreprise"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created enterprise",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Entreprise"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/entreprises/{id}": {
+      "get": {
+        "summary": "Get an enterprise by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the enterprise",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The enterprise",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Entreprise"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an enterprise by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the enterprise",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Entreprise"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated enterprise",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Entreprise"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an enterprise by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the enterprise",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The enterprise has been deleted"
+          }
+        }
+      }
+    },
+    "/entreprises/{id}/missions": {
+      "get": {
+        "summary": "Get a list of missions for an enterprise",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the enterprise",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of missions of the enterprise"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new mission for an enterprise",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the enterprise",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mission"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created mission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mission"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/missions/{id}": {
+      "get": {
+        "summary": "Get a mission by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the mission",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The mission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mission"
+                }
+
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a mission by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the mission",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mission"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated mission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mission"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a mission by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the mission",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The mission has been deleted"
+          }
+        }
+      }
+    },
+    "/missions/{id}/users": {
+      "get": {
+        "summary": "Get a list of users for a mission",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the mission",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add a new user to a mission",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the mission",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The created user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "Get a user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The updated user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The user has been deleted"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Entreprise": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the enterprise"
+          },
+          "description": {
+            "type": "string",
+            "description": "A description of the enterprise"
+          },
+          "linkLinkedin": {
+            "type": "string",
+            "description": "Link to the enterprise's LinkedIn page"
+          },
+          "linkWebsite": {
+            "type": "string",
+            "description": "Link to the enterprise's website"
+          },
+          "logo": {
+            "type": "string",
+            "description": "Path or URL to the enterprise's logo"
+          },
+          "address": {
+            "type": "string",
+            "description": "The address of the enterprise"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "The phone number of the enterprise"
+          },
+          "email": {
+            "type": "string",
+            "description": "The email address of the enterprise"
+          },
+          "category": {
+            "type": "string",
+            "enum": ["startup", "company"],
+            "description": "The category of the enterprise"
+          },
+          "missions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Mission"
+            },
+            "description": "List of missions associated with the enterprise"
+          }
+        },
+        "example": {
+          "name": "Example Enterprise",
+          "description": "A sample enterprise",
+          "linkLinkedin": "https://www.linkedin.com/example",
+          "linkWebsite": "https://www.example.com",
+          "logo": "/images/example-logo.png",
+          "address": "123 Main Street, Cityville",
+          "phoneNumber": "+1 (555) 123-4567",
+          "email": "info@example.com",
+          "category": "startup",
+          "missions": ["mission1_id", "mission2_id"]
+        }
+      },
+      "Mission": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the mission"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the mission"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the mission"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the user"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the user"
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the user"
+          }
+        }
+      }
+    }
+  }
+}
