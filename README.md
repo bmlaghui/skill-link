@@ -15,11 +15,6 @@ This repository contains a  MEAN (MongoDB, Express.js, Angular, Node.js) stack a
    git clone https://github.com/bmlaghui/skill-link.git
    cd skill-link
 
-2. Install dependencies:
-
-   ```bash
-   npm install  
-
 ### Development Environment
 
 #### Server
@@ -29,12 +24,17 @@ This repository contains a  MEAN (MongoDB, Express.js, Angular, Node.js) stack a
    ```bash
    cd back
 
-2. Create a .env file in the server directory with the following content:
+2. Install dependencies:
+
+   ```bash
+   npm install  
+
+3. Create a .env file in the server directory with the following content:
 
    ```bash
    MONGODB_URI=mongodb://localhost:27017/skill-link-db
 
-3. Run the server:
+4. Run the server:
 
    ```bash
    npm run dev
@@ -46,18 +46,16 @@ This repository contains a  MEAN (MongoDB, Express.js, Angular, Node.js) stack a
    ```bash
    cd front
 
-2. Run the Angular development server:
+2. Install dependencies:
 
    ```bash
-   ng serve
+   npm install  
 
+3. Run the Angular development server:
 
+   ```bash
+   ng serve -o
 
+## Architecture
 
-
-
-
- 
-
-
-
+![Alt text](image.png)
