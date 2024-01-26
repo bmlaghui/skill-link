@@ -1,4 +1,4 @@
-# skill-link APP
+# SKILLS LINK APP
 
 This repository contains a  MEAN (MongoDB, Express.js, Angular, Node.js) stack application. Follow the instructions below to set up and run the app in both development and production environments.
 
@@ -16,8 +16,6 @@ This repository contains a  MEAN (MongoDB, Express.js, Angular, Node.js) stack a
    cd skill-link
 
 ### Development Environment
-
-#### Server
 
 1. Navigate to the server directory:
 
@@ -44,23 +42,6 @@ This repository contains a  MEAN (MongoDB, Express.js, Angular, Node.js) stack a
 
    ```bash
    npm run dev
-
-#### Client
-
-1. Navigate to the client directory:
-
-   ```bash
-   cd front
-
-2. Install dependencies:
-
-   ```bash
-   npm install  
-
-3. Run the Angular development server:
-
-   ```bash
-   ng serve -o
 
 ## Architecture
 
