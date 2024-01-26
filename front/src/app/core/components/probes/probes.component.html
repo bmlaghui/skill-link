@@ -1,0 +1,46 @@
+<h1>Probes</h1>
+<table class="table table-striped text-center">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Machine</th>
+        <th scope="col">Tags</th>
+        <th scope="col">Ip Console</th>
+        <th scope="col">Ip Alert</th>
+        <th scope="col">Connexion</th>
+        <th scope="col">State</th>
+        <th scope="col">Task</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (probe of probes; track probe.id) {
+        <tr>
+            <td>{{probe.name}}</td>
+            <td>{{probe.machine}}</td>
+            <td>{{probe.tags}}</td>
+            <td>{{probe.ip_console}}</td>
+            <td>{{probe.ip_console}}</td>
+            <td class="{{probe.test_connection_state|lowercase}}">{{probe.test_connection_state}}</td>
+            <td class="{{probe.state|lowercase}}">{{probe.state}}</td>
+            <td class="{{probe.task_execution_status|lowercase}}">{{probe.task_execution_status}}</td>
+            <td>
+                 <button class="btn bg-dark text-white">
+                    <i class="bi bi-repeat"></i>
+                 </button>
+            
+                @if (probe.task_execution_status.toLowerCase() === 'failed') {
+                    <button class="btn bg-dark text-white mx-1">
+                        <i class="bi bi-caret-right-fill"></i>
+                    </button>
+                   }
+            </td>
+        </tr>
+      }
+      @empty {
+        <tr>
+            <td colspan="9">No probes</td>
+        </tr>
+      }
+    </tbody>
+  </table>

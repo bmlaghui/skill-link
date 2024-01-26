@@ -9,7 +9,7 @@ import { OrdersComponent } from './components/orders/orders.component';
 import { SalesComponent } from './components/sales/sales.component';
 import { CustomersComponent } from './components/customers/customers.component';
 import { ProbesComponent } from './components/probes/probes.component';
-import { authGuard } from './guards/auth.guard';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
     {

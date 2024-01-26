@@ -17,6 +17,10 @@ This repository contains a  MEAN (MongoDB, Express.js, Angular, Node.js) stack a
 
 ### Development Environment
 
+### Development Environment
+
+#### Server
+
 1. Navigate to the server directory:
 
    ```bash
@@ -42,6 +46,47 @@ This repository contains a  MEAN (MongoDB, Express.js, Angular, Node.js) stack a
 
    ```bash
    npm run dev
+
+#### Client
+
+1. Navigate to the client directory:
+
+   ```bash
+   cd front
+
+2. Install dependencies:
+
+   ```bash
+   npm install  
+
+3. Navigate to the src folder
+
+   ```bash
+   cd src
+
+4. Create a proxy config
+
+   ```bash
+    touch poxy.conf.json
+
+5. put this code inside
+
+   ```bash
+   {
+      "/api/*": {
+         "target": "<PUT YOUR API URL>",
+         "secure" : false,
+         "pathRewrite" : { "^/api" : ""},
+         "changeOrigin" : false,
+         "logLevel" : "debug"
+      }
+   }
+
+6. Run the Angular development server:
+
+   ```bash
+   ng serve -o
+
 
 ## Architecture
 

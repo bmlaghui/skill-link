@@ -1,0 +1,67 @@
+<div
+  class="container-fluid login-section d-flex justify-content-center align-items-center"
+>
+  <div class="card login-card shadow-lg">
+    <!-- card header -->
+    <div class="card-header p-3">
+      <h1 class="float-start">Operator Login</h1>
+      <img class="float-end" src="../../../assets/images/logo-sesame.png" width="250px"/></div>
+    <!-- card body -->
+    <div class="card-body">
+      <form [formGroup]="loginForm">
+        <div class="row">
+          <div class="col-6">
+            <div class="col-auto mb-4">
+              
+            </div>
+
+            <div class="col-xl-12 mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input
+                type="text"
+                class="form-control"
+                id="E-mail"
+                aria-describedby="usernameHelp"
+                placeholder="Sésame IT"
+                formControlName="username"
+              />
+              @if(loginForm.controls['username'].hasError('required') &&
+              loginForm.controls['username'].touched) {
+              <div class="text-danger">Username is required</div>
+              } 
+            </div>
+            <div class="col-xl-12 mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                placeholder="**********"
+                formControlName="password"
+              />
+              @if(loginForm.controls['password'].hasError('required') &&
+              loginForm.controls['password'].touched) {
+              <div class="text-danger">Password is required</div>
+              }
+            </div>
+          </div>
+          <div class="col-6">
+            <img src="../../../assets/images/icon-hacker.png" alt="">
+           
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- card footer -->
+    <div class="card-footer">
+      <div class="api float-start">
+        Jizô-M Server <span [ngClass]="{'badge badge-success': (connected | async), 'badge badge-danger': !(connected| async)}">
+          {{ (connected | async) ? 'Online' : 'Offline' }}
+        </span>                
+    </div>
+      <button class="btn btn-yellow float-end" (click)="submit()">
+        Sign in
+      </button>
+    </div>
+  </div>
+</div>
