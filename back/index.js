@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
+const rateLimit = require('express-rate-limit');
 
 // Create the server
 const app = express();
@@ -30,6 +31,15 @@ mongoose.connection.once('close', () => {
 mongoose.connection.on('error', (error) => {
   console.log('Mongoose Connection Error: ' + error);
 });
+
+const limiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP, please try again later.',
+});
+
+// Apply the rate limiter to all requests
+app.use(limiter);
 
 // Routes
 app.get('/', (req, res) => {

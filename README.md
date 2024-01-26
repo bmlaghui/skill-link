@@ -32,7 +32,13 @@ This repository contains a  MEAN (MongoDB, Express.js, Angular, Node.js) stack a
 3. Create a .env file in the server directory with the following content:
 
    ```bash
-   MONGODB_URI=mongodb://localhost:27017/skill-link-db
+   MONGODB_URI='<YOUR MONGODB CONNECTION STRING>'
+   APP_BASE_URL = '<YOUR API HOST>' 
+   PORT='<YOUR API PORT>'
+   SECRET_KEY='<YOUR SECRET KEY>'
+   GMAIL_USERNAME='<YOUR GMAIL ADRESS>'
+   GMAIL_PASSWORD='<YOUR GMAIL PASSWORD>' *If you are using 2FA authentification with gmail, put the application password*
+   APP_NAME = 'SKILLS LINK'
 
 4. Run the server:
 

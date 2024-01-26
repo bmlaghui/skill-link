@@ -1,9 +1,16 @@
+
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const User = require('../models/User'); 
 const Mission = require('../models/Mission');
 const Application = require('../models/Application');
 const mongoose = require('mongoose');
+const { sendEmail } = require('../services/emailService'); // Assuming you move sendEmail to a separate module
+
 
 exports.createUser = async (req, res) => {
     try {
+        // Validate request body
         if(!req.body.firstName) {
             return res.status(422).json({ err: 'first name is required'  });
         }
@@ -13,6 +20,18 @@ exports.createUser = async (req, res) => {
         if(!req.body.email) {
             return res.status(422).json({ err: 'email is required' });
         }
+        let emailCheck = await User.findOne({ email : req.body.email});
+        if(emailCheck) {
+            return res.status(422).json({ err: 'email is already used' });
+        }
+        if(!req.body.username) {
+            return res.status(422).json({ err: 'username is required' });
+        }
+        let usernameCheck = await User.findOne({ username : req.body.username});
+        if(usernameCheck) {
+            return res.status(422).json({ err: 'username is already used' });
+        }
+
         if(!req.body.role) {
             return res.status(422).json({ err: 'role is required' });
         }
@@ -25,19 +44,43 @@ exports.createUser = async (req, res) => {
         if(!req.body.password) {
             return res.status(422).json({ err: 'password is required' });
         }
+        // Hash the password
         const salt = await bcrypt.genSalt(10);
         req.body.password = await bcrypt.hash(req.body.password, salt);
 
+        // Create a new user
         const user = new User(req.body);
 
+        // Save the user
         await user.save();
-        return res.status(201).json({User, msg: 'User created successfully'});
-    }
-    catch (err) {
-        return res.status(500).json({ err });
+
+        // Generate verification token
+        const verificationToken = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
+            expiresIn: '1h',
+        });
+
+        // Create verification link
+        const verificationLink = `${process.env.APP_BASE_URL+':'+process.env.PORT}/users/verify/${user._id}/${verificationToken}`;
+
+        // Compose email options
+        const emailOptions = {
+            userEmail: req.body.email,
+            subjectEmail: 'Verify Your Account',
+            bodyEmail: `Bonjour ${req.body.firstName} ${req.body.lastName},\n\n` +
+               `Bienvenue sur notre plateforme ! Pour activer votre compte, veuillez cliquer sur le lien ci-dessous :\n\n` +
+               `${verificationLink}\n\n` +
+               `Ce lien est valable pendant 1 heure. Merci de rejoindre notre communauté.\n\n` +
+               `Cordialement,\nVotre équipe ${process.env.APP_NAME}`, // Remplacez APP_NAME par le nom de votre application
+        };
+
+        // Send verification email
+        await sendEmail(emailOptions);
+
+        return res.status(201).json({ user, msg: 'User created successfully. Verification email sent.' });
+    } catch (err) {
+        return res.status(500).json({ err: err.message });
     }
 };
-
 exports.getUsers = async (req, res) => {
     try {
         const Users = await User.find({}, { __v: 0, _id: 0, password: 0});
@@ -301,13 +344,55 @@ exports.updateApplication = async (req, res) => {
     }
 }
 
+exports.getCandidats = async(req, res) => {
+    try {
+        const candidats = await User.find({role: 'candidat'}, { __v: 0, _id: 0, password: 0});
+        return res.json(candidats);
+    }
+    catch (err) {
+        return res.status(500).json({ err });
+    }
+}
+
+exports.getEntreprises = async(req, res) => {
+    try {
+        const entreprises = await User.find({role: 'entreprise'}, { __v: 0, _id: 0, password: 0});
+        return res.json(entreprises);
+    }
+    catch (err) {
+        return res.status(500).json({ err });
+    }
+}
+
+exports.getAdmins = async(req, res) => {
+    try {
+        const admins = await User.find({role: 'admin'}, { __v: 0, _id: 0, password: 0});
+        return res.json(admins);
+    }
+    catch (err) {
+        return res.status(500).json({ err });
+    }
+}
 
 
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const User = require('../models/User'); // Import your User model
+exports.verify = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            return res.status(422).json({ err: 'User not found' });
+        }
+        if (user.verified) {
+            return res.status(422).json({ err: 'User already verified' });
+        }
+        await User.findByIdAndUpdate(req.params.id, { verified: true });
+        return res.json({ msg: 'User verified successfully' });
+    } catch (err) {
+        return res.status(500).json({ err: err.message });
+    }
+}
 
-// Login a user
+
+// Auth
 exports.login = async (req, res) => {
     try {
         if (!req.body.email) {
@@ -329,14 +414,18 @@ exports.login = async (req, res) => {
             return res.status(422).json({ err: 'password is not valid' });
         }
 
-        const token = (require('jsonwebtoken')).sign({ userId: user._id }, process.env.SECRET_KEY, {
+        if (!user.verified) {
+            return res.status(422).json({ err: 'User not verified' });
+        }
+
+        const token = jwt.sign({ userId: user._id, role: user.role }, process.env.SECRET_KEY, {
             expiresIn: '1h',
         });
 
         // Send the token in the response
-        return res.json({ msg: 'User logged in successfully', token: token });
+        return res.json({ msg: `User logged in successfully as ${user.role}`, token: token, role: user.role }); // Fix 'role: role' to 'role: user.role'
     } catch (err) {
-        return res.status(500).json({ err: err });
+        return res.status(500).json({ err: err.message }); // Use err.message to get the error message
     }
 };
 
@@ -350,5 +439,24 @@ exports.logout = async (req, res) => {
     }
 }
 
+
+exports.resetPassword = async (req, res) => {
+    try {
+        const user = await User.findById(req.userId);
+        if (!user) {
+            return res.status(422).json({ err: 'User not found' });
+        }
+        if (!req.body.password) {
+            return res.status(422).json({ err: 'password is required' });
+        }
+        const salt = await bcrypt.genSalt(10);
+        const newPassword = await bcrypt.hash(req.body.password, salt);
+        await User.findByIdAndUpdate(req.userId, { password: newPassword });
+        return res.json({ msg: 'Password reset successfully' });
+    } 
+    catch (err) {
+        return res.status(500).json({ err: err.message });
+    }
+}
 
 

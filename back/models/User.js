@@ -11,13 +11,17 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
-    username: String,
+    username: {
+        type:String,
+        required: true,
+        unique: true
+    },
     phoneNumber: {
         type: String,
-        required: true
-    
+        required: true,
     },
     role: {
         type: String,
@@ -52,6 +56,18 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     }],
+    languages: [{
+        type: String,
+        required: true
+    }],
+    interests: [{
+        type: String,
+        required: true
+    }],
+    verified: {
+        type: Boolean,
+        default: false
+    },
     missions: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Mission'
