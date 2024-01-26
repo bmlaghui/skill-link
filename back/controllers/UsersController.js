@@ -1,8 +1,6 @@
-const User = require('../models/User');
 const Mission = require('../models/Mission');
 const Application = require('../models/Application');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 
 exports.createUser = async (req, res) => {
     try {
@@ -299,6 +297,55 @@ exports.updateApplication = async (req, res) => {
         return res.json({ msg: 'Application updated successfully'});
     }
     catch (err) {
+        return res.status(500).json({ err });
+    }
+}
+
+
+
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const User = require('../models/User'); // Import your User model
+
+// Login a user
+exports.login = async (req, res) => {
+    try {
+        if (!req.body.email) {
+            return res.status(422).json({ err: 'email is required' });
+        }
+        if (!req.body.password) {
+            return res.status(422).json({ err: 'password is required' });
+        }
+
+        const user = await User.findOne({ email: req.body.email });
+
+        if (!user) {
+            return res.status(422).json({ err: 'email is not valid' });
+        }
+
+        const isMatch = await bcrypt.compare(req.body.password, user.password);
+
+        if (!isMatch) {
+            return res.status(422).json({ err: 'password is not valid' });
+        }
+
+        const token = (require('jsonwebtoken')).sign({ userId: user._id }, process.env.SECRET_KEY, {
+            expiresIn: '1h',
+        });
+
+        // Send the token in the response
+        return res.json({ msg: 'User logged in successfully', token: token });
+    } catch (err) {
+        return res.status(500).json({ err: err });
+    }
+};
+
+
+exports.logout = async (req, res) => {
+    try{
+        return res.json({ msg: 'User logged out successfully' });
+    }
+    catch(err) {
         return res.status(500).json({ err });
     }
 }

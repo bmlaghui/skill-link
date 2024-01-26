@@ -4,15 +4,17 @@ const Mission = require('../models/Mission');
 const mongoose = require('mongoose');
 const missionsController = require('../controllers/MissionsController');
 
-router.post('/missions', missionsController.createMission );
+const verifyToken = require('../middleware/authMiddleware');
 
-router.get('/missions', missionsController.getMissions);
+router.post('/missions', verifyToken, missionsController.createMission );
 
-router.get('/missions/:id', missionsController.getMission);
+router.get('/missions', verifyToken, missionsController.getMissions);
 
-router.put('/missions/:id', missionsController.updateMission);
+router.get('/missions/:id', verifyToken, missionsController.getMission);
 
-router.delete('/missions/:id', missionsController.deleteMission);
+router.put('/missions/:id', verifyToken, missionsController.updateMission);
+
+router.delete('/missions/:id', verifyToken, missionsController.deleteMission);
 
 
 module.exports = router;
