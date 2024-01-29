@@ -1,20 +1,16 @@
 import { Component } from '@angular/core';
-import { WeatherService } from '../../../core/services/weather.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
-import { DecimalPipe } from '@angular/common'; // Import DecimalPipe
-
-
+import { WeatherService } from '../../core/services/weather.service';
 
 @Component({
-  selector: 'app-dashboard-admin',
+  selector: 'app-dashboard',
   standalone: true,
   imports: [],
-  templateUrl: './dashboard-admin.component.html',
-  styleUrl: './dashboard-admin.component.scss',
-  providers: [DecimalPipe] // Add DecimalPipe to the component providers
+  templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.scss'
 })
-export class DashboardAdminComponent {
+export class DashboardComponent {
   constructor(private weatherService: WeatherService) {
   }
 
@@ -24,8 +20,4 @@ export class DashboardAdminComponent {
 
   actualTemperature = toSignal(this.weatherService.getActualTemperature('Paris'));
 
-
-
 }
-
-

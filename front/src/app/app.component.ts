@@ -4,9 +4,14 @@ import { RouterOutlet } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgChartsModule } from 'ng2-charts';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { LoginComponent } from './core/components/authentification/login/login.component';
-import { RegisterComponent } from './core/components/authentification/register/register.component';
-import { LayoutComponent } from './core/layout/layout.component';
+
+import { DashboardComponent } from './views/dashboard/dashboard.component';
+import { LoginComponent } from './views/authentification/login/login.component';
+import { RegisterComponent } from './views/authentification/register/register.component';
+import { FooterComponent } from './views/layout/footer/footer.component';
+import { SidebarComponent } from './views/layout/sidebar/sidebar.component';
+import { SettingsPanelComponent } from './views/layout/settings-panel/settings-panel.component';
+import { NavbarComponent } from './views/layout/navbar/navbar.component';
 
 
 @Component({
@@ -20,7 +25,11 @@ import { LayoutComponent } from './core/layout/layout.component';
               FormsModule, 
               ReactiveFormsModule,
               NgChartsModule,
-              LayoutComponent
+              DashboardComponent,
+              FooterComponent,
+              SidebarComponent,
+              SettingsPanelComponent,
+              NavbarComponent
             ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

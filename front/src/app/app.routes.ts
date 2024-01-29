@@ -1,30 +1,90 @@
 import { Routes } from '@angular/router';
-
-
-import { authGuard } from './core/guards/auth.guard';
+import { AppLayoutComponent } from './views/layout/app-layout/app-layout.component';
 
 export const routes: Routes = [
     {
-        'path': 'login',
-        loadComponent: () => import('./core/components/authentification/login/login.component').then(m => m.LoginComponent)
+        path: '',
+        component: AppLayoutComponent,
+        children: [
+            {
+                path: 'dashboard',
+                // canActivate: [AuthGuard],
+                loadComponent: () => import('./views/dashboard/dashboard.component').then(m => m.DashboardComponent)
+            },
+            {
+                path: 'candidats',
+                // canActivate: [AuthGuard],
+                loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
+            },
+            {
+                path: 'candidats/:id',
+                // canActivate: [AuthGuard],
+                loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
+            },
+            {
+                path: 'entreprises',
+                // canActivate: [AuthGuard],
+                loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
+            },
+            {
+                path: 'offres',
+                // canActivate: [AuthGuard],
+                loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
+            },
+            {
+                path: 'candidatures',
+                // canActivate: [AuthGuard],
+                loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
+            },
+            {
+                path: 'parametres',
+                // canActivate: [AuthGuard],
+                loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
+            },
+            {
+                path: 'profile',
+                // canActivate: [AuthGuard],
+                loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
+            },
+            {
+                path: 'notifications',
+                // canActivate: [AuthGuard],
+                loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
+            },
+            {
+                path: 'messages',
+                // canActivate: [AuthGuard],
+                loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
+            },
+            {
+                path: 'factures',
+                // canActivate: [AuthGuard],
+                loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
+            },
+            {
+                path: 'paiements',
+                // canActivate: [AuthGuard],
+                loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
+            }
+        ]
     },
     {
-        'path': 'register',
-        loadComponent: () => import('./core/components/authentification/register/register.component').then(m => m.RegisterComponent)
+        path: 'login',
+        loadComponent: () => import('./views/authentification/login/login.component').then(m => m.LoginComponent)
     },
     {
-        'path': 'dashboard',
-        canActivate: [authGuard],
-        loadComponent: () => import('./feature/dashbord/dashboard-admin/dashboard-admin.component').then(m => m.DashboardAdminComponent),
+        path: 'register',
+        loadComponent: () => import('./views/authentification/register/register.component').then(m => m.RegisterComponent),
     },
     {
-        'path': 'users',
-        canActivate: [authGuard],
-        loadComponent: () => import('./feature/users/listing/listing.component').then(m => m.ListingComponent),
+        path: 'reset-password',
+        loadComponent: () => import('./views/authentification/reset-password/reset-password.component').then(m => m.ResetPasswordComponent),
     },
+
     {
-        'path': '**',
-        redirectTo: '/login',
+        path : '**',
+        redirectTo: 'login',
         pathMatch: 'full'
     }
+
 ];

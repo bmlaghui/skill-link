@@ -4,8 +4,9 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, of } from 'rxjs';
-import { AuthService } from '../../../services/auth.service';
-import { ConnectionService } from '../../../services/connection.service';
+import { AuthService } from '../../../core/services/auth.service';
+import { ConnectionService } from '../../../core/services/connection.service';
+
 
 @Component({
   selector: 'app-login',
@@ -70,8 +71,5 @@ export class LoginComponent implements OnInit{
     }
 
   }
-  
-  
- 
   
 }
