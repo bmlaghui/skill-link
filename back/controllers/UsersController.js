@@ -395,14 +395,14 @@ exports.verify = async (req, res) => {
 // Auth
 exports.login = async (req, res) => {
     try {
-        if (!req.body.email) {
-            return res.status(422).json({ err: 'email is required' });
+        if (!req.body.username) {
+            return res.status(422).json({ err: 'username is required' });
         }
         if (!req.body.password) {
             return res.status(422).json({ err: 'password is required' });
         }
 
-        const user = await User.findOne({ email: req.body.email });
+        const user = await User.findOne({ username: req.body.username });
 
         if (!user) {
             return res.status(422).json({ err: 'email is not valid' });

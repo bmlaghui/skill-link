@@ -5,5 +5,12 @@
         "pathRewrite" : { "^/api" : ""},
         "changeOrigin" : false,
         "logLevel" : "debug"
+    },
+    "/weatherapi/*": {
+      "target": "https://api.openweathermap.org",
+      "secure": false,
+      "pathRewrite": { "^/weatherapi": "" },
+      "changeOrigin": true,
+      "logLevel": "debug"
     }
 }

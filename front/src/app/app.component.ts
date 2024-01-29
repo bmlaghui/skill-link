@@ -1,15 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { NavigationComponent } from './components/navigation/navigation.component';
 import { NgChartsModule } from 'ng2-charts';
-import { LinechartComponent } from './components/linechart/linechart.component';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ProbesComponent } from './components/probes/probes.component';
+import { LoginComponent } from './core/components/authentification/login/login.component';
+import { RegisterComponent } from './core/components/authentification/register/register.component';
+import { LayoutComponent } from './core/layout/layout.component';
 
 
 @Component({
@@ -20,13 +17,10 @@ import { ProbesComponent } from './components/probes/probes.component';
               RouterOutlet,
               LoginComponent,
               RegisterComponent, 
-              NavigationComponent,
               FormsModule, 
               ReactiveFormsModule,
-              DashboardComponent,
               NgChartsModule,
-              LinechartComponent,
-              ProbesComponent
+              LayoutComponent
             ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

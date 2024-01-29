@@ -44,6 +44,7 @@ const userSchema = new mongoose.Schema({
     linkGithub: String,
     linkWebsite: String,
     linkCV: String,
+    image: String,
     skills: [{
         type: String,
         required: true
