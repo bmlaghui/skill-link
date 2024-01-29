@@ -12,7 +12,7 @@ export class WeatherService {
 
   
   getActualTemperature(city: string) {
-    const apiUrl = `weatherapi/data/2.5/weather?q=${city}&appid=${environment.weatherApiKey}&units=metric`;
+    const apiUrl = `/weatherapi/?q=${city}&appid=${environment.weatherApiKey}&units=metric`;
     console.log(this.http.get<any>(apiUrl));
     return this.http.get<any>(apiUrl);
   } 

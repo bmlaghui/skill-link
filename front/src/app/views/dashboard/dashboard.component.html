@@ -32,7 +32,8 @@
             <div class="weather-info">
               <div class="d-flex">
                 <div>
-                  <h2 class="mb-0 font-weight-normal"><i class="icon-sun mr-2"></i>{{actualTemperature()}}<sup>C</sup></h2>
+                  <h2 class="mb-0 font-weight-normal"><i class="icon-sun mr-2"></i>{{actualTemperature().main.temp}}<sup>°</sup></h2>
+                  <p>{{actualTemperature().weather[0].main}} - {{actualTemperature().weather[0].description}}</p>
                 </div>
                 <div class="ml-2">
                   <h4 class="location font-weight-normal">Paris</h4>

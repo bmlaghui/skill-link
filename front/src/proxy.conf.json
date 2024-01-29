@@ -7,10 +7,11 @@
         "logLevel" : "debug"
     },
     "/weatherapi/*": {
-      "target": "https://api.openweathermap.org",
+      "target": "https://api.openweathermap.org/data/2.5/weather",
       "secure": false,
       "pathRewrite": { "^/weatherapi": "" },
       "changeOrigin": true,
       "logLevel": "debug"
     }
 }
+
