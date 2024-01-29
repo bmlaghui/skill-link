@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
+import jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
