@@ -12,6 +12,8 @@ import { FooterComponent } from './views/layout/footer/footer.component';
 import { SidebarComponent } from './views/layout/sidebar/sidebar.component';
 import { SettingsPanelComponent } from './views/layout/settings-panel/settings-panel.component';
 import { NavbarComponent } from './views/layout/navbar/navbar.component';
+import { TagInputModule } from 'ngx-chips';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @Component({
@@ -29,7 +31,9 @@ import { NavbarComponent } from './views/layout/navbar/navbar.component';
               FooterComponent,
               SidebarComponent,
               SettingsPanelComponent,
-              NavbarComponent
+              NavbarComponent,
+              TagInputModule
+              
             ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

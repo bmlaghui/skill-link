@@ -7,11 +7,13 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { loggerInterceptor } from './core/interceptors/logger.interceptor';
 export const appConfig: ApplicationConfig = {
+
   providers: [
       provideRouter(routes),
       provideAnimations(), // required animations providers
       provideToastr(), // Toastr providers
-      provideHttpClient(withInterceptors([loggerInterceptor])) // Http client providers
+      provideHttpClient(withInterceptors([loggerInterceptor])), 
+      
   ]
 };
 
