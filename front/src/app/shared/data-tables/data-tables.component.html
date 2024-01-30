@@ -1,7 +1,6 @@
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
-        <p class="card-title">Advanced Table</p>
         <div class="row">
           <div class="col-12">
             <div class="table-responsive">
@@ -15,54 +14,58 @@
                 </div>
                 <div class="row">
                   <div class="col-sm-12">
-                    
-                    <table
-                      id="example"
-                      class="display expandable-table dataTable no-footer"
-                      style="width: 100%"
-                      role="grid"
-                    >
-                      <thead>
-                        <tr role="row">
-   
-                          @for (item of getColumnNames(); track item) {
-                            <th
-                              class="sorting_asc"
-                              tabindex="0"
-                              aria-controls="example"
-                              rowspan="1"
-                              colspan="1"
-                              aria-label="Product: activate to sort column descending"
-                              aria-sort="ascending"
-                              style="width: 51px"
-                            >
-                              {{item}}
-                            </th>
-                          }
-                          
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr class="odd">
-                          @for (column of data; track column;) {
-                            @for (item of getValues(column); track $index) {
-                      
-                              <td
-                                class="sorting_1"
+                    @if(getColumnNames().length > 0) {
+                      <table
+                        id="example"
+                        class="display expandable-table dataTable no-footer"
+                        style="width: 100%"
+                        role="grid"
+                      >
+                        <thead>
+                          <tr role="row">
+    
+                            @for (item of getColumnNames(); track item) {
+                              <th
+                                class="sorting_asc"
                                 tabindex="0"
+                                aria-controls="example"
+                                rowspan="1"
+                                colspan="1"
+                                aria-label="Product: activate to sort column descending"
+                                aria-sort="ascending"
                                 style="width: 51px"
                               >
                                 {{item}}
-                              
+                              </th>
+                            }
+                            
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="odd">
+                            @for (column of data; track column;) {
+                              @for (item of getValues(column); track $index) {
+                                <td
+                                  class="sorting_1"
+                                  tabindex="0"
+                                  style="width: 51px"
+                                >
+                                  {{item}}
                                 
-                              </td>
-                            }
-                            }
-                         
-                          
-                        </tr>
-                      </tbody>
-                    </table>
+                                  
+                                </td>
+                              }
+                              }
+                          </tr>
+                        </tbody>
+                      </table>
+                    }
+                    @else {
+                     <div>
+                      No data
+                     </div>
+                    }
+                    
                   </div>
                 </div>
               </div>

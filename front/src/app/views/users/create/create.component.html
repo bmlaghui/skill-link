@@ -125,17 +125,11 @@
                                     />
                                 </div>
                                 <div class="form-group col-md-4 col-sm-12">
-                                    <label for="experiences">Expériences</label>
-                                    <tag-input  [(ngModel)]="items" id="experiences" name="experiences" [placeholder]="'Ajoute une expérience'" [secondaryPlaceholder]="'Ajoute une 1ère expérience'" >
-                                    </tag-input>
-                                </div>
-                                <div class="form-group col-md-4 col-sm-12">
                                     <label for="interests">Intérêts</label>
                                     <tag-input  [(ngModel)]="items" id="interests" name="interests" [placeholder]="'Ajoute un intérêt'" [secondaryPlaceholder]="'Ajoute un 1èr intérêt'" >
                                     </tag-input>
                                 </div>
 
-                                
                                 <div class="form-group col-md-4 col-sm-12">
                                     <label for="photo">Photo</label>
                                     <input
@@ -145,8 +139,25 @@
                                     type="file"
                                     />
                                 </div>
-
-
+                            </div>
+                            <div class="row">
+                                <label>Expériences</label>
+                                <div class="form-group col-md-2 col-sm-12">
+                                    <label for="beginDate">Date de début</label>
+                                    <input id="beginDate" class="form-control" name="beginDate" type="date" />
+                                </div>
+                                <div class="form-group col-md-2 col-sm-12">
+                                    <label for="beginEnd">Date de fin</label>
+                                    <input id="beginEnd" class="form-control" name="beginDate" type="date" />
+                                </div>
+                                <div class="form-group col-md-3 col-sm-12">
+                                    <label for="post">Poste</label>
+                                    <input id="post" class="form-control" name="post" type="text" />
+                                </div>
+                                <div class="form-group col-md-5 col-sm-12">
+                                    <label for="description">Description</label>
+                                    <textarea id="description" class="form-control" name="description" type="date" ></textarea>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="submit"></label>

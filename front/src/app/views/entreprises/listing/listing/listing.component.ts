@@ -16,7 +16,13 @@ export class ListingComponent {
   candidates: Entreprise[] = [];
   candidatesService = inject(CandidatesService);
   //candidats = toSignal(this.candidatesService.getUsers());
-  cnadidatesList = this.candidatesService.getUsers().subscribe(data => {
-    this.data = data;
+  cnadidatesList = this.candidatesService.getEntreprise().subscribe(data => {
+    if(data) {
+
+      this.data = data;
+    }
+    else {
+      this.data = [];
+    }
   });
 }

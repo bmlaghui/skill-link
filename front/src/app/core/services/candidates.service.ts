@@ -15,4 +15,8 @@ export class CandidatesService {
     return this.http.get<any[]>(`${environment.apiUrl}/users`);
   }
 
+  getEntreprise() {
+    return this.http.get<any[]>(`${environment.apiUrl}/entreprises`);
+  }
+
 }
