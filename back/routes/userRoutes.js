@@ -454,4 +454,8 @@ router.post('/users/:id/applications', verifyToken, usersController.createApplic
 router.put('/users/:id/applications/:idApplication', verifyToken, usersController.updateApplication);
 router.delete('/users/:id/applications/:idApplication', verifyToken, usersController.deleteApplication);
 
+//Get Users by role
+router.get('/candidates', verifyToken, usersController.getCandidates);
+router.get('/admins', verifyToken, usersController.getAdmins);
+router.get('/recruiters', verifyToken, usersController.getRecuiters);
 module.exports = router;

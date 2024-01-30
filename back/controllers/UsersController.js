@@ -460,3 +460,36 @@ exports.resetPassword = async (req, res) => {
 }
 
 
+exports.getCandidates = async (req, res) => {
+    try {
+        const users = await User.find({role: 'candidat'}, { __v: 0, _id: 0, password: 0});
+        return res.json(users);
+
+    }
+    catch(err) {
+        return res.status(500).json({ err: err.message });
+    }
+}
+
+exports.getRecuiters = async (req, res) => {
+    try {
+        const users = await User.find({role: 'entreprise'}, { __v: 0, _id: 0, password: 0});
+        return res.json(users);
+
+    }
+    catch(err) {
+        return res.status(500).json({ err: err.message });
+    }
+}
+
+exports.getAdmins = async (req, res) => {
+    try {
+        const users = await User.find({role: 'admin'}, { __v: 0, _id: 0, password: 0});
+        return res.json(users);
+
+    }
+    catch(err) {
+        return res.status(500).json({ err: err.message });
+    }
+}
+

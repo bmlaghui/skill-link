@@ -13,4 +13,5 @@ export class EntreprisesService {
   getEntreprises() {
     return this.http.get<any[]>(`${environment.apiUrl}/entreprises`);
   }
+
 }

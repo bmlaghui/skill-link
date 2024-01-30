@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { CandidatesService } from '../../../../core/services/candidates.service';
 import { Entreprise } from '../../../../core/interfaces/entreprise';
 import { DataTablesComponent } from "../../../../shared/data-tables/data-tables.component";
 import { RouterLink } from '@angular/router';
+import { EntreprisesService } from '../../../../core/services/entreprises.service';
 
 @Component({
     selector: 'app-listing',
@@ -13,12 +13,10 @@ import { RouterLink } from '@angular/router';
 })
 export class ListingComponent {
   data: Entreprise[] = [];
-  candidates: Entreprise[] = [];
-  candidatesService = inject(CandidatesService);
+  entreprisesService = inject(EntreprisesService);
   //candidats = toSignal(this.candidatesService.getUsers());
-  cnadidatesList = this.candidatesService.getEntreprise().subscribe(data => {
+  entreprisesList = this.entreprisesService.getEntreprises().subscribe(data => {
     if(data) {
-
       this.data = data;
     }
     else {

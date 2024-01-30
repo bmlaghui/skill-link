@@ -1,22 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CandidatesService {
+export class UsersService {
 
   http = inject(HttpClient);
   
-  getUsers() {
-    return this.http.get<any[]>(`${environment.apiUrl}/users`);
+  getCandidates() {
+    return this.http.get<User[]>(`${environment.apiUrl}/candidates`);
   }
 
-  getEntreprise() {
-    return this.http.get<any[]>(`${environment.apiUrl}/entreprises`);
+  getAdmins() {
+    return this.http.get<User[]>(`${environment.apiUrl}/admins`);
   }
 
+  getRecruiters() {
+    return this.http.get<User[]>(`${environment.apiUrl}/recruiters`);
+  }
+
+  
+ 
 }
