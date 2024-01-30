@@ -18,6 +18,11 @@ export const routes: Routes = [
                 loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
             },
             {
+                path: 'candidats/add',
+                // canActivate: [AuthGuard],
+                loadComponent: () => import('./views/users/create/create.component').then(m => m.CreateComponent)
+            },
+            {
                 path: 'candidats/:id',
                 // canActivate: [AuthGuard],
                 loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
@@ -25,7 +30,7 @@ export const routes: Routes = [
             {
                 path: 'entreprises',
                 // canActivate: [AuthGuard],
-                loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
+                loadComponent: () => import('./views/entreprises/listing/listing/listing.component').then(m => m.ListingComponent)
             },
             {
                 path: 'offres',

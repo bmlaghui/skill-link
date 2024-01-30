@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { CandidatesService } from '../../../core/services/candidates.service';
-import { Entreprise } from '../../../core/interfaces/entreprise';
-import { DataTablesComponent } from "../../../shared/data-tables/data-tables.component";
+import { CandidatesService } from '../../../../core/services/candidates.service';
+import { Entreprise } from '../../../../core/interfaces/entreprise';
+import { DataTablesComponent } from "../../../../shared/data-tables/data-tables.component";
 import { RouterLink } from '@angular/router';
 
 @Component({
