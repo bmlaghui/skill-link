@@ -423,7 +423,7 @@ exports.login = async (req, res) => {
         });
 
         // Send the token in the response
-        return res.json({ msg: `User logged in successfully as ${user.role}`, token: token, role: user.role }); // Fix 'role: role' to 'role: user.role'
+        return res.json({ msg: `User logged in successfully as ${user.role}`, token: token, user: user }); // Fix 'role: role' to 'role: user.role'
     } catch (err) {
         return res.status(500).json({ err: err.message }); // Use err.message to get the error message
     }
