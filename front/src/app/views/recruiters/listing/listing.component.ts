@@ -1,10 +1,9 @@
-import { Component, Input, computed, inject } from '@angular/core';
-import { DataTablesComponent } from '../../../shared/data-tables/data-tables.component';
-import { RouterLink } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { User } from '../../../core/interfaces/user';
 import { UsersService } from '../../../core/services/users.service';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { DataTablesComponent } from '../../../shared/data-tables/data-tables.component';
 
 @Component({
   selector: 'app-listing',
@@ -18,7 +17,7 @@ export class ListingComponent {
   candidates: User[] = [];
   usersService = inject(UsersService);
   //candidats = toSignal(this.candidatesService.getUsers());
-  candidatesList = this.usersService.getCandidates().subscribe(data => {
+  candidatesList = this.usersService.getRecruiters().subscribe(data => {
     if(data) {
       this.data = data;
     }

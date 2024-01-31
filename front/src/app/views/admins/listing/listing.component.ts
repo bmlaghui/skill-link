@@ -1,10 +1,12 @@
-import { Component, Input, computed, inject } from '@angular/core';
-import { DataTablesComponent } from '../../../shared/data-tables/data-tables.component';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { CommonModule } from '@angular/common';
+import { DataTablesComponent } from '../../../shared/data-tables/data-tables.component';
 import { User } from '../../../core/interfaces/user';
 import { UsersService } from '../../../core/services/users.service';
+import { of } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { EntreprisesService } from '../../../core/services/entreprises.service';
+import { Entreprise } from '../../../core/interfaces/entreprise';
 
 @Component({
   selector: 'app-listing',
@@ -14,11 +16,11 @@ import { UsersService } from '../../../core/services/users.service';
   styleUrl: './listing.component.scss'
 })
 export class ListingComponent {
+
   data: User[] = [];
-  candidates: User[] = [];
   usersService = inject(UsersService);
   //candidats = toSignal(this.candidatesService.getUsers());
-  candidatesList = this.usersService.getCandidates().subscribe(data => {
+  adminsList = this.usersService.getAdmins().subscribe(data => {
     if(data) {
       this.data = data;
     }
@@ -27,3 +29,5 @@ export class ListingComponent {
     }
   });
 }
+
+

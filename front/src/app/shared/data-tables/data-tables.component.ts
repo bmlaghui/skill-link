@@ -10,14 +10,22 @@ import { User } from '../../core/interfaces/user';
   styleUrl: './data-tables.component.scss'
 })
 export class DataTablesComponent {
-  @Input() data: User[] = [];
+  @Input() data: any[] = [];
   
- getColumnNames() {
-    return Object.keys(this.data[0]);
+  getColumnNames() {
+    if (this.data && this.data.length > 0) {
+      return Object.keys(this.data[0]);
+    } else {
+      return [];
+    }
   }
 
-  getValues(row: User) {
-    return Object.values(row);
+  getValues(row: any) {
+    if (row) {
+      return Object.values(row);
+    } else {
+      return [];
+    }
   }
 
 }

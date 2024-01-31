@@ -1,8 +1,0 @@
-{
-    "labels": ["Download Sales", "In Store Sales", "Mail Sales"],
-    "data":   {
-        "Last Week A": [60, 55, 44],
-        "Last Week B": [14, 11, 0],
-        "Last Week C": [14, 11, 0]
-    }
-}

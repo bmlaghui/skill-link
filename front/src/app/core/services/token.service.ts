@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +30,21 @@ constructor() {
     removeToken() {
     this.updateToken(false);
     localStorage.removeItem('CURRENT_TOKEN');
+    }
+
+
+    getDecodedToken(): any {
+      try {
+        const token = this.getToken();
+        if (token) {
+          return jwtDecode(token);
+
+        }
+        return null;
+      } catch (error) {
+        console.error('Error decoding token:', error);
+        return null;
+      }
     }
   
 }

@@ -405,7 +405,7 @@ exports.login = async (req, res) => {
         const user = await User.findOne({ username: req.body.username });
 
         if (!user) {
-            return res.status(422).json({ err: 'email is not valid' });
+            return res.status(422).json({ err: 'user is not valid' });
         }
 
         const isMatch = await bcrypt.compare(req.body.password, user.password);
@@ -423,7 +423,7 @@ exports.login = async (req, res) => {
         });
 
         // Send the token in the response
-        return res.json({ msg: `User logged in successfully as ${user.role}`, token: token, user: user }); // Fix 'role: role' to 'role: user.role'
+        return res.json({ msg: `User logged in successfully as ${user.role}`, token: token, user: user, user:user }); // Fix 'role: role' to 'role: user.role'
     } catch (err) {
         return res.status(500).json({ err: err.message }); // Use err.message to get the error message
     }
@@ -459,4 +459,37 @@ exports.resetPassword = async (req, res) => {
     }
 }
 
+
+exports.getCandidates = async (req, res) => {
+    try {
+        const users = await User.find({role: 'candidat'}, { __v: 0, _id: 0, password: 0});
+        return res.json(users);
+
+    }
+    catch(err) {
+        return res.status(500).json({ err: err.message });
+    }
+}
+
+exports.getRecuiters = async (req, res) => {
+    try {
+        const users = await User.find({role: 'entreprise'}, { __v: 0, _id: 0, password: 0});
+        return res.json(users);
+
+    }
+    catch(err) {
+        return res.status(500).json({ err: err.message });
+    }
+}
+
+exports.getAdmins = async (req, res) => {
+    try {
+        const users = await User.find({role: 'admin'}, { __v: 0, _id: 0, password: 0});
+        return res.json(users);
+
+    }
+    catch(err) {
+        return res.status(500).json({ err: err.message });
+    }
+}
 

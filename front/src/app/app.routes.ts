@@ -71,6 +71,16 @@ export const routes: Routes = [
                 path: 'paiements',
                 // canActivate: [AuthGuard],
                 loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
+            },
+            {
+                path: 'administrateurs',
+                // canActivate: [AuthGuard],
+                loadComponent: () => import('./views/admins/listing/listing.component').then(m => m.ListingComponent)
+            },
+            {
+                path: 'recuiters',
+                // canActivate: [AuthGuard],
+                loadComponent: () => import('./views/recruiters/listing/listing.component').then(m => m.ListingComponent)
             }
         ]
     },

@@ -2,16 +2,19 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+const swaggerSpec = require('./swagger.js');
 const rateLimit = require('express-rate-limit');
 
 // Create the server
 const app = express();
 app.use(express.json());
 
-// Serve Swagger UI at /api-docs
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+var options = {
+  explorer: true
+};
 
+// Serve Swagger UI at /api-docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // Entreprises Routes
 app.use( require('./routes/entrepriseRoutes.js'));
 // Missions Routes
