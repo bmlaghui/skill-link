@@ -11,7 +11,10 @@ import { User } from '../interfaces/user';
   providedIn: 'root'
 })
 export class AuthService {
+
   private apiUrl = environment.apiUrl;
+
+
   public user: User = {} as User;
 
   constructor(private http: HttpClient, private tokenService: TokenService) { }
@@ -22,7 +25,6 @@ export class AuthService {
         if (response && response.token) {
           // Store the token securely (consider using HttpOnly cookies for better security).
           this.tokenService.setToken(response.token);
-          this.user = response.user;
           return response;
         }
       }),
@@ -36,6 +38,23 @@ export class AuthService {
     this.user = {} as User;
     return of(true);
   }
+
+  connectedUser(): Observable<any> {
+    const token = this.tokenService.getDecodedToken();
+    console.log(token);
+    return this.http.get<any>(`${this.apiUrl}/users/${token.userId}`);
+  }
+
+  handleError(errorResp: any) {    
+    if (errorResp.error instanceof ErrorEvent) {
+      console.error('Client side error:', errorResp.error.message);
+    } else {
+      console.error('Server side error:', errorResp);
+    }
+    return throwError('There is a problem with the service. We are notified & working on it. Please try again later.');
+  }
+
+  
   
  
 }
