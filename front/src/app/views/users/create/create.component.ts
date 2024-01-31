@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 
 import { CommonModule } from '@angular/common';
 import { TagInputModule } from 'ngx-chips';
+import { ConnectableObservable } from 'rxjs';
 
 @Component({
   selector: 'app-create',
@@ -12,28 +13,69 @@ import { TagInputModule } from 'ngx-chips';
   styleUrl: './create.component.scss'
 })
 export class CreateComponent implements OnInit{
-onTagAdded() {
-throw new Error('Method not implemented.');
-}
-  items=[];
+
+  onTagAdded() {
+  throw new Error('Method not implemented.');
+  }
+  items=[]; items2=[];
   myGroup!:FormGroup;
 
   ngOnInit() {
     this.setForm();
+    const passwordControl = this.myGroup.get('password');
+    const passwordConfirmControl = this.myGroup.get('passwordConfirm');
+    if (passwordControl && passwordConfirmControl) {
+      this.myGroup.addValidators(
+        this.matchValidator(passwordControl, passwordConfirmControl)
+      );
+    }
   }
 
   setForm(){
     this.myGroup = new FormGroup({
-      competences: new FormControl([]),
-      formations: new FormControl([]),
-      experiences: new FormControl([]),
-      interests  : new FormControl([]),
-      firstName: new FormControl()
-  });
+      firstname: new FormControl('', [Validators.required]),
+      lastname: new FormControl('', [Validators.required]),
+      username: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]),
+      passwordConfirm: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]),
+      telephone: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
+      cvlink: new FormControl(''),
+      linkedinlink: new FormControl(''),
+      portfoliolink: new FormControl(''),
+      githublink: new FormControl(''),
+      skills: new FormControl('[]'),
+      interests: new FormControl('[]'),
+      photo: new FormControl(''),
+      formations: new FormControl('[]'),
+      experiences: new FormControl('[]')
+    }
+    )
+  }
+
+   matchValidator(
+    control: AbstractControl,
+    controlTwo: AbstractControl
+  ): ValidatorFn {
+    return () => {
+      if (control.value !== controlTwo.value)
+        return { match_error: 'Value does not match' };
+      return null;
+    };
+  }
+
+
+  submitCandidate(){
+    console.log('submit')
+    console.log(this.myGroup.value);
+  if(this.myGroup.valid)
+    {
+      console.log(this.myGroup.value);
+    }
+  }
+
 
  
-
-  }
 
 
 }

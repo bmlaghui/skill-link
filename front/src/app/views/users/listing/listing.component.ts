@@ -18,7 +18,7 @@ export class ListingComponent {
   candidates: User[] = [];
   usersService = inject(UsersService);
   //candidats = toSignal(this.candidatesService.getUsers());
-  candidatesList = this.usersService.getCandidates().subscribe(data => {
+  candidatesList = this.usersService.getUsersByRole('candidat').subscribe(data => {
     if(data) {
       this.data = data;
     }

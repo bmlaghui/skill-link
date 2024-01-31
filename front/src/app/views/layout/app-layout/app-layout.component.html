@@ -1,4 +1,4 @@
-<div class="container-scroller">
+<div class="container-scroller" (mousemove)="onUserAction()" (click)="onUserAction()" (keypress)="onUserAction()">
     <app-navbar></app-navbar>
     <div class="container-fluid page-body-wrapper">
         <app-settings-panel></app-settings-panel>
@@ -9,3 +9,4 @@
         </div>
     </div>
 </div>
+

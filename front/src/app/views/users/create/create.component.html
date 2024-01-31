@@ -12,6 +12,7 @@
                         <form class="pt-3"[formGroup]="myGroup">
                         <fieldset>
                             <div class="row">
+                                <p class="title-step p-2">Information générales</p>
                                 <div class="form-group col-md-4 col-sm-12">
                                     <label for="firstname">Nom</label>
                                     <input
@@ -19,8 +20,12 @@
                                     class="form-control valid"
                                     name="firstname"
                                     type="text"
-                                    aria-invalid="false"
+                                    formControlName="firstname"
                                     />
+                                    @if(myGroup.controls['firstname'].hasError('required') &&
+                                    myGroup.controls['firstname'].touched) {
+                                        <div class="text-danger">Le nom est requis</div>
+                                    } 
                                 </div>
                                 <div class="form-group col-md-4 col-sm-12">
                                     <label for="lastname">Prénom</label>
@@ -29,8 +34,12 @@
                                     class="form-control valid"
                                     name="lastname"
                                     type="text"
-                                    aria-invalid="false"
+                                    formControlName="lastname"
                                     />
+                                    @if(myGroup.controls['lastname'].hasError('required') &&
+                                    myGroup.controls['lastname'].touched) {
+                                        <div class="text-danger">Le prénom est requis</div>
+                                    } 
                                 </div>
                                 <div class="form-group col-md-4 col-sm-12">
                                     <label for="username">Nom d'utilisateur</label>
@@ -39,7 +48,17 @@
                                     class="form-control"
                                     name="username"
                                     type="text"
+                                    formControlName="username"
                                     />
+                                    @if(myGroup.controls['username'].hasError('required') &&
+                                    myGroup.controls['username'].touched) {
+                                        <div class="text-danger">Le nom d'utilisateur est requis</div>
+                                    } 
+                                    @if(myGroup.controls['firstname'].valid && myGroup.controls['lastname'].valid) {
+                                        {{myGroup.controls['username'].setValue(myGroup.controls['lastname'].value[0] + '.' + myGroup.controls['firstname'].value)}}
+                                        {{myGroup.controls['username'].disable()}}
+                                    }
+                                    
                                 </div>
                                 <div class="form-group col-md-4 col-sm-12">
                                     <label for="email">Email</label>
@@ -48,7 +67,16 @@
                                     class="form-control"
                                     name="email"
                                     type="email"
+                                    formControlName="email"
                                     />
+                                    @if(myGroup.controls['email'].hasError('required') &&
+                                    myGroup.controls['email'].touched) {
+                                        <div class="text-danger">L'e-mail est requis</div>
+                                    } 
+                                    @if(myGroup.controls['email'].hasError('email') &&
+                                    myGroup.controls['email'].touched) {
+                                        <div class="text-danger">L'e-mail est invalide</div>
+                                    }
                                 </div>
                                 <div class="form-group col-md-4 col-sm-12">
                                     <label for="password">Mot de passe</label>
@@ -57,7 +85,16 @@
                                     class="form-control"
                                     name="password"
                                     type="password"
+                                    formControlName="password"
                                     />
+                                    @if(myGroup.controls['password'].hasError('required') &&
+                                    myGroup.controls['password'].touched) {
+                                        <div class="text-danger">Le mot de passe est requis</div>
+                                    } 
+                                    @if(myGroup.controls['password'].hasError('pattern') &&
+                                    myGroup.controls['password'].touched) {
+                                        <div class="text-danger">Le mot de passe doit contenir 8 caractères: au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial</div>
+                                    }
                                 </div>
                                 <div class="form-group col-md-4 col-sm-12">
                                     <label for="confirm_password"
@@ -68,7 +105,22 @@
                                     class="form-control"
                                     name="confirm_password"
                                     type="password"
+                                    formControlName="passwordConfirm"
                                     />
+                                    @if(myGroup.controls['passwordConfirm'].hasError('required') &&
+                                    myGroup.controls['passwordConfirm'].touched) {
+                                        <div class="text-danger">La confirmation du mot de passe est requis</div>
+                                    } 
+                                    @if(myGroup.controls['passwordConfirm'].hasError('pattern') &&
+                                    myGroup.controls['passwordConfirm'].touched) {
+                                        <div class="text-danger">La confirmation du mot de passe doit contenir 8 caractères: au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial</div>
+                                    }
+                                   @if(myGroup.controls['passwordConfirm'].hasError('match_error') &&
+                                    myGroup.controls['passwordConfirm'].touched) {
+                                        <div class="text-danger">La confirmation du mot de passe doit être identique au mot de passe</div>
+                                    }
+                                    {{myGroup.controls['passwordConfirm'].getRawValue() === myGroup.controls['password'].getRawValue() ? myGroup.controls['passwordConfirm'].setErrors(null) : myGroup.controls['passwordConfirm'].setErrors({'match_error': true})}}
+                                   
                                 </div>
                                 <div class="form-group col-md-4 col-sm-12">
                                     <label for="phone">Téléphone</label>
@@ -77,11 +129,12 @@
                                     class="form-control"
                                     name="phone"
                                     type="text"
+                                    formControlName="telephone"
                                     />
                                 </div>
                                 <div class="form-group col-md-4 col-sm-12">
                                     <label for="cv">CV</label>
-                                    <input id="cv" class="form-control" name="cv" type="file" />
+                                    <input id="cv" class="form-control" name="cv" type="file" formControlName="cvlink" />
                                 </div>
                                 <div class="form-group col-md-4 col-sm-12">
                                     <label for="linkedin">Linkedin</label>
@@ -90,6 +143,7 @@
                                     class="form-control"
                                     name="linkedin"
                                     type="text"
+                                    formControlName="cvlink"
                                     />
                                 </div>
                                 <div class="form-group col-md-4 col-sm-12">
@@ -99,6 +153,7 @@
                                     class="form-control"
                                     name="portfolio"
                                     type="text"
+                                    formControlName="portfoliolink"
                                     />
                                 </div>
                                 <div class="form-group col-md-4 col-sm-12">
@@ -108,28 +163,19 @@
                                     class="form-control"
                                     name="github"
                                     type="text"
+                                    formControlName="githublink"
                                     />
                                 </div>
                                 <div class="form-group col-md-4 col-sm-12">
                                     <label for="competences">Compétences</label>
-                                    <tag-input  [(ngModel)]="items" id="competences" name="experiences"  [placeholder]="'Ajoute une compétence'" [secondaryPlaceholder]="'Ajoute une 1ère compétence'" >
+                                    <tag-input  [(ngModel)]="items" id="skils" name="experiences"  [placeholder]="'Ajoute une compétence'" [secondaryPlaceholder]="'Ajoute une 1ère compétence'" formControlName="skills" >
                                     </tag-input>
-                                </div>
-                                <div class="form-group col-md-4 col-sm-12">
-                                    <label for="formations">Formations</label>
-                                    <input
-                                    id="formations"
-                                    class="form-control"
-                                    name="formations"
-                                    type="text"
-                                    />
                                 </div>
                                 <div class="form-group col-md-4 col-sm-12">
                                     <label for="interests">Intérêts</label>
-                                    <tag-input  [(ngModel)]="items" id="interests" name="interests" [placeholder]="'Ajoute un intérêt'" [secondaryPlaceholder]="'Ajoute un 1èr intérêt'" >
+                                    <tag-input  [(ngModel)]="items2" id="interests" name="interests" [placeholder]="'Ajoute un intérêt'" [secondaryPlaceholder]="'Ajoute un 1èr intérêt'" formControlName="interests" >
                                     </tag-input>
                                 </div>
-
                                 <div class="form-group col-md-4 col-sm-12">
                                     <label for="photo">Photo</label>
                                     <input
@@ -137,35 +183,128 @@
                                     class="form-control"
                                     name="photo"
                                     type="file"
+                                    formControlName="photo"
                                     />
                                 </div>
                             </div>
                             <div class="row">
-                                <label>Expériences</label>
+                                <p class="title-step p-2">Formations</p>
                                 <div class="form-group col-md-2 col-sm-12">
                                     <label for="beginDate">Date de début</label>
-                                    <input id="beginDate" class="form-control" name="beginDate" type="date" />
+                                    <input id="beginDate" class="form-control" name="beginDate" type="date" formControlName="beginDateFormation1" />
                                 </div>
                                 <div class="form-group col-md-2 col-sm-12">
                                     <label for="beginEnd">Date de fin</label>
-                                    <input id="beginEnd" class="form-control" name="beginDate" type="date" />
+                                    <input id="beginEnd" class="form-control" name="beginDate" type="date" formControlName="endDateFormation1"/>
                                 </div>
                                 <div class="form-group col-md-3 col-sm-12">
-                                    <label for="post">Poste</label>
-                                    <input id="post" class="form-control" name="post" type="text" />
+                                    <label for="post">Diplôme</label>
+                                    <input id="post" class="form-control" name="post" type="text"  formControlName="diplomeFormation1"/>
                                 </div>
                                 <div class="form-group col-md-5 col-sm-12">
                                     <label for="description">Description</label>
-                                    <textarea id="description" class="form-control" name="description" type="date" ></textarea>
+                                    <textarea id="description" class="form-control" name="description"  formControlName="descriptionFormation1"></textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="row">
+                                <div class="form-group col-md-2 col-sm-12">
+                                    <label for="beginDate">Date de début</label>
+                                    <input id="beginDate" class="form-control" name="beginDate" type="date" formControlName="beginDateFormation2"/>
+                                </div>
+                                <div class="form-group col-md-2 col-sm-12">
+                                    <label for="beginEnd">Date de fin</label>
+                                    <input id="beginEnd" class="form-control" name="beginDate" type="date" formControlName="endDateFormation2" />
+                                </div>
+                                <div class="form-group col-md-3 col-sm-12">
+                                    <label for="post">Diplôme</label>
+                                    <input id="post" class="form-control" name="post" type="text"  formControlName="diplomeFormation2"/>
+                                </div>
+                                <div class="form-group col-md-5 col-sm-12">
+                                    <label for="description">Description</label>
+                                    <textarea id="description" class="form-control" name="description"  formControlName="descriptionFormation2"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-2 col-sm-12">
+                                    <label for="beginDate">Date de début</label>
+                                    <input id="beginDate" class="form-control" name="beginDate" type="date" formControlName="beginDateFormation3"/>
+                                </div>
+                                <div class="form-group col-md-2 col-sm-12">
+                                    <label for="beginEnd">Date de fin</label>
+                                    <input id="beginEnd" class="form-control" name="beginDate" type="date" formControlName="endDateFormation3"/>
+                                </div>
+                                <div class="form-group col-md-3 col-sm-12">
+                                    <label for="post">Diplôme</label>
+                                    <input id="post" class="form-control" name="post" type="text"  formControlName="diplomeFormation3"/>
+                                </div>
+                                <div class="form-group col-md-5 col-sm-12">
+                                    <label for="description">Description</label>
+                                    <textarea id="description" class="form-control" name="description"  formControlName="descriptionFormation3"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <p class="title-step p-2">Expériences professionnels</p>
+                                <div class="form-group col-md-2 col-sm-12">
+                                    <label for="beginDate">Date de début</label>
+                                    <input id="beginDate" class="form-control" name="beginDate" type="date"  formControlName="beginDateExperience1"/>
+                                </div>
+                                <div class="form-group col-md-2 col-sm-12">
+                                    <label for="beginEnd">Date de fin</label>
+                                    <input id="beginEnd" class="form-control" name="beginDate" type="date"  formControlName="endDateExperience1"/>
+                                </div>
+                                <div class="form-group col-md-3 col-sm-12">
+                                    <label for="post">Poste</label>
+                                    <input id="post" class="form-control" name="post" type="text"  formControlName="posteExperience1"/>
+                                </div>
+                                <div class="form-group col-md-5 col-sm-12">
+                                    <label for="description">Description</label>
+                                    <textarea id="description" class="form-control" name="description" formControlName="descriptionExperience1"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-2 col-sm-12">
+                                    <label for="beginDate">Date de début</label>
+                                    <input id="beginDate" class="form-control" name="beginDate" type="date" formControlName="beginDateExperience2"/>
+                                </div>
+                                <div class="form-group col-md-2 col-sm-12">
+                                    <label for="beginEnd">Date de fin</label>
+                                    <input id="beginEnd" class="form-control" name="beginDate" type="date" formControlName="endDateExperience2"/>
+                                </div>
+                                <div class="form-group col-md-3 col-sm-12">
+                                    <label for="post">Poste</label>
+                                    <input id="post" class="form-control" name="post" type="text" formControlName="posteExperience2"/>
+                                </div>
+                                <div class="form-group col-md-5 col-sm-12">
+                                    <label for="description">Description</label>
+                                    <textarea id="description" class="form-control" name="description" formControlName="descriptionExperience2"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-2 col-sm-12">
+                                    <label for="beginDate">Date de début</label>
+                                    <input id="beginDate" class="form-control" name="beginDate" type="date" formControlName="beginDateExperience3"/>
+                                </div>
+                                <div class="form-group col-md-2 col-sm-12">
+                                    <label for="beginEnd">Date de fin</label>
+                                    <input id="beginEnd" class="form-control" name="beginDate" type="date" formControlName="endDateExperience3"/>
+                                </div>
+                                <div class="form-group col-md-3 col-sm-12">
+                                    <label for="post">Poste</label>
+                                    <input id="post" class="form-control" name="post" type="text" formControlName="postExperience3"/>
+                                </div>
+                                <div class="form-group col-md-5 col-sm-12">
+                                    <label for="description">Description</label>
+                                    <textarea id="description" class="form-control" name="description" formControlName="descriptionExperience3"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group float-right">
                                 <label for="submit"></label>
                             <input
                                 class="btn btn-primary mx-1"
                                 type="submit"
                                 value="Ajouter"
                                 id="submit"
+                                (click)="submitCandidate()"
                                 />
                                 <label for="reset"></label>
                                 <input id="reset" type="reset" class="btn btn-info" value="Reset" />

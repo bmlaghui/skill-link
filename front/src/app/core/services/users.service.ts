@@ -10,16 +10,8 @@ export class UsersService {
 
   http = inject(HttpClient);
   
-  getCandidates() {
-    return this.http.get<User[]>(`${environment.apiUrl}/candidates`);
-  }
-
-  getAdmins() {
-    return this.http.get<User[]>(`${environment.apiUrl}/admins`);
-  }
-
-  getRecruiters() {
-    return this.http.get<User[]>(`${environment.apiUrl}/recruiters`);
+  getUsersByRole(role: string) {
+    return this.http.get<User[]>(`${environment.apiUrl}/users/role/${role}`);
   }
 
   

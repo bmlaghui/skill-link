@@ -20,6 +20,6 @@ export class DashboardComponent {
 
   actualTemperature = toSignal(this.weatherService.getActualTemperature('Paris'));
 
-  actualUser = toSignal(this.authService.connectedUser()); // Fix: Wrap authService.user in of() function
+  actualUser = toSignal(this.authService.connectedUser()); 
 
 }

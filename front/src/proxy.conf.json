@@ -1,17 +1,16 @@
 {
-    "/api/*": {
-        "target": "http://127.0.0.1:3000",
-        "secure" : false,
-        "pathRewrite" : { "^/api" : ""},
-        "changeOrigin" : false,
-        "logLevel" : "debug"
-    },
-    "/weatherapi/*": {
-      "target": "https://api.openweathermap.org/data/2.5/weather",
-      "secure": false,
-      "pathRewrite": { "^/weatherapi": "" },
-      "changeOrigin": true,
-      "logLevel": "debug"
-    }
+  "/api": {
+    "target": "http://127.0.0.1:3000",
+    "secure": false,
+    "pathRewrite": { "^/api": "" },
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/weatherapi/*": {
+    "target": "https://api.openweathermap.org/data/2.5/weather",
+    "secure": false,
+    "pathRewrite": { "^/weatherapi": "" },
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
 }
-
