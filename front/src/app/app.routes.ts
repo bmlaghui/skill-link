@@ -95,6 +95,14 @@ export const routes: Routes = [
     {
         path: 'reset-password',
         loadComponent: () => import('./views/authentification/reset-password/reset-password.component').then(m => m.ResetPasswordComponent),
+    },
+    {
+        path: 'error',
+        loadComponent: () => import('./views/error-404/error-404.component').then(m => m.Error404Component)
+    },
+    {
+        path: '**',
+        redirectTo: 'error'
     }
 
 ];

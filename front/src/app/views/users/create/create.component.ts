@@ -48,7 +48,31 @@ export class CreateComponent implements OnInit{
       interests: new FormControl('[]'),
       photo: new FormControl(''),
       formations: new FormControl('[]'),
-      experiences: new FormControl('[]')
+      experiences: new FormControl('[]'),
+      beginDateFormation1 : new FormControl(''),
+      endDateFormation1 : new FormControl(''),
+      diplomeFormation1 : new FormControl(''),
+      descriptionFormation1 : new FormControl(''),
+      beginDateFormation2 : new FormControl(''),
+      endDateFormation2 : new FormControl(''),
+      diplomeFormation2 : new FormControl(''),
+      descriptionFormation2 : new FormControl(''),
+      beginDateFormation3 : new FormControl(''),
+      endDateFormation3 : new FormControl(''),
+      diplomeFormation3 : new FormControl(''),
+      descriptionFormation3 : new FormControl(''),
+      beginDateExperience1 : new FormControl(''),
+      endDateExperience1 : new FormControl(''),
+      posteExperience1 : new FormControl(''),
+      descriptionExperience1 : new FormControl(''),
+      beginDateExperience2 : new FormControl(''),
+      posteExperience2 : new FormControl(''),
+      descriptionExperience2 : new FormControl(''),
+      endDateExperience2 : new FormControl(''),
+      beginDateExperience3 : new FormControl(''),
+      posteExperience3 : new FormControl(''),
+      descriptionExperience3 : new FormControl('')
+
     }
     )
   }

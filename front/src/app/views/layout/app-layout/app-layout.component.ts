@@ -3,7 +3,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FooterComponent } from '../footer/footer.component';
 import { SettingsPanelComponent } from '../settings-panel/settings-panel.component';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { IdleService } from '../../../core/services/idle.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
@@ -22,12 +22,18 @@ export class AppLayoutComponent implements OnInit, OnDestroy{
   private idleSubscription?: Subscription;
   toaster = inject(ToastrService);
   authService = inject(AuthService);
+  router = inject(Router);
 
 
   ngOnInit(): void {
     this.idleService.idleState.subscribe((isIdle) => {
       if (isIdle) {
-        this.toaster.warning('Vous êtes inactif depuis un moment, vous allez être déconnecté dans 10 secondes');        
+        this.toaster.warning('Vous êtes inactif depuis un moment, vous allez être déconnecté dans 10 secondes');   
+        // lougout user after 10 seconds
+        setTimeout(() => {
+          this.logout();
+          this.idleService.stopWatching();
+        }, 10000);
       } 
     });
   }
@@ -41,6 +47,13 @@ export class AppLayoutComponent implements OnInit, OnDestroy{
 
   onUserAction() {
     this.idleService.resetTimer();
+  }
+
+  logout() {
+    this.authService.logout().subscribe(() => {
+      localStorage.clear();
+      this.router.navigate(['/login']);
+    });
   }
 
 }

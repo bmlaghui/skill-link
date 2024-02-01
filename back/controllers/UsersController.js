@@ -439,6 +439,17 @@ exports.logout = async (req, res) => {
     }
 }
 
+exports.refreshToken = async (req, res) => {
+    try {
+        const token = jwt.sign({ userId: req.userId, role: req.role }, process.env.SECRET_KEY, {
+            expiresIn: '1h',
+        });
+        return res.json({ msg: 'Token refreshed successfully', token });
+    } catch (err) {
+        return res.status(500).json({ err: err.message });
+    }
+}
+
 
 exports.resetPassword = async (req, res) => {
     try {
@@ -460,36 +471,19 @@ exports.resetPassword = async (req, res) => {
 }
 
 
-exports.getCandidates = async (req, res) => {
+exports.getUsersByRole = async (req, res) => {
     try {
-        const users = await User.find({role: 'candidat'}, { __v: 0, _id: 0, password: 0});
+        if(!req.params.role) {
+            return res.status(422).json({ err: 'role is required' });
+        }
+        else if(!User.schema.path('role').enumValues.includes(req.params.role)) {
+            return res.status(422).json({ err: `role is not valid. It must be one of theese options: ${User.schema.path('role').enumValues}` });
+        }
+        const users = await User.find({ role: req.params.role }, { __v: 0, _id: 0, password: 0 });
         return res.json(users);
-
     }
-    catch(err) {
-        return res.status(500).json({ err: err.message });
-    }
-}
-
-exports.getRecuiters = async (req, res) => {
-    try {
-        const users = await User.find({role: 'entreprise'}, { __v: 0, _id: 0, password: 0});
-        return res.json(users);
-
-    }
-    catch(err) {
-        return res.status(500).json({ err: err.message });
-    }
-}
-
-exports.getAdmins = async (req, res) => {
-    try {
-        const users = await User.find({role: 'admin'}, { __v: 0, _id: 0, password: 0});
-        return res.json(users);
-
-    }
-    catch(err) {
-        return res.status(500).json({ err: err.message });
+    catch (err) {
+        return res.status(500).json({ err });
     }
 }
 

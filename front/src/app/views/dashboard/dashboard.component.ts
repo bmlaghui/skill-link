@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 export class DashboardComponent {
 
   private weatherService = inject(WeatherService);
+  
   private authService = inject(AuthService);
 
   actualTemperature = toSignal(this.weatherService.getActualTemperature('Paris'));

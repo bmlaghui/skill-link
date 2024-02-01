@@ -33,6 +33,7 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Entreprise'
     },
+    image: String,
     adress: String,
     password: {
         type: String,

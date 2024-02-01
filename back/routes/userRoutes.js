@@ -441,6 +441,7 @@ router.delete('/users/:id', verifyToken, usersController.deleteUser);
 router.post('/login', usersController.login);
 router.get('/logout', verifyToken, usersController.logout)
 router.post('/users/verify/:id', verifyToken, usersController.verify)
+router.get('/refresh_token', usersController.refreshToken)
 
 // Missions of a user
 router.get('/users/:id/missions', verifyToken, usersController.getMissions);
@@ -455,7 +456,5 @@ router.put('/users/:id/applications/:idApplication', verifyToken, usersControlle
 router.delete('/users/:id/applications/:idApplication', verifyToken, usersController.deleteApplication);
 
 //Get Users by role
-router.get('/candidates', verifyToken, usersController.getCandidates);
-router.get('/admins', verifyToken, usersController.getAdmins);
-router.get('/recruiters', verifyToken, usersController.getRecuiters);
+router.get('/users/role/:role', verifyToken, usersController.getUsersByRole);
 module.exports = router;
