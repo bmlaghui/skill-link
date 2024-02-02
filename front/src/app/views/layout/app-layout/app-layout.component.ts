@@ -6,9 +6,9 @@ import { SettingsPanelComponent } from '../settings-panel/settings-panel.compone
 import { Router, RouterModule } from '@angular/router';
 import { IdleService } from '../../../core/services/idle.service';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../core/services/auth.service';
+import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
   selector: 'app-app-layout',
@@ -20,6 +20,8 @@ import { AuthService } from '../../../core/services/auth.service';
 export class AppLayoutComponent implements OnInit, OnDestroy{
   idleService = inject(IdleService);
   private idleSubscription?: Subscription;
+
+
   toaster = inject(ToastrService);
   authService = inject(AuthService);
   router = inject(Router);
@@ -39,10 +41,9 @@ export class AppLayoutComponent implements OnInit, OnDestroy{
   }
   
   ngOnDestroy(): void {
-    if(this.idleSubscription) {
-      this.idleSubscription.unsubscribe();
-    }
-    throw new Error('Method not implemented.');
+    
+    this.idleService.resetTimer();
+    this.idleService.stopWatching();
   }
 
   onUserAction() {

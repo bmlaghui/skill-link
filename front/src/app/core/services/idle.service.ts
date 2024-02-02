@@ -10,7 +10,7 @@ export class IdleService {
   private idleSubject = new Subject<boolean>();
   private timeout = environment.time_out; // seconds
   private lastActivity?: Date;
-  private idleCheckInterval = 1; // seconds
+  private idleCheckInterval = 10; // seconds
   private idleSubscription?: Subscription;
 
 

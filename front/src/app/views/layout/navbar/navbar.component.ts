@@ -21,6 +21,9 @@ export class NavbarComponent {
     this.authService.logout().subscribe(() => {
       localStorage.clear();
       this.router.navigate(['/login']);
-    });
+    },
+    (error) => {
+      console.log("An error occured while logging out", error);
+      });
   }
 }

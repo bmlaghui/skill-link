@@ -4,19 +4,22 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, Reac
 import { CommonModule } from '@angular/common';
 import { TagInputModule } from 'ngx-chips';
 import { ConnectableObservable } from 'rxjs';
+import { LineFormComponent } from '../../../shared/line-form/line-form.component';
 
 @Component({
   selector: 'app-create',
   standalone: true,
-  imports: [ CommonModule, FormsModule, ReactiveFormsModule, TagInputModule ],
+  imports: [ CommonModule, FormsModule, ReactiveFormsModule, TagInputModule, LineFormComponent],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
 export class CreateComponent implements OnInit{
+  
 
   onTagAdded() {
   throw new Error('Method not implemented.');
   }
+  
   items=[]; items2=[];
   myGroup!:FormGroup;
 
@@ -48,31 +51,7 @@ export class CreateComponent implements OnInit{
       interests: new FormControl('[]'),
       photo: new FormControl(''),
       formations: new FormControl('[]'),
-      experiences: new FormControl('[]'),
-      beginDateFormation1 : new FormControl(''),
-      endDateFormation1 : new FormControl(''),
-      diplomeFormation1 : new FormControl(''),
-      descriptionFormation1 : new FormControl(''),
-      beginDateFormation2 : new FormControl(''),
-      endDateFormation2 : new FormControl(''),
-      diplomeFormation2 : new FormControl(''),
-      descriptionFormation2 : new FormControl(''),
-      beginDateFormation3 : new FormControl(''),
-      endDateFormation3 : new FormControl(''),
-      diplomeFormation3 : new FormControl(''),
-      descriptionFormation3 : new FormControl(''),
-      beginDateExperience1 : new FormControl(''),
-      endDateExperience1 : new FormControl(''),
-      posteExperience1 : new FormControl(''),
-      descriptionExperience1 : new FormControl(''),
-      beginDateExperience2 : new FormControl(''),
-      posteExperience2 : new FormControl(''),
-      descriptionExperience2 : new FormControl(''),
-      endDateExperience2 : new FormControl(''),
-      beginDateExperience3 : new FormControl(''),
-      posteExperience3 : new FormControl(''),
-      descriptionExperience3 : new FormControl('')
-
+      experiences: new FormControl('[]')
     }
     )
   }
@@ -97,6 +76,18 @@ export class CreateComponent implements OnInit{
       console.log(this.myGroup.value);
     }
   }
+
+  formExperieces = [
+
+    { dateBegin: '', dateEnd: '', poste:'', desciption:'' }
+
+  ];
+
+  updateFormData(lines: any[]) {
+    this.formExperieces = lines;
+  }
+
+  
 
 
  

@@ -6,20 +6,18 @@ export const routes: Routes = [
     {
         path: '',
         component: AppLayoutComponent,
+        canActivateChild: [authGuard], // Restringe el acceso a los
         children: [
             {
                 path: 'dashboard',
-                canActivate: [authGuard],
                 loadComponent: () => import('./views/dashboard/dashboard.component').then(m => m.DashboardComponent)
             },
             {
                 path: 'candidats',
-                // canActivate: [AuthGuard],
                 loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
             },
             {
                 path: 'candidats/add',
-                // canActivate: [AuthGuard],
                 loadComponent: () => import('./views/users/create/create.component').then(m => m.CreateComponent)
             },
             {
