@@ -15,7 +15,32 @@ export class NavbarComponent {
   authService = inject(AuthService);
   router = inject(Router);
 
-  actualUser = toSignal(this.authService.connectedUser()); 
+  actualUser = toSignal(this.authService.connectedUser(), { initialValue: {
+    "languages": [],
+    "interests": [],
+    "firstName": null,
+    "lastName": null,
+    "email": null,
+    "username": null,
+    "phoneNumber": null,
+    "role": null,
+    "address": null,
+    "description": null,
+    "linkLinkedin": null,
+    "linkGithub": null,
+    "linkWebsite": null,
+    "linkCV": null,
+    "image": null,
+    "skills": [],
+    "verified": null,
+    "notifications": [],
+    "experiences": [],
+    "diplomas": [],
+    "missions": [],
+    "applications": [],
+    "createdAt": null,
+    "updatedAt": null
+  }  }); 
 
   logout() {
     this.authService.logout().subscribe(() => {

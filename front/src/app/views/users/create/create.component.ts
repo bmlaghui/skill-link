@@ -77,14 +77,14 @@ export class CreateComponent implements OnInit{
     }
   }
 
-  formExperieces = [
+  formExperiences = [
 
     { dateBegin: '', dateEnd: '', poste:'', desciption:'' }
 
   ];
 
   updateFormData(lines: any[]) {
-    this.formExperieces = lines;
+    this.formExperiences = lines;
   }
 
   
