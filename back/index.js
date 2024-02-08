@@ -5,6 +5,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./swagger.js');
 const rateLimit = require('express-rate-limit');
 
+
 // Create the server
 const app = express();
 app.use(express.json());
@@ -16,11 +17,11 @@ var options = {
 // Serve Swagger UI at /api-docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // Entreprises Routes
-app.use( require('./routes/entrepriseRoutes.js'));
+app.use(require('./routes/entrepriseRoutes.js'));
 // Missions Routes
-app.use( require('./routes/missionRoutes.js'));
+app.use(require('./routes/missionRoutes.js'));
 // Users Routes
-app.use( require('./routes/userRoutes.js'));
+app.use(require('./routes/userRoutes.js'));
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI);
@@ -53,6 +54,8 @@ app.get('/ping', (req, res) => {
   res.status(200).send({ message: 'ok' }); // Status 200 for OK
 });
 
+const seedData = require('./seed.js');
+seedData();
 // Start the server
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
