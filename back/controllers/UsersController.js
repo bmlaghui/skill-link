@@ -487,3 +487,325 @@ exports.getUsersByRole = async (req, res) => {
     }
 }
 
+exports.getNbCandidatesInLastSixMonths = async (req, res) => {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1; // +1 because months are zero-indexed
+    const currentYear = currentDate.getFullYear();
+    
+    // Calculate the starting date 6 months ago
+    const dateDebut = new Date(currentDate);
+    dateDebut.setMonth(currentDate.getMonth() - 5); // Go back 6 months (including the current month)
+
+    try {
+        const resultats = await User.aggregate([
+            {
+                $match: {
+                    createdAt: { $gte: dateDebut },
+                    role: "candidat"
+                }
+            },
+            {
+                $group: {
+                    _id: {
+                        year: { $year: "$createdAt" },
+                        month: { $month: "$createdAt" }
+                    },
+                    count: { $sum: 1 }
+                }
+            }
+        ]);
+
+        const lastSixMonths = [];
+
+        // Initialize last 6 months with count 0
+        for (let i = 0; i < 6; i++) {
+            let month = currentMonth - i;
+            let year = currentYear;
+
+            // Adjust month and year if needed
+            if (month <= 0) {
+                month += 12;
+                year -= 1;
+            }
+
+            lastSixMonths.push({ month: month, year: year, count: 0 });
+        }
+
+        // Update count if data available for a month
+        resultats.forEach(item => {
+            const index = currentMonth - item._id.month;
+            lastSixMonths[index].count = item.count;
+        });
+
+        // Reformat months to match the desired output
+        const months = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        const jsonResult = lastSixMonths.map(item => {
+            const monthIndex = (item.month + 11) % 12; // Convert to 0-indexed
+            return {
+                month: months[monthIndex],
+                year: item.year,
+                "number of candidates": item.count
+            };
+        });
+
+        // Sending JSON response
+        res.json(jsonResult);
+
+    } catch (error) {
+        console.error("Error while retrieving data:", error);
+        res.status(500).json({ error: "An error occurred while processing the data." });
+ 
+    }
+}
+
+
+exports.getNbAdminsInLastSixMonths = async (req, res) => {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1; // +1 because months are zero-indexed
+    const currentYear = currentDate.getFullYear();
+    
+    // Calculate the starting date 6 months ago
+    const dateDebut = new Date(currentDate);
+    dateDebut.setMonth(currentDate.getMonth() - 5); // Go back 6 months (including the current month)
+
+    try {
+        const resultats = await User.aggregate([
+            {
+                $match: {
+                    createdAt: { $gte: dateDebut },
+                    role: "admin"
+                }
+            },
+            {
+                $group: {
+                    _id: {
+                        year: { $year: "$createdAt" },
+                        month: { $month: "$createdAt" }
+                    },
+                    count: { $sum: 1 }
+                }
+            }
+        ]);
+
+        const lastSixMonths = [];
+
+        // Initialize last 6 months with count 0
+        for (let i = 0; i < 6; i++) {
+            let month = currentMonth - i;
+            let year = currentYear;
+
+            // Adjust month and year if needed
+            if (month <= 0) {
+                month += 12;
+                year -= 1;
+            }
+
+            lastSixMonths.push({ month: month, year: year, count: 0 });
+        }
+
+        // Update count if data available for a month
+        resultats.forEach(item => {
+            const index = currentMonth - item._id.month;
+            lastSixMonths[index].count = item.count;
+        });
+
+        // Reformat months to match the desired output
+        const months = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        const jsonResult = lastSixMonths.map(item => {
+            const monthIndex = (item.month + 11) % 12; // Convert to 0-indexed
+            return {
+                month: months[monthIndex],
+                year: item.year,
+                "number of candidates": item.count
+            };
+        });
+
+        // Sending JSON response
+        res.json(jsonResult);
+
+    } catch (error) {
+        console.error("Error while retrieving data:", error);
+        res.status(500).json({ error: "An error occurred while processing the data." });
+ 
+    }
+}
+
+exports.getNbEntreprisesInLastSixMonths = async (req, res) => {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1; // +1 because months are zero-indexed
+    const currentYear = currentDate.getFullYear();
+    
+    // Calculate the starting date 6 months ago
+    const dateDebut = new Date(currentDate);
+    dateDebut.setMonth(currentDate.getMonth() - 5); // Go back 6 months (including the current month)
+
+    try {
+        const resultats = await User.aggregate([
+            {
+                $match: {
+                    createdAt: { $gte: dateDebut },
+                    role: "entreprise"
+                }
+            },
+            {
+                $group: {
+                    _id: {
+                        year: { $year: "$createdAt" },
+                        month: { $month: "$createdAt" }
+                    },
+                    count: { $sum: 1 }
+                }
+            }
+        ]);
+
+        const lastSixMonths = [];
+
+        // Initialize last 6 months with count 0
+        for (let i = 0; i < 6; i++) {
+            let month = currentMonth - i;
+            let year = currentYear;
+
+            // Adjust month and year if needed
+            if (month <= 0) {
+                month += 12;
+                year -= 1;
+            }
+
+            lastSixMonths.push({ month: month, year: year, count: 0 });
+        }
+
+        // Update count if data available for a month
+        resultats.forEach(item => {
+            const index = currentMonth - item._id.month;
+            lastSixMonths[index].count = item.count;
+        });
+
+        // Reformat months to match the desired output
+        const months = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        const jsonResult = lastSixMonths.map(item => {
+            const monthIndex = (item.month + 11) % 12; // Convert to 0-indexed
+            return {
+                month: months[monthIndex],
+                year: item.year,
+                "number of candidates": item.count
+            };
+        });
+
+        // Sending JSON response
+        res.json(jsonResult);
+
+    } catch (error) {
+        console.error("Error while retrieving data:", error);
+        res.status(500).json({ error: "An error occurred while processing the data." });
+ 
+    }
+}
+
+exports.getRegistrationInfo = async (req, res) => {
+    try {
+        // Get today's date
+        const today = new Date();
+
+        // Calculate the date 30 days ago
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(today.getDate() - 30);
+
+        // Query to get the count of registrations for today
+        const todayRegistrations = await User.countDocuments({
+            createdAt: {
+                $gte: new Date(today.getFullYear(), today.getMonth(), today.getDate()),
+                $lt: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1)
+            }
+        });
+
+        // Query to get the count of registrations for 30 days ago
+        const thirtyDaysAgoRegistrations = await User.countDocuments({
+            createdAt: {
+                $gte: new Date(thirtyDaysAgo.getFullYear(), thirtyDaysAgo.getMonth(), thirtyDaysAgo.getDate()),
+                $lt: new Date(thirtyDaysAgo.getFullYear(), thirtyDaysAgo.getMonth(), thirtyDaysAgo.getDate() + 1)
+            }
+        });
+
+        // Calculate the percentage change
+        const percentageChange = ((todayRegistrations - thirtyDaysAgoRegistrations) / thirtyDaysAgoRegistrations) * 100;
+
+        // Prepare the response
+        const response = {
+            todayRegistrations: todayRegistrations,
+            change: percentageChange.toFixed(2) + "%",
+            period: "30 days"
+        };
+
+        // Sending JSON response
+        res.json(response);
+
+    } catch (error) {
+        console.error("Error while retrieving registration data:", error);
+        res.status(500).json({ error: "An error occurred while processing the data." });
+    }
+}
+
+exports.getUsersByRoleStat = async (req, res) => {
+    try {
+        // Définir les rôles possibles
+        const rolesPossibles = ["admin", "candidat", "entreprise"];
+
+        // Exécuter l'agrégation pour récupérer les données de la base de données
+        const resultatsDB = await User.aggregate([
+            {
+                $group: {
+                    _id: "$role",
+                    count: { $sum: 1 }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    role: {
+                        $switch: {
+                            branches: [
+                                { case: { $eq: ["$_id", "admin"] }, then: "admin" },
+                                { case: { $eq: ["$_id", "candidat"] }, then: "candidat" },
+                                { case: { $eq: ["$_id", "entreprise"] }, then: "entreprise" }
+                            ],
+                            default: "other"
+                        }
+                    },
+                    count: 1
+                }
+            }
+        ]);
+
+        // Fusionner les résultats de la base de données avec les rôles possibles
+        const resultats = rolesPossibles.map(role => {
+            const result = resultatsDB.find(item => item.role === role);
+            return result ? result : { role: role, count: 0 };
+        });
+
+        // Envoyer la réponse JSON
+        res.json(resultats);
+    }
+    catch (err) {
+        return res.status(500).json({ err });
+    }
+}
+
+
+
+
+
+
+
+

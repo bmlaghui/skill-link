@@ -78,6 +78,11 @@ const userSchema = new mongoose.Schema({
     applications: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Application'
+    }], 
+    notifications : [{
+        category: String,
+        body: String,
+        date: Date
     }]
 }, 
 {
