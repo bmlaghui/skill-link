@@ -12,7 +12,7 @@ import { NgChartsModule } from 'ng2-charts';
   templateUrl: './piechart.component.html',
   styleUrl: './piechart.component.scss'
 })
-export class PiechartComponent implements OnInit{
+export class PiechartComponent{
   public pieChartTitle: string = 'Pie-Chart';
   chartData = input.required<any>()
   @Input() chartName:string|undefined;
@@ -34,12 +34,13 @@ export class PiechartComponent implements OnInit{
     }
   };
   
-  ngOnInit(): void {
+ constructor(){
     effect(() => {
       console.log(this.chartData());
     });
-    throw new Error('Method not implemented.');
   }
+
+
   
   public pieChartLabels: string[] = [];
   public pieChartDatasets: { data: any[] }[] = [];
