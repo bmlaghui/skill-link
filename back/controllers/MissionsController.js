@@ -108,3 +108,15 @@ exports.deleteMission = async (req, res) => {
         return res.status(500).json({ err });
     }
 };
+
+exports.getMissionsByCategoryStat = async (req, res) => {
+    try {
+        const missions = await Mission.aggregate([
+            { $group: { _id: '$category', count: { $sum: 1 } } }
+        ]);
+        return res.json(missions);
+    }
+    catch (err) {
+        return res.status(500).json({ err });
+    }
+};

@@ -24,24 +24,44 @@ export class PiechartComponent{
     responsive: true,
     plugins: {
       legend: {
-        display: false,
+        display: true,
         position: 'bottom',
         align: 'center',
         labels: {
           boxWidth: 20,
           padding: 5,
-          usePointStyle: false,
+          usePointStyle: true,
+          font: {
+            size: 12,
+            weight: 'bold'
+          },
+          color: 'black',
+          // generateLabels: function(chart) {
+          //   const data = chart.data;
+          //   if (data.labels && data.datasets) {
+          //     const labels = data.labels.slice();
+          //     return labels.map(function(label, index) {
+          //       const dataset = data.datasets[0];
+          //       const value = dataset.data[index];
+          //       return {
+          //         text: `${label} - ${value}`, // Display label with value
+          //         index: index,
+          //         datasetIndex: 0,
+          //       };
+          //     });
+          //   }
+          //   return [];
+          // }
         }
       }
     }
   };
   
+  
  constructor(){
     effect(() => {
-      console.log("Test" ,this.chartData());
-      this.pieChartLabels = this.chartData().map((data: any) => data.role);
-      this.pieChartDatasets = [{ data: this.chartData().map((data: any) => data.count) }];
-
+      this.pieChartLabels = this.chartData().map((data: any) => data.role || data._id);
+      this.pieChartDatasets = [{ data: this.chartData().map((data: any) => data.count)}];
     });
   }
 

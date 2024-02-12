@@ -75,3 +75,20 @@ exports.deleteApplication = async (req, res) => {
         return res.status(500).json({ err });
     }
 };
+
+exports.getApplicationsByStatusStat = async (req, res) => {
+    try {
+        const stats = await Application.aggregate([
+            {
+                $group: {
+                    _id: "$statut",
+                    count: { $sum: 1 }
+                }
+            }
+        ]);
+        return res.json(stats);
+    }
+    catch (err) {
+        return res.status(500).json({ err });
+    }
+};

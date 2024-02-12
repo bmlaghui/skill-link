@@ -191,3 +191,20 @@ exports.deleteMission = async (req, res) => {
         return res.status(500).json({ err });
     }
 };
+
+exports.getEntreprisesByCategoryStat = async (req, res) => {
+    try {
+        const entreprises = await Entreprise.aggregate([
+            {
+                $group: {
+                    _id: '$category',
+                    count: { $sum: 1 }
+                }
+            }
+        ]);
+        return res.json(entreprises);
+    }
+    catch (err) {
+        return res.status(500).json({ err });
+    }
+}

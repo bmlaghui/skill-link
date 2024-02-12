@@ -548,7 +548,7 @@ exports.getNbCandidatesInLastSixMonths = async (req, res) => {
             return {
                 month: months[monthIndex],
                 year: item.year,
-                "number of candidates": item.count
+                "number_of_candidates": item.count
             };
         });
 
@@ -699,7 +699,7 @@ exports.getNbEntreprisesInLastSixMonths = async (req, res) => {
             return {
                 month: months[monthIndex],
                 year: item.year,
-                "number of candidates": item.count
+                "number_of_candidates": item.count
             };
         });
 

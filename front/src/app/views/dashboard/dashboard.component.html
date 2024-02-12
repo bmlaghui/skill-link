@@ -43,18 +43,19 @@
           <div class="col-md-6 mb-4 stretch-card transparent">
             <div class="card card-tale">
               <div class="card-body">
-                <p class="mb-4">Today’s Bookings</p>
-                <p class="fs-30 mb-2">4006</p>
-                <p>10.00% (30 days)</p>
+                <p class="mb-4">Total Users</p>
+                <p class="fs-30 mb-2">{{nbCandidates()}} Candidates</p>
+                <p class="fs-30 mb-2">{{nbRecruiters()}} Recruiters</p>
+                <p class="fs-30 mb-2">{{nbAdmins()}} Admins</p>
               </div>
             </div>
           </div>
           <div class="col-md-6 mb-4 stretch-card transparent">
             <div class="card card-dark-blue">
               <div class="card-body">
-                <p class="mb-4">Total Bookings</p>
-                <p class="fs-30 mb-2">61344</p>
-                <p>22.00% (30 days)</p>
+                <p class="mb-4">Total Entreprises</p>
+                <p class="fs-30 mb-2">{{nbCompanies()}} Companies</p>
+                <p class="fs-30 mb-2">{{nbStartups()}} Startups</p>
               </div>
             </div>
           </div>
@@ -63,18 +64,16 @@
           <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
             <div class="card card-light-blue">
               <div class="card-body">
-                <p class="mb-4">Number of Meetings</p>
-                <p class="fs-30 mb-2">34040</p>
-                <p>2.00% (30 days)</p>
+                <p class="mb-4">Total Missions</p>
+                <p class="fs-30 mb-2">{{nbMissions()}}</p>
               </div>
             </div>
           </div>
           <div class="col-md-6 stretch-card transparent">
             <div class="card card-light-danger">
               <div class="card-body">
-                <p class="mb-4">Number of Clients</p>
-                <p class="fs-30 mb-2">47033</p>
-                <p>0.22% (30 days)</p>
+                <p class="mb-4">Total Applications</p>
+                <p class="fs-30 mb-2">{{nbApplications()}}</p>
               </div>
             </div>
           </div>
@@ -82,39 +81,43 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6 grid-margin stretch-card">
+      <div class="col-md-3 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
-            <p class="card-title">Users details</p>
-            <p class="font-weight-500"></p>
-            <div class="d-flex flex-wrap mb-5">
-              <div class="mr-5 mt-3">
-                <p class="text-muted">Candidates</p>
-                <h3 class="text-primary fs-30 font-weight-medium">{{nbCandidates()}}</h3>
-              </div>
-              <div class="mr-5 mt-3">
-                <p class="text-muted">Recruiters</p>
-                <h3 class="text-primary fs-30 font-weight-medium">{{nbRecruiters()}}</h3>
-              </div>
-              <div class="mr-5 mt-3">
-                <p class="text-muted">Admins</p>
-                <h3 class="text-primary fs-30 font-weight-medium">{{nbAdmins()}}</h3>
-              </div>
-            </div>
+            <div class="d-flex justify-content-between">
+              <p class="card-title">Users Report</p>
+             </div>
             <app-piechart [chartData]="usersByTypeData()" [chartName]="usersByType" [widthSize]="widthSize"  [heightSize]="heightSize"></app-piechart>
           </div>
         </div>
       </div>
-      <div class="col-md-6 grid-margin stretch-card">
+      <div class="col-md-3 grid-margin stretch-card">
         <div class="card">
           <div class="card-body">
            <div class="d-flex justify-content-between">
-            <p class="card-title">Sales Report</p>
-            <a href="#" class="text-info">View all</a>
+            <p class="card-title">Entreprises Report</p>
            </div>
-            <p class="font-weight-500">The total number of sessions within the date range. It is the period time a user is actively engaged with your website, page or app, etc</p>
-            <div id="sales-legend" class="chartjs-legend mt-4 mb-2"></div>
-            <canvas id="sales-chart"></canvas>
+            <app-piechart [chartData]="entreprisesByCategory()" [chartName]="usersByType" [widthSize]="widthSize"  [heightSize]="heightSize"></app-piechart>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <p class="card-title">Missions Report</p>
+             </div>
+            <app-piechart [chartData]="missionsByCategory()" [chartName]="usersByType" [widthSize]="widthSize"  [heightSize]="heightSize"></app-piechart>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <p class="card-title">Applications Report</p>
+             </div>
+            <app-piechart [chartData]="applicationsByStatus()" [chartName]="usersByType" [widthSize]="widthSize"  [heightSize]="heightSize"></app-piechart>
           </div>
         </div>
       </div>
@@ -129,76 +132,30 @@
                   <div class="row">
                     <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
                       <div class="ml-xl-4 mt-3">
-                      <p class="card-title">Detailed Reports</p>
-                        <h1 class="text-primary">$34040</h1>
-                        <h3 class="font-weight-500 mb-xl-4 text-primary">North America</h3>
+                      <p class="card-title">Detailed Reports in Last 6 months</p>
+                        <h1 class="text-primary">{{nbCandidatesTotal()}}</h1>
+                        <h3 class="font-weight-500 mb-xl-4 text-primary">Candidates registred</h3>
                         <p class="mb-2 mb-xl-0">The total number of sessions within the date range. It is the period time a user is actively engaged with your website, page or app, etc</p>
                       </div>  
                       </div>
                     <div class="col-md-12 col-xl-9">
                       <div class="row">
-                        <div class="col-md-6 border-right">
+                        <div class="col-md-3 border-right">
                           <div class="table-responsive mb-3 mb-md-0 mt-3">
                             <table class="table table-borderless report-table">
+                              @for (item of nbCandidatesLast6Months(); track $index) {
                               <tr>
-                                <td class="text-muted">Illinois</td>
-                                <td class="w-100 px-0">
-                                  <div class="progress progress-md mx-4">
-                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"></div>
-                                  </div>
-                                </td>
-                                <td><h5 class="font-weight-bold mb-0">713</h5></td>
+                                <td class="text-muted">{{item.month}}/{{item.year}}</td>
+                               
+                                <td><h5 class="font-weight-bold mb-0">{{item.number_of_candidates}}</h5></td>
                               </tr>
-                              <tr>
-                                <td class="text-muted">Washington</td>
-                                <td class="w-100 px-0">
-                                  <div class="progress progress-md mx-4">
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-                                  </div>
-                                </td>
-                                <td><h5 class="font-weight-bold mb-0">583</h5></td>
-                              </tr>
-                              <tr>
-                                <td class="text-muted">Mississippi</td>
-                                <td class="w-100 px-0">
-                                  <div class="progress progress-md mx-4">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 95%" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
-                                  </div>
-                                </td>
-                                <td><h5 class="font-weight-bold mb-0">924</h5></td>
-                              </tr>
-                              <tr>
-                                <td class="text-muted">California</td>
-                                <td class="w-100 px-0">
-                                  <div class="progress progress-md mx-4">
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                  </div>
-                                </td>
-                                <td><h5 class="font-weight-bold mb-0">664</h5></td>
-                              </tr>
-                              <tr>
-                                <td class="text-muted">Maryland</td>
-                                <td class="w-100 px-0">
-                                  <div class="progress progress-md mx-4">
-                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                  </div>
-                                </td>
-                                <td><h5 class="font-weight-bold mb-0">560</h5></td>
-                              </tr>
-                              <tr>
-                                <td class="text-muted">Alaska</td>
-                                <td class="w-100 px-0">
-                                  <div class="progress progress-md mx-4">
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                  </div>
-                                </td>
-                                <td><h5 class="font-weight-bold mb-0">793</h5></td>
-                              </tr>
+                            }
                             </table>
                           </div>
                         </div>
-                        <div class="col-md-6 mt-3">
-                          <canvas id="north-america-chart"></canvas>
+                        <div class="col-md-9 mt-3">
+                          <app-barchart [chartData]="nbCandidatesLast6Months()"></app-barchart>
+                          {{nbCandidatesLast6Months()|json}}
                           <div id="north-america-legend"></div>
                         </div>
                       </div>
