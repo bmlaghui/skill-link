@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { AfterViewInit, Component, Input, OnInit, computed } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, computed, effect, input } from '@angular/core';
 import { ChartOptions } from 'chart.js';
 import jsPDF from 'jspdf';
 import { NgChartsModule } from 'ng2-charts';
@@ -14,9 +14,10 @@ import { NgChartsModule } from 'ng2-charts';
 })
 export class PiechartComponent implements OnInit{
   public pieChartTitle: string = 'Pie-Chart';
-  @Input() chartData!: any ; // Define an input property named chartData
+  chartData = input.required<any>()
   @Input() chartName:string|undefined;
-
+  
+  
   public pieChartOptions: ChartOptions<'pie'> = {
     responsive: true,
     plugins: {
@@ -32,16 +33,23 @@ export class PiechartComponent implements OnInit{
       }
     }
   };
-
+  
+  ngOnInit(): void {
+    effect(() => {
+      console.log(this.chartData());
+    });
+    throw new Error('Method not implemented.');
+  }
   
   public pieChartLabels: string[] = [];
-  public pieChartDatasets: { data: any[] }[] = [{ data: [ this.chartData ] }];
+  public pieChartDatasets: { data: any[] }[] = [];
   public pieChartLegend: boolean = true;
   public pieChartPlugins: any[] = [];
-  ngOnInit() {
-    console.log("MY DATAAAAAAAAA", this.chartData);
-    console.log("MY NAMEEEEEEE", this.chartName);
-  }
+
+
+ 
+  
 
   
 }
+

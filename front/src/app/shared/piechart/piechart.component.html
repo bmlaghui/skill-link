@@ -1,6 +1,6 @@
 <div class="content p-3">
-  <h3>{{pieChartTitle}}</h3> 
-  {{chartData|json}}
+  <h3>{{pieChartTitle}}</h3>
+  {{chartData()|json}} 
   <canvas baseChart width="400" height="400"
     [id]="pieChartTitle"
     [type]="'pie'"
