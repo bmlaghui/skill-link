@@ -15,7 +15,7 @@ import { PiechartComponent } from "../../shared/piechart/piechart.component";
     styleUrl: './dashboard.component.scss',
     imports: [CommonModule, PiechartComponent]
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
 
   private weatherService = inject(WeatherService);
   
@@ -100,14 +100,8 @@ export class DashboardComponent implements OnInit {
         usersDataset : any = [];
         usersByTypeData = toSignal(this.dashboardService.getUsersByroleStats(), { initialValue: [ { "role": "admin", "count": 0 }, { "role": "candidat", "count": 0 }, { "role": "entreprise", "count": 0 } ]  });
 
-        ngOnInit() {
-  
-          const usersData = this.dashboardService.getUsersByroleStats().subscribe(
-            (data) => {
-              this.usersDataset = data;
-            }
-          );
-        }
+        widthSize = 200;
+        heightSize = 200;
         
         /**
          * The number of candidates.
@@ -136,6 +130,9 @@ export class DashboardComponent implements OnInit {
             return filteredData?.map(role => role.count);
           }
         );   
+
+
+
 
         
 

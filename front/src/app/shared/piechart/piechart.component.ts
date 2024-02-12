@@ -16,6 +16,8 @@ export class PiechartComponent{
   public pieChartTitle: string = 'Pie-Chart';
   chartData = input.required<any>()
   @Input() chartName:string|undefined;
+  @Input()widthSize!:number;
+  @Input()heightSize!:number;
   
   
   public pieChartOptions: ChartOptions<'pie'> = {
@@ -36,7 +38,10 @@ export class PiechartComponent{
   
  constructor(){
     effect(() => {
-      console.log(this.chartData());
+      console.log("Test" ,this.chartData());
+      this.pieChartLabels = this.chartData().map((data: any) => data.role);
+      this.pieChartDatasets = [{ data: this.chartData().map((data: any) => data.count) }];
+
     });
   }
 
