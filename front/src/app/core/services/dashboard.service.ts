@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { Observable } from 'rxjs';
 
@@ -8,7 +8,13 @@ import { Observable } from 'rxjs';
 })
 export class DashboardService {
 
-  constructor(private http: HttpClient) {}
+  http = inject (HttpClient)
+
+  getUsersByroleStats() {
+    return this.http.get<any[]>(`${environment.apiUrl}/dashboard_users_by_role`);
+  }
+
+
 
 
 }

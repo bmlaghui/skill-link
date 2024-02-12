@@ -9,21 +9,33 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './line-form.component.scss'
 })
 export class LineFormComponent {
-  @Input() lines: any[] = [];
+  @Input() lines: any[] = [{}];
+
   @Output() linesChange = new EventEmitter<any[]>();
 
+
   addLine() {
-    this.lines.push(this.lines[this.lines.length - 1] || '');
+
+    this.lines.push({});
+
     this.emitChanges();
+
   }
+
 
   removeLine(index: number) {
+
     this.lines.splice(index, 1);
+
     this.emitChanges();
+
   }
 
- private emitChanges() {
+
+  private emitChanges() {
+
     this.linesChange.emit(this.lines);
+
   }
 
 }

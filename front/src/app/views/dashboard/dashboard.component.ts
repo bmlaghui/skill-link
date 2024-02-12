@@ -1,19 +1,21 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input, OnInit, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { of } from 'rxjs';
+import { map, of } from 'rxjs';
 import { WeatherService } from '../../core/services/weather.service';
 import { AuthService } from '../../core/services/auth.service';
 import { User } from '../../core/interfaces/user';
 import { CommonModule } from '@angular/common';
+import { DashboardService } from '../../core/services/dashboard.service';
+import { PiechartComponent } from "../../shared/piechart/piechart.component";
 
 @Component({
-  selector: 'app-dashboard',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+    selector: 'app-dashboard',
+    standalone: true,
+    templateUrl: './dashboard.component.html',
+    styleUrl: './dashboard.component.scss',
+    imports: [CommonModule, PiechartComponent]
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
   private weatherService = inject(WeatherService);
   
@@ -90,5 +92,54 @@ export class DashboardComponent {
     "createdAt": null,
     "updatedAt": null
   }  }); 
+
+
+
+        dashboardService = inject(DashboardService);
+        usersByType = "Users stats";
+        usersDataset : any = [];
+        usersByTypeData = toSignal(this.dashboardService.getUsersByroleStats(), { initialValue: [ { "role": "admin", "count": 0 }, { "role": "candidat", "count": 0 }, { "role": "entreprise", "count": 0 } ]  });
+
+        ngOnInit() {
+  
+          const usersData = this.dashboardService.getUsersByroleStats().subscribe(
+            (data) => {
+              this.usersDataset = data;
+            }
+          );
+        }
+        
+        /**
+         * The number of candidates.
+         */
+        nbCandidates = computed(() => 
+          {
+            const filteredData = this.usersByTypeData()?.filter((role) => role.role === 'candidat');
+            return filteredData?.map(role => role.count);
+          }
+        );
+        /**
+         * The number of recruiters.
+         */
+        nbRecruiters = computed(() => 
+          {
+            const filteredData = this.usersByTypeData()?.filter((role) => role.role === 'entreprise');
+            return filteredData?.map(role => role.count);
+          }
+        );
+        /**
+         * The number of admins.
+         */
+        nbAdmins = computed(() => 
+          {
+            const filteredData = this.usersByTypeData()?.filter((role) => role.role === 'admin');
+            return filteredData?.map(role => role.count);
+          }
+        );   
+
+        
+
+
+    
 
 }

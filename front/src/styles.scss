@@ -1,4 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 // regular style toast
 @import 'ngx-toastr/toastr';
+@font-face {
+    font-family: 'protesta';
+    src: url('./assets/fonts/Protest/ProtestGuerrilla-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 

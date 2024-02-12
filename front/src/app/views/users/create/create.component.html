@@ -191,11 +191,9 @@
                                 <div class="mb-2">
                                     <p class="title-step p-2">Formations</p>
                                 </div>
-                                {{formExperiences|json}}
-                                <app-line-form [(lines)]="formExperiences">
+                                <app-line-form [(lines)]="formFormations">
                                     <div class="row">
-                                        @for(formExperiences of formExperiences; track formExperiences; let index = $index) {
-
+                                        @for(formFormation of formFormations; track formFormation; let index = $index) {
                                             <ng-container>
                                               <!-- Customize the structure of each line as needed -->
                                                   <div class="form-group col-md-2 col-sm-12">
@@ -217,7 +215,6 @@
                                             </ng-container>
                                         }
                                         <!-- Define the structure of each line in the parent component -->
-                                      
                                     </div>
                                   </app-line-form>
                                   
@@ -227,6 +224,33 @@
                                 <div class="mb-2">
                                     <p class="title-step p-2">Expériences professionnels</p>
                                 </div>
+                                <app-line-form [(lines)]="formExperiences">
+                                    <div class="row">
+                                        @for(formExperiences of formExperiences; track formExperiences; let index = $index) {
+                                            <ng-container>
+                                              <!-- Customize the structure of each line as needed -->
+                                                  <div class="form-group col-md-2 col-sm-12">
+                                                      <label for="beginDate">Date de début</label>
+                                                      <input  class="form-control" name="beginDate" type="date" />
+                                                  </div>
+                                                  <div class="form-group col-md-2 col-sm-12">
+                                                      <label for="beginEnd">Date de fin</label>
+                                                      <input class="form-control" name="beginDate" type="date" />
+                                                  </div>
+                                                  <div class="form-group col-md-3 col-sm-12">
+                                                      <label for="post">Poste</label>
+                                                      <input  class="form-control" name="post" type="text"  />
+                                                  </div>
+                                                  <div class="form-group col-md-5 col-sm-12">
+                                                      <label for="description">Description</label>
+                                                      <textarea  class="form-control" name="description" ></textarea>
+                                                  </div>
+                                            </ng-container>
+                                        }
+                                        <!-- Define the structure of each line in the parent component -->
+                                    </div>
+                                  </app-line-form>
+                                  
                                
                             </div>
 
