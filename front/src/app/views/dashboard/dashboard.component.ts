@@ -22,50 +22,50 @@ export class DashboardComponent {
   
   private authService = inject(AuthService);
 
-  actualTemperature = toSignal(this.weatherService.getActualTemperature('Paris'), { initialValue: 
-    {
-      "coord": {
-        "lon": null,
-        "lat": null
-      },
-      "weather": [
-        {
-          "id": null,
-          "main": null,
-          "description": null,
-          "icon": null
-        }
-      ],
-      "base": null,
-      "main": {
-        "temp": null,
-        "feels_like": null,
-        "temp_min": null,
-        "temp_max": null,
-        "pressure": null,
-        "humidity": null
-      },
-      "visibility": null,
-      "wind": {
-        "speed": null,
-        "deg": null
-      },
-      "clouds": {
-        "all": null
-      },
-      "dt": null,
-      "sys": {
-        "type": null,
-        "id": null,
-        "country": null,
-        "sunrise": null,
-        "sunset": null
-      },
-      "timezone": null,
-      "id": null,
-      "name": null,
-      "cod": null
-    } });
+  // actualTemperature = toSignal(this.weatherService.getActualTemperature('Paris'), { initialValue: 
+  //   {
+  //     "coord": {
+  //       "lon": null,
+  //       "lat": null
+  //     },
+  //     "weather": [
+  //       {
+  //         "id": null,
+  //         "main": null,
+  //         "description": null,
+  //         "icon": null
+  //       }
+  //     ],
+  //     "base": null,
+  //     "main": {
+  //       "temp": null,
+  //       "feels_like": null,
+  //       "temp_min": null,
+  //       "temp_max": null,
+  //       "pressure": null,
+  //       "humidity": null
+  //     },
+  //     "visibility": null,
+  //     "wind": {
+  //       "speed": null,
+  //       "deg": null
+  //     },
+  //     "clouds": {
+  //       "all": null
+  //     },
+  //     "dt": null,
+  //     "sys": {
+  //       "type": null,
+  //       "id": null,
+  //       "country": null,
+  //       "sunrise": null,
+  //       "sunset": null
+  //     },
+  //     "timezone": null,
+  //     "id": null,
+  //     "name": null,
+  //     "cod": null
+  //   } });
 
   actualUser = toSignal(this.authService.connectedUser(), { initialValue: {
     "languages": [],
@@ -95,7 +95,7 @@ export class DashboardComponent {
   }  }); 
 
 
-
+        barChartName = "candidates"
         dashboardService = inject(DashboardService);
         usersByType = "Users stats";
         usersDataset : any = [];
