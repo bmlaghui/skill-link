@@ -638,6 +638,82 @@ exports.getNbAdminsInLastSixMonths = async (req, res) => {
     }
 }
 
+exports.getNbUsersInLastSixMonthsByRole = async (req, res) => {
+   
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth() + 1; // +1 because months are zero-indexed
+        const currentYear = currentDate.getFullYear();
+
+        // Calculate the starting date 6 months ago
+        const dateDebut = new Date(currentDate);
+        dateDebut.setMonth(currentDate.getMonth() - 5); // Go back 6 months (including the current month)
+
+        try {
+            const resultats = await User.aggregate([
+                {
+                    $match: {
+                        createdAt: { $gte: dateDebut }
+                    }
+                },
+                {
+                    $group: {
+                        _id: {
+                            year: { $year: "$createdAt" },
+                            month: { $month: "$createdAt" },
+                            role: "$role"
+                        },
+                        count: { $sum: 1 }
+                    }
+                }
+            ]);
+
+            const lastSixMonths = [];
+
+            // Initialize last 6 months with count 0
+            for (let i = 0; i < 6; i++) {
+                let month = currentMonth - i;
+                let year = currentYear;
+                if (month <= 0) {
+                    month += 12;
+                    year -= 1;
+                }
+                lastSixMonths.push({ month: month, year: year, admin: 0, candidat: 0, entreprise: 0 });
+            }
+            // Fill in missing data from DB results and convert to desired format
+            resultats.forEach(item => {
+                const index = currentMonth - item._id.month;
+                lastSixMonths[index][item._id.role] = item.count;
+            });
+
+            // Reformat months to match the desired output
+            const months = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+
+            const jsonResult = lastSixMonths.map(item => {
+                const monthIndex = (item.month + 11) % 12; // Convert to 0-indexed
+                return {
+                    month: months[monthIndex],
+                    year: item.year,
+                    admin: item.admin,
+                    candidat: item.candidat,
+                    entreprise: item.entreprise
+                };
+            });
+
+            // Sending JSON response
+            res.json(jsonResult);
+        }
+        catch (error) {
+            console.error("Error while retrieving data:", error);
+            res.status(500).json({ error: "An error occurred while processing the data." });
+        }
+    }
+    
+
+
+
 exports.getNbEntreprisesInLastSixMonths = async (req, res) => {
     const currentDate = new Date();
     const currentMonth = currentDate.getMonth() + 1; // +1 because months are zero-indexed

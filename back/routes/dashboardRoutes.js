@@ -28,6 +28,7 @@ router.get('/dashboard_applications_by_status', verifyToken, applicationsControl
 router.get('/dashboard_candidates_last6months', verifyToken, usersController.getNbCandidatesInLastSixMonths);
 router.get('/dashboard_admins_last6months', verifyToken, usersController.getNbAdminsInLastSixMonths);
 router.get('/dashboard_entreprises_last6months', verifyToken, usersController.getNbEntreprisesInLastSixMonths);
+router.get('/dashboard_users_last6months', verifyToken, usersController.getNbUsersInLastSixMonthsByRole);
 
 
 
