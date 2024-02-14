@@ -167,9 +167,9 @@
                       <p class="card-title">
                         Detailed Reports in Last 6 months
                       </p>
-                      <h1 class="text-primary">{{ nbCandidatesTotal() }}</h1>
+                      <h1 class="text-primary">{{ nbUsersTotal() }}</h1>
                       <h3 class="font-weight-500 mb-xl-4 text-primary">
-                        Candidates registred
+                        Users registred
                       </h3>
                       <p class="mb-2 mb-xl-0">
                         The total number of sessions within the date range. It
@@ -183,7 +183,7 @@
                       <div class="col-md-3 border-right">
                         <div class="table-responsive mb-3 mb-md-0 mt-3">
                           <table class="table table-borderless report-table">
-                            @for (item of nbCandidatesLast6Months(); track
+                            @for (item of nbUsersLast6Months(); track
                             $index) {
                             <tr>
                               <td class="text-muted">
@@ -192,7 +192,7 @@
 
                               <td>
                                 <h5 class="font-weight-bold mb-0">
-                                  {{ item.number_of_candidates }}
+                                  {{ item.candidat }}
                                 </h5>
                               </td>
                             </tr>
@@ -201,9 +201,7 @@
                         </div>
                       </div>
                       <div class="col-md-9 mt-3">
-                        <app-barchart
-                          [chartData]="nbCandidatesLast6Months()" [chartName]="barChartName"
-                        ></app-barchart>
+                        <app-barchart [chartData]="nbUsersLast6Months()" [chartName]="barChartName"></app-barchart>
                         <div id="north-america-legend"></div>
                       </div>
                     </div>

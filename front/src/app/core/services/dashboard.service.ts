@@ -38,6 +38,10 @@ export class DashboardService {
     return this.http.get<any[]>(`${environment.apiUrl}/dashboard_admins_last6months`);
   }
 
+  getUsersInLast6Months() {
+    return this.http.get<any[]>(`${environment.apiUrl}/dashboard_users_last6months`);
+  }
+
 
 
 

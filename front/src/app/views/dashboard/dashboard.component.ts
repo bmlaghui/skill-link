@@ -106,7 +106,7 @@ export class DashboardComponent {
 
         widthSize = 200;
         heightSize = 200;
-        
+
         /**
          * The number of candidates.
          */
@@ -220,6 +220,34 @@ export class DashboardComponent {
         
           return totalCount;
         });
+
+        /**
+         * The number of users registered in last 6 months
+         */
+        nbUsersLast6Months = toSignal(this.dashboardService.getUsersInLast6Months(), { initialValue: [{}] } );
+
+        /**
+         * The number of users registered in last 6 months
+         */
+        nbUsersTotal = computed(() => {
+          const filteredData = this.nbUsersLast6Months(); // Assuming nbUsersLast6Months is a method that returns the filtered data
+        
+          if (!filteredData || !Array.isArray(filteredData)) {
+            return 0; // Return 0 if filteredData is not an array or is null/undefined
+          }
+        
+          // Calculate the total count of users
+          let totalCount = 0;
+          filteredData.forEach(userData => {
+            totalCount += userData.admin; 
+            totalCount += userData.entreprise;
+            totalCount += userData.candidat;
+          });
+        
+          return totalCount;
+        });
+        
+
         
   
 

@@ -19,8 +19,12 @@ export class BarchartComponent {
     effect(() => {
       this.barChartData.labels = this.chartData().map((data: any) => data.month);
       this.barChartData.datasets = [
-          { label: this.chartName, data: this.chartData().map((data: any) => data.number_of_candidates) },
+          { label: 'admin', data: this.chartData().map((data: any) => data.admin) },
+          { label: 'recruiter', data: this.chartData().map((data: any) => data.entreprise) },
+          { label: 'candidate', data: this.chartData().map((data: any) => data.candidat) }
+
         ];
+        console.log(this.chartData())
     });
 
   }
