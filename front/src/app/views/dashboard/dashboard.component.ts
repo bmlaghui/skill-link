@@ -246,6 +246,7 @@ export class DashboardComponent {
         
           return totalCount;
         });
+totalUsers: any;
         
 
         

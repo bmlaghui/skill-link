@@ -639,156 +639,151 @@ exports.getNbAdminsInLastSixMonths = async (req, res) => {
 }
 
 exports.getNbUsersInLastSixMonthsByRole = async (req, res) => {
-   
+    try {
         const currentDate = new Date();
         const currentMonth = currentDate.getMonth() + 1; // +1 because months are zero-indexed
         const currentYear = currentDate.getFullYear();
 
         // Calculate the starting date 6 months ago
-        const dateDebut = new Date(currentDate);
-        dateDebut.setMonth(currentDate.getMonth() - 5); // Go back 6 months (including the current month)
+        const sixMonthsAgo = new Date(currentDate);
+        sixMonthsAgo.setMonth(currentDate.getMonth() - 5);
 
-        try {
-            const resultats = await User.aggregate([
-                {
-                    $match: {
-                        createdAt: { $gte: dateDebut }
-                    }
-                },
-                {
-                    $group: {
-                        _id: {
-                            year: { $year: "$createdAt" },
-                            month: { $month: "$createdAt" },
-                            role: "$role"
-                        },
-                        count: { $sum: 1 }
-                    }
-                }
-            ]);
-
-            const lastSixMonths = [];
-
-            // Initialize last 6 months with count 0
-            for (let i = 0; i < 6; i++) {
-                let month = currentMonth - i;
-                let year = currentYear;
-                if (month <= 0) {
-                    month += 12;
-                    year -= 1;
-                }
-                lastSixMonths.push({ month: month, year: year, admin: 0, candidat: 0, entreprise: 0 });
-            }
-            // Fill in missing data from DB results and convert to desired format
-            resultats.forEach(item => {
-                const index = currentMonth - item._id.month;
-                lastSixMonths[index][item._id.role] = item.count;
-            });
-
-            // Reformat months to match the desired output
-            const months = [
-                "January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"
-            ];
-
-            const jsonResult = lastSixMonths.map(item => {
-                const monthIndex = (item.month + 11) % 12; // Convert to 0-indexed
-                return {
-                    month: months[monthIndex],
-                    year: item.year,
-                    admin: item.admin,
-                    candidat: item.candidat,
-                    entreprise: item.entreprise
-                };
-            });
-
-            // Sending JSON response
-            res.json(jsonResult);
-        }
-        catch (error) {
-            console.error("Error while retrieving data:", error);
-            res.status(500).json({ error: "An error occurred while processing the data." });
-        }
-    }
-    
-
-
-
-exports.getNbEntreprisesInLastSixMonths = async (req, res) => {
-    const currentDate = new Date();
-    const currentMonth = currentDate.getMonth() + 1; // +1 because months are zero-indexed
-    const currentYear = currentDate.getFullYear();
-    
-    // Calculate the starting date 6 months ago
-    const dateDebut = new Date(currentDate);
-    dateDebut.setMonth(currentDate.getMonth() - 5); // Go back 6 months (including the current month)
-
-    try {
+        // Get the users grouped by year, month, and role from the database
         const resultats = await User.aggregate([
             {
                 $match: {
-                    createdAt: { $gte: dateDebut },
-                    role: "entreprise"
+                    createdAt: { $gte: sixMonthsAgo }
                 }
             },
             {
                 $group: {
                     _id: {
                         year: { $year: "$createdAt" },
-                        month: { $month: "$createdAt" }
+                        month: { $month: "$createdAt" },
+                        role: "$role"
                     },
                     count: { $sum: 1 }
                 }
             }
         ]);
 
-        const lastSixMonths = [];
-
-        // Initialize last 6 months with count 0
-        for (let i = 0; i < 6; i++) {
+        // Initialize the data structure for the last six months
+        const lastSixMonthsData = Array.from({ length: 6 }, (_, i) => {
             let month = currentMonth - i;
             let year = currentYear;
-
-            // Adjust month and year if needed
             if (month <= 0) {
                 month += 12;
                 year -= 1;
             }
+            return { month, year, admin: 0, candidat: 0, entreprise: 0 };
+        });
 
-            lastSixMonths.push({ month: month, year: year, count: 0 });
-        }
-
-        // Update count if data available for a month
+        // Fill in data from database results
         resultats.forEach(item => {
-            const index = currentMonth - item._id.month;
-            lastSixMonths[index].count = item.count;
+            const { year, month, role } = item._id;
+            const data = lastSixMonthsData.find(entry => entry.year === year && entry.month === month);
+            if (data) {
+                data[role] += item.count;
+            }
         });
 
-        // Reformat months to match the desired output
-        const months = [
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-        ];
+        // Format months and generate JSON response
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const jsonResponse = lastSixMonthsData.map(item => ({
+            month: months[(item.month + 11) % 12], // Convert to 0-indexed
+            year: item.year,
+            admin: item.admin,
+            candidat: item.candidat,
+            entreprise: item.entreprise,
+            totalMonth: item.admin + item.candidat + item.entreprise
+        }));
 
-        const jsonResult = lastSixMonths.map(item => {
-            const monthIndex = (item.month + 11) % 12; // Convert to 0-indexed
-            return {
-                month: months[monthIndex],
-                year: item.year,
-                "number_of_candidates": item.count
-            };
-        });
-
-        // Sending JSON response
-        res.json(jsonResult);
-
-    } catch (error) {
-        console.error("Error while retrieving data:", error);
-        res.status(500).json({ error: "An error occurred while processing the data." });
- 
+        // Send the JSON response
+        res.json(jsonResponse);
+    } catch (err) {
+        console.error("Error in getNbUsersInLastSixMonthsByRole:", err);
+        res.status(500).json({ error: "Internal server error" });
     }
-}
+};
 
+
+
+    exports.getNbEntreprisesInLastSixMonths = async (req, res) => {
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth() + 1; // +1 because months are zero-indexed
+        const currentYear = currentDate.getFullYear();
+        
+        // Calculate the starting date 6 months ago
+        const dateDebut = new Date(currentDate);
+        dateDebut.setMonth(currentDate.getMonth() - 5); // Go back 6 months (including the current month)
+    
+        try {
+            const resultats = await User.aggregate([
+                {
+                    $match: {
+                        createdAt: { $gte: dateDebut },
+                        role: "entreprise"
+                    }
+                },
+                {
+                    $group: {
+                        _id: {
+                            year: { $year: "$createdAt" },
+                            month: { $month: "$createdAt" }
+                        },
+                        count: { $sum: 1 }
+                    }
+                }
+            ]);
+    
+            const lastSixMonths = [];
+    
+            // Initialize last 6 months with count 0
+            for (let i = 0; i < 6; i++) {
+                let month = currentMonth - i;
+                let year = currentYear;
+    
+                // Adjust month and year if needed
+                if (month <= 0) {
+                    month += 12;
+                    year -= 1;
+                }
+    
+                lastSixMonths.push({ month: month, year: year, count: 0 });
+            }
+    
+            // Update count if data available for a month
+            resultats.forEach(item => {
+                const index = currentMonth - item._id.month - 1;
+                if (index >= 0 && index < 6) {
+                    lastSixMonths[index].count = item.count;
+                }
+            });
+    
+            // Reformat months to match the desired output
+            const months = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+    
+            const jsonResult = lastSixMonths.map(item => {
+                const monthIndex = (item.month + 11) % 12; // Convert to 0-indexed
+                return {
+                    month: months[monthIndex],
+                    year: item.year,
+                    "number_of_entreprises": item.count
+                };
+            });
+    
+            // Sending JSON response
+            res.json(jsonResult);
+    
+        } catch (error) {
+            console.error("Error while retrieving ", error);
+            res.status(500).json({ error: "An error occurred while processing the data." });
+     
+        }
+    }
 exports.getRegistrationInfo = async (req, res) => {
     try {
         // Get today's date
@@ -849,16 +844,7 @@ exports.getUsersByRoleStat = async (req, res) => {
             {
                 $project: {
                     _id: 0,
-                    role: {
-                        $switch: {
-                            branches: [
-                                { case: { $eq: ["$_id", "admin"] }, then: "admin" },
-                                { case: { $eq: ["$_id", "candidat"] }, then: "candidat" },
-                                { case: { $eq: ["$_id", "entreprise"] }, then: "entreprise" }
-                            ],
-                            default: "other"
-                        }
-                    },
+                    role: "$_id",
                     count: 1
                 }
             }
@@ -867,7 +853,7 @@ exports.getUsersByRoleStat = async (req, res) => {
         // Fusionner les résultats de la base de données avec les rôles possibles
         const resultats = rolesPossibles.map(role => {
             const result = resultatsDB.find(item => item.role === role);
-            return result ? result : { role: role, count: 0 };
+            return result || { role: role, count: 0 };
         });
 
         // Envoyer la réponse JSON
