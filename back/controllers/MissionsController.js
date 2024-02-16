@@ -120,3 +120,28 @@ exports.getMissionsByCategoryStat = async (req, res) => {
         return res.status(500).json({ err });
     }
 };
+exports.getCandidateCounts = async (req, res) => {
+    try {
+        const mission = await Mission.findOne({}); // You may need to adjust the query based on your actual requirements
+        if (!mission) {
+            return res.status(404).json({ error: 'No mission found' });
+        }
+
+        const candidateCount = mission.candidates.length;
+        const selectedCandidateCount = mission.selectedCandidates.length;
+        const rejectedCandidateCount = mission.rejectedCandidates.length;
+        const pendingCandidateCount = mission.pendingCandidates.length;
+        const retainedCandidateCount = mission.retainedCandidates.length;
+
+        res.json({
+            candidateCount,
+            selectedCandidateCount,
+            rejectedCandidateCount,
+            pendingCandidateCount,
+            retainedCandidateCount
+        });
+    } catch (error) {
+        console.error('Error fetching candidate counts:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};

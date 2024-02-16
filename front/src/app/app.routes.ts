@@ -79,6 +79,10 @@ export const routes: Routes = [
                 path: 'recuiters',
                 // canActivate: [AuthGuard],
                 loadComponent: () => import('./views/recruiters/listing/listing.component').then(m => m.ListingComponent)
+            },
+            {
+                path: '**',
+                redirectTo: 'error'
             }
         ]
     },

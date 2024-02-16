@@ -61,13 +61,13 @@ export class LoginComponent implements OnInit{
           this._router.navigate(['/dashboard'])
       },
       error => {
-        this.toaster.error("Bad crediantials!","danger")
+        this.toaster.error("Bad crediantials!","Error")
       }
       )
 
     }
     else {
-      this.toaster.error("Please fill the form correctly","danger")
+      this.toaster.error("Please fill the form correctly","Error")
     }
 
   }

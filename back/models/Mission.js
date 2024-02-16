@@ -45,23 +45,23 @@ const missionSchema = new mongoose.Schema({
         enum: ['draft', 'published', 'archived'],
         default: 'draft'
     },
-    candidats: [{
+    candidates: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }],
-    candidatsSelectionnes: [{
+    selectedCandidates: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }],
-    candidatsRefuses: [{
+    rejectedCandidates: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }],
-    candidatsEnAttente: [{
+    pendingCandidates: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }],
-    candidatsRetenus: [{
+    retainedCandidates: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }]

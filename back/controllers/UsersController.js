@@ -784,6 +784,7 @@ exports.getNbUsersInLastSixMonthsByRole = async (req, res) => {
      
         }
     }
+
 exports.getRegistrationInfo = async (req, res) => {
     try {
         // Get today's date
@@ -810,7 +811,7 @@ exports.getRegistrationInfo = async (req, res) => {
         });
 
         // Calculate the percentage change
-        const percentageChange = ((todayRegistrations - thirtyDaysAgoRegistrations) / thirtyDaysAgoRegistrations) * 100;
+        const percentageChange = ((todayRegistrations - thirtyDaysAgoRegistrations) / (thirtyDaysAgoRegistrations === 0 ? 1 : thirtyDaysAgoRegistrations)) * 100;
 
         // Prepare the response
         const response = {
@@ -827,6 +828,7 @@ exports.getRegistrationInfo = async (req, res) => {
         res.status(500).json({ error: "An error occurred while processing the data." });
     }
 }
+
 
 exports.getUsersByRoleStat = async (req, res) => {
     try {
