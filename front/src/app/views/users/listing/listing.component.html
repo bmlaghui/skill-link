@@ -16,5 +16,56 @@
                 </div>
             </div>
         </div>
-    <app-data-tables [data]="data"></app-data-tables>
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table no-footer">
+                            <thead>
+                                <tr role="row">
+                                <th></th>
+                                <th class="sorting_asc">First Name</th>
+                                <th class="sorting_asc">Last Name</th>
+                                <th class="sorting_asc">Username</th>
+                                <th class="sorting_asc">E-mail</th>
+                                <th class="sorting_asc">Phone Number</th>
+                                <th class="sorting_asc">Address</th>
+                                <th class="sorting_asc">Number Of Applications</th>
+                                <th class="sorting_asc">State</th>  
+                                <th rowspan="1" colspan="3" aria-label="" >Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (candidate of candidatesList(); track candidate.username){  
+                                <tr class="odd">
+                                    <img class="img-user" [src]="candidate.image ? candidate.image : 'assets/images/auth/user.jpeg'" [alt]="candidate.username + ' Image'" />                                    <td class="sorting_1">{{candidate.firstName}}</td>
+                                    <td class="sorting_1">{{candidate.lastName}}</td>
+                                    <td class="sorting_1">{{candidate.username}}</td>
+                                    <td class="sorting_1">{{candidate.email}}</td>
+                                    <td class="sorting_1">{{candidate.phoneNumber}}</td>
+                                    <td class="sorting_1">{{candidate.adress}}</td>
+                                    <td class="sorting_1">{{candidate.applications?.length || '0' }}</td>
+                                    <td class="sorting_1">
+                                        <button class="btn btn-sm" [ngClass]="{'btn-success': candidate.verified, 'btn-danger': !candidate.verified}" (click)="toggleVerificationStatus(candidate)">
+                                          {{ candidate.verified ? 'Verified' : 'Not Verified' }}
+                                        </button>
+                                      </td>
+                                      
+                                <td>
+                                    <a class="btn btn-info" [routerLink]="['/candidats/', candidate._id]"><i class="ti ti-eye"></i></a>
+                                    <a class="btn btn-primary" [routerLink]="['/candidates/edit', 1]"><i class="ti ti-pencil"></i></a>
+                                    <a class="btn btn-danger" [routerLink]="['/candidates/delete', 1]"><i class="ti ti-trash"></i></a>
+                                </td>
+                            </tr>
+                        } 
+                        </tbody>
+                        </table>                         
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 </div>

@@ -140,7 +140,7 @@ export class DashboardComponent {
          */
         nbCompanies = computed(() => 
           {
-            const filteredData = this.entreprisesByCategory()?.filter((category) => category.category === 'company');
+            const filteredData = this.entreprisesByCategory()?.filter((category) => category._id === 'company');
             return filteredData?.length;
           }
         );
@@ -149,7 +149,7 @@ export class DashboardComponent {
          */
         nbStartups = computed(() => 
           {
-            const filteredData = this.entreprisesByCategory()?.filter((category) => category.category === 'startup');
+            const filteredData = this.entreprisesByCategory()?.filter((category) => category._id === 'startup');
             return filteredData?.length;
           }
         );
@@ -247,6 +247,7 @@ export class DashboardComponent {
           return totalCount;
         });
 totalUsers: any;
+
         
 
         

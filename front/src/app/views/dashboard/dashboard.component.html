@@ -44,42 +44,90 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6 grid-margin transparent">
+    <div class="col-md-6 grid-margin transparent ">
       <div class="row">
-        <div class="col-md-6 mb-4 stretch-card transparent">
+        <div class="col-md-6 mb-4 stretch-card">
           <div class="card card-tale">
             <div class="card-body">
-              <p class="mb-4">Total Users</p>
-              <p class="fs-30 mb-2">{{ nbCandidates() }} Candidates</p>
-              <p class="fs-30 mb-2">{{ nbRecruiters() }} Recruiters</p>
-              <p class="fs-30 mb-2">{{ nbAdmins() }} Admins</p>
+              <div class="d-flex align-items-center">
+                <i class="ti ti-user  fs-30 text-white icon-md"></i>
+                <div class="px-3">
+                  <p class="font-weight-bold fs-6">Total Users</p>
+                  <p class="">
+                    <span class="mb-3">{{ nbCandidates() }} Candidates </span> &
+                    <span class="mb-3">{{ nbRecruiters() }} Recruiters </span> &
+                    <span class="mb-3">{{ nbAdmins() }} Admins</span>
+                  </p>
+                </div>
+              </div>
+              <div class="card-footer bg-transparent border-white">
+                <a href="#" class="text-white text-decoration-none float-right"><i class="ti-eye mr-1"></i>View all</a>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-md-6 mb-4 stretch-card transparent">
+        <div class="col-md-6 mb-4 stretch-card">
           <div class="card card-dark-blue">
             <div class="card-body">
-              <p class="mb-4">Total Entreprises</p>
-              <p class="fs-30 mb-2">{{ nbCompanies() }} Companies</p>
-              <p class="fs-30 mb-2">{{ nbStartups() }} Startups</p>
+              <div class="d-flex align-items-center">
+                <i class="ti ti-briefcase  fs-30 text-white icon-md"></i>
+                <div class="px-3">
+                  <p class="font-weight-bold fs-6">Total Entreprises</p>
+                  <p class="">
+                    <span class="mb-3">
+                      {{ nbCompanies() }} Compagnie
+                      @if(nbCompanies() > 1) {s} </span> &
+                    <span class="mb-3">
+                      {{ nbStartups() }} Startup
+                      @if(nbStartups() > 1) {s} </span> 
+                  </p>
+                </div>
+              </div>
+              <div class="card-footer bg-transparent border-white">
+                <a href="#" class="text-white text-decoration-none float-right"><i class="ti-eye mr-1"></i>View all</a>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+        <div class="col-md-6 mb-4 stretch-card">
           <div class="card card-light-blue">
             <div class="card-body">
-              <p class="mb-4">Total Missions</p>
-              <p class="fs-30 mb-2">{{ nbMissions() }}</p>
+              <div class="d-flex align-items-center">
+                <i class="ti ti-briefcase  fs-30 text-white icon-md"></i>
+                <div class="px-3">
+                  <p class="font-weight-bold fs-6">Total Missions</p>
+                  <p class="">
+                    <span class="mb-3">{{ nbMissions() }} Mission
+                      @if(nbMissions() >1) {s} 
+                    </span> 
+                  </p>
+                </div>
+              </div>
+              <div class="card-footer bg-transparent border-white">
+                <a href="#" class="text-white text-decoration-none float-right"><i class="ti-eye mr-1"></i>View all</a>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-md-6 stretch-card transparent">
+        <div class="col-md-6 mb-4 stretch-card">
           <div class="card card-light-danger">
             <div class="card-body">
-              <p class="mb-4">Total Applications</p>
-              <p class="fs-30 mb-2">{{ nbApplications() }}</p>
+              <div class="d-flex align-items-center">
+                <i class="ti ti-file  fs-30 text-white icon-md"></i>
+                <div class="px-3">
+                  <p class="font-weight-bold fs-6">Total Applications</p>
+                  <p class="">
+                    <span class="mb-3">{{ nbApplications() }} Application
+                      @if(nbApplications() >1) {s} 
+                    </span> 
+                  </p>
+                </div>
+              </div>
+              <div class="card-footer bg-transparent border-white">
+                <a href="#" class="text-white text-decoration-none float-right"><i class="ti-eye mr-1"></i>View all</a>
+              </div>
             </div>
           </div>
         </div>

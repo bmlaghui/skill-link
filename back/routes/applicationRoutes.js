@@ -16,4 +16,6 @@ router.put('/applications/:id', verifyToken, applicationsController.updateMissio
 router.delete('/applications/:id', verifyToken, applicationsController.deleteMission);
 
 
+
+
 module.exports = router;

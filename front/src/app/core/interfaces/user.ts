@@ -1,4 +1,5 @@
 export interface User {
+  _id: any|string;
   firstName: string;
   lastName: string;
   email: string;
@@ -6,7 +7,7 @@ export interface User {
   phoneNumber: string;
   role: 'candidat' | 'entreprise' | 'admin';
   _idEntreprise?: string; // Assuming _idEntreprise is a reference to another entity
-  address?: string;
+  adress?: string;
   password: string;
   description?: string;
   linkLinkedin: string;

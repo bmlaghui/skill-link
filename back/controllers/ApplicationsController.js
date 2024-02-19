@@ -92,3 +92,6 @@ exports.getApplicationsByStatusStat = async (req, res) => {
         return res.status(500).json({ err });
     }
 };
+
+
+

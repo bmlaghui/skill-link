@@ -83,7 +83,7 @@ exports.createUser = async (req, res) => {
 };
 exports.getUsers = async (req, res) => {
     try {
-        const Users = await User.find({}, { __v: 0, _id: 0, password: 0});
+        const Users = await User.find({}, { __v: 0, password: 0});
         return res.json(Users);
     }
     catch (err) {
@@ -479,7 +479,7 @@ exports.getUsersByRole = async (req, res) => {
         else if(!User.schema.path('role').enumValues.includes(req.params.role)) {
             return res.status(422).json({ err: `role is not valid. It must be one of theese options: ${User.schema.path('role').enumValues}` });
         }
-        const users = await User.find({ role: req.params.role }, { __v: 0, _id: 0, password: 0 });
+        const users = await User.find({ role: req.params.role }, { __v: 0, password: 0 });
         return res.json(users);
     }
     catch (err) {

@@ -78,28 +78,53 @@ export class CreateComponent implements OnInit{
   }
 
   formExperiences = [
-
-    { dateBegin: '', dateEnd: '', post: '', description: '' }
-
+    {
+      champ: "Date de début", 
+      type: "date", 
+      name: "dateBegin"
+    },
+    { 
+      champ: "Date de fin", 
+      type: "date", 
+      name: "dateEnd"
+    },
+    { 
+      champ: "Poste", 
+      type: "text", 
+      name: "position"
+    },
+    { 
+      champ: "Description", 
+      type: "textarea", 
+      name: "description"
+    }
+  ];
+  
+  formFormations = [
+    
+    { 
+      champ: "Date de début", 
+      type: "date", 
+      name: "dateBegin"
+    },
+    { 
+      champ: "Date de fin", 
+      type: "date", 
+      name: "dateEnd"
+    },
+    { 
+      champ: "Diplôme", 
+      type: "text", 
+      name: "diploma"
+    },
+    { 
+      champ: "Description", 
+      type: "textarea", 
+      name: "description"
+    }
+    
+   
   ];
 
-  formFormations = [
-      
-      { dateBegin: '', dateEnd: '', diploma: '', school: '' }
-  
-    ];
-
-
-  updateFormData(lines: any[]) {
-
-    this.formExperiences = lines;
-
-  }
-
-  
-
-
- 
-
-
+  lines = [{}];
 }

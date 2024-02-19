@@ -23,7 +23,7 @@ export const routes: Routes = [
             {
                 path: 'candidats/:id',
                 // canActivate: [AuthGuard],
-                loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
+                loadComponent: () => import('./views/users/view/view.component').then(m => m.ViewComponent)
             },
             {
                 path: 'entreprises',
