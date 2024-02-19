@@ -1,0 +1,166 @@
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+            <h3 class="font-weight-bold">Ajout d'un administrateur</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form class="pt-3" [formGroup]="myGroup">
+                        <fieldset>
+                            <div class="row">
+                                <div class="form-group col-md-4 col-sm-12">
+                                    <label for="firstname">Nom</label>
+                                    <input
+                                    id="firstname"
+                                    class="form-control valid"
+                                    name="firstname"
+                                    type="text"
+                                    formControlName="firstname"
+                                    />
+                                    @if(myGroup.controls['firstname'].hasError('required') &&
+                                    myGroup.controls['firstname'].touched) {
+                                        <div class="text-danger">Le nom est requis</div>
+                                    } 
+                                </div>
+                                <div class="form-group col-md-4 col-sm-12">
+                                    <label for="lastname">Prénom</label>
+                                    <input
+                                    id="lastname"
+                                    class="form-control valid"
+                                    name="lastname"
+                                    type="text"
+                                    formControlName="lastname"
+                                    />
+                                    @if(myGroup.controls['lastname'].hasError('required') &&
+                                    myGroup.controls['lastname'].touched) {
+                                        <div class="text-danger">Le prénom est requis</div>
+                                    } 
+                                </div>
+                                <div class="form-group col-md-4 col-sm-12">
+                                    <label for="username">Nom d'utilisateur</label>
+                                    <input
+                                    id="username"
+                                    class="form-control"
+                                    name="username"
+                                    type="text"
+                                    formControlName="username"
+                                    />
+                                    @if(myGroup.controls['username'].hasError('required') &&
+                                    myGroup.controls['username'].touched) {
+                                        <div class="text-danger">Le nom d'utilisateur est requis</div>
+                                    } 
+                                    @if(myGroup.controls['firstname'].valid && myGroup.controls['lastname'].valid) {
+                                        {{myGroup.controls['username'].setValue(myGroup.controls['lastname'].value[0] + '.' + myGroup.controls['firstname'].value)}}
+                                        
+                                    }
+                                    
+                                </div>
+                                <div class="form-group col-md-4 col-sm-12">
+                                    <label for="email">Email</label>
+                                    <input
+                                    id="email"
+                                    class="form-control"
+                                    name="email"
+                                    type="email"
+                                    formControlName="email"
+                                    />
+                                    @if(myGroup.controls['email'].hasError('required') &&
+                                    myGroup.controls['email'].touched) {
+                                        <div class="text-danger">L'e-mail est requis</div>
+                                    } 
+                                    @if(myGroup.controls['email'].hasError('email') &&
+                                    myGroup.controls['email'].touched) {
+                                        <div class="text-danger">L'e-mail est invalide</div>
+                                    }
+                                </div>
+                                <div class="form-group col-md-4 col-sm-12">
+                                    <label for="password">Mot de passe</label>
+                                    <input
+                                    id="password"
+                                    class="form-control"
+                                    name="password"
+                                    type="password"
+                                    formControlName="password"
+                                    />
+                                    @if(myGroup.controls['password'].hasError('required') &&
+                                    myGroup.controls['password'].touched) {
+                                        <div class="text-danger">Le mot de passe est requis</div>
+                                    } 
+                                    @if(myGroup.controls['password'].hasError('pattern') &&
+                                    myGroup.controls['password'].touched) {
+                                        <div class="text-danger">Le mot de passe doit contenir 8 caractères: au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial</div>
+                                    }
+                                </div>
+                                <div class="form-group col-md-4 col-sm-12">
+                                    <label for="confirm_password"
+                                    >Confirmation de mot de passe</label
+                                    >
+                                    <input
+                                    id="confirm_password"
+                                    class="form-control"
+                                    name="confirm_password"
+                                    type="password"
+                                    formControlName="passwordConfirm"
+                                    />
+                                    @if(myGroup.controls['passwordConfirm'].hasError('required') &&
+                                    myGroup.controls['passwordConfirm'].touched) {
+                                        <div class="text-danger">La confirmation du mot de passe est requis</div>
+                                    } 
+                                    @if(myGroup.controls['passwordConfirm'].hasError('pattern') &&
+                                    myGroup.controls['passwordConfirm'].touched) {
+                                        <div class="text-danger">La confirmation du mot de passe doit contenir 8 caractères: au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial</div>
+                                    }
+                                   @if(myGroup.controls['passwordConfirm'].hasError('match_error') &&
+                                    myGroup.controls['passwordConfirm'].touched) {
+                                        <div class="text-danger">La confirmation du mot de passe doit être identique au mot de passe</div>
+                                    }
+                                    {{myGroup.controls['passwordConfirm'].getRawValue() === myGroup.controls['password'].getRawValue() ? myGroup.controls['passwordConfirm'].setErrors(null) : myGroup.controls['passwordConfirm'].setErrors({'match_error': true})}}
+                                   
+                                </div>
+                                <div class="form-group col-md-4 col-sm-12">
+                                    <label for="phone">Téléphone</label>
+                                    <input
+                                    id="phone"
+                                    class="form-control"
+                                    name="phone"
+                                    type="text"
+                                    formControlName="telephone"
+                                    />
+                                </div>
+
+                                <div class="form-group col-md-4 col-sm-12">
+                                    <label for="photo">Photo</label>
+                                    <input
+                                    id="photo"
+                                    class="form-control"
+                                    name="photo"
+                                    type="file"
+                                    formControlName="photo"
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group float-right">
+                                <label for="submit"></label>
+                                <input
+                                    class="btn btn-primary mx-1"
+                                    type="submit"
+                                    value="Ajouter"
+                                    id="submit"
+                                    (click)="submitForm()"
+                                    />
+                                <label for="reset"></label>
+                                <input id="reset" type="reset" class="btn btn-info" value="Reset">
+                            </div>
+                        </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

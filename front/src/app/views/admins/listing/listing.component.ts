@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { EntreprisesService } from '../../../core/services/entreprises.service';
 import { Entreprise } from '../../../core/interfaces/entreprise';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-listing',
@@ -19,17 +20,10 @@ export class ListingComponent {
 
   data: User[] = [];
   usersService = inject(UsersService);
-  
-  
-  //candidats = toSignal(this.candidatesService.getUsers());
-  adminsList = this.usersService.getUsersByRole('admin').subscribe(data => {
-    if(data) {
-      this.data = data;
-    }
-    else {
-      this.data = [];
-    }
-  });
+  adminsList = toSignal (this.usersService.getUsersByRole('admin'));
+  toggleVerificationStatus(admin: any): void {
+    admin.verified = !admin.verified;
+  }
 }
 
 

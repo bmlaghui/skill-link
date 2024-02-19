@@ -10,74 +10,82 @@ export const routes: Routes = [
         children: [
             {
                 path: 'dashboard',
+                canActivate: [authGuard],
                 loadComponent: () => import('./views/dashboard/dashboard.component').then(m => m.DashboardComponent)
             },
             {
                 path: 'candidats',
+                canActivate: [authGuard],
                 loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
             },
             {
                 path: 'candidats/add',
+                canActivate: [authGuard],
                 loadComponent: () => import('./views/users/create/create.component').then(m => m.CreateComponent)
             },
             {
                 path: 'candidats/:id',
-                // canActivate: [AuthGuard],
+                canActivate: [authGuard],
                 loadComponent: () => import('./views/users/view/view.component').then(m => m.ViewComponent)
             },
             {
                 path: 'entreprises',
-                // canActivate: [AuthGuard],
+                canActivate: [authGuard],
                 loadComponent: () => import('./views/entreprises/listing/listing/listing.component').then(m => m.ListingComponent)
             },
             {
                 path: 'offres',
-                // canActivate: [AuthGuard],
+                canActivate: [authGuard],
                 loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
             },
             {
                 path: 'candidatures',
-                // canActivate: [AuthGuard],
+                canActivate: [authGuard],
                 loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
             },
             {
                 path: 'parametres',
-                // canActivate: [AuthGuard],
+                canActivate: [authGuard],
                 loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
             },
             {
                 path: 'profile',
-                // canActivate: [AuthGuard],
+                canActivate: [authGuard],
                 loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
             },
             {
                 path: 'notifications',
-                // canActivate: [AuthGuard],
+                canActivate: [authGuard],
                 loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
             },
             {
                 path: 'messages',
-                // canActivate: [AuthGuard],
+                canActivate: [authGuard],
                 loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
             },
             {
                 path: 'factures',
-                // canActivate: [AuthGuard],
+                canActivate: [authGuard],
                 loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
             },
             {
                 path: 'paiements',
-                // canActivate: [AuthGuard],
+                canActivate: [authGuard],
                 loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
             },
             {
                 path: 'administrateurs',
-                // canActivate: [AuthGuard],
+                canActivate: [authGuard],
                 loadComponent: () => import('./views/admins/listing/listing.component').then(m => m.ListingComponent)
             },
             {
+                path: 'administrateurs/add',
+                canActivate: [authGuard],
+                loadComponent: () => import('./views/admins/create/create.component').then(m => m.CreateComponent)
+            },
+            {
                 path: 'recuiters',
-                // canActivate: [AuthGuard],
+                canActivate: [authGuard],
                 loadComponent: () => import('./views/recruiters/listing/listing.component').then(m => m.ListingComponent)
             },
             {

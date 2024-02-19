@@ -8,7 +8,7 @@
                 <div class="col-12 col-xl-4">
                 <div class="justify-content-end d-flex">
                 <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
-                    <button class="btn btn-sm btn-light bg-white" [routerLink]="['/user/add']">
+                    <button class="btn btn-sm btn-light bg-white" [routerLink]="['/administrateurs/add']">
                         <i class="ti ti-plus"></i> Add Admin
                     </button>
                 </div>
@@ -16,5 +16,59 @@
                 </div>
             </div>
         </div>
-    <app-data-tables [data]="data"></app-data-tables>
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table no-footer">
+                            <thead>
+                                <tr role="row">
+                                    <th></th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Username</th>
+                                    <th>E-mail</th>
+                                    <th>Phone Number</th>
+                                    <th>Address</th>
+                                    <th>State</th>  
+                                    <th rowspan="1" colspan="3" aria-label="" >Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (admin of adminsList(); track admin.username){  
+                                    <tr class="odd">
+                                        <img class="img-user" [src]="admin.image ? admin.image : 'assets/images/auth/user.jpeg'" [alt]="admin.username + ' Image'" />
+                                        <td class="sorting_1">{{admin.firstName}}</td>
+                                        <td class="sorting_1">{{admin.lastName}}</td>
+                                        <td class="sorting_1">{{admin.username}}</td>
+                                        <td class="sorting_1">{{admin.email}}</td>
+                                        <td class="sorting_1">{{admin.phoneNumber}}</td>
+                                        <td class="sorting_1">{{admin.adress}}</td>
+                                        <td class="sorting_1">
+                                            <button class="btn btn-sm" [ngClass]="{'btn-success': admin.verified, 'btn-danger': !admin.verified}" (click)="toggleVerificationStatus(admin)">
+                                            {{ admin.verified ? 'Verified' : 'Not Verified' }}
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-info" [routerLink]="['/admins/', admin._id]"><i class="ti ti-eye"></i></a>
+                                            <a class="btn btn-primary" [routerLink]="['/admins/edit', 1]"><i class="ti ti-pencil"></i></a>
+                                            <a class="btn btn-danger" [routerLink]="['/admins/delete', 1]"><i class="ti ti-trash"></i></a>
+                                        </td>
+                                    </tr>
+                            }
+                                @empty {
+                                    <tr>
+                                        <td colspan="10" class="text-center">No Admins Found</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>                         
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
 </div>

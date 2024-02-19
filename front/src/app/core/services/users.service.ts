@@ -14,6 +14,10 @@ export class UsersService {
     return this.http.get<User[]>(`${environment.apiUrl}/users/role/${role}`);
   }
 
+  createUser(user: User) {
+    return this.http.post<User>(`${environment.apiUrl}/users`, user);
+  }
+
   
  
 }
