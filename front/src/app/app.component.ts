@@ -18,6 +18,7 @@ import { ToastrService } from 'ngx-toastr';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Subscription } from 'rxjs';
 import { IdleService } from './core/services/idle.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @Component({
@@ -36,8 +37,7 @@ import { IdleService } from './core/services/idle.service';
               SidebarComponent,
               SettingsPanelComponent,
               NavbarComponent,
-              TagInputModule
-              
+              TagInputModule,
             ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

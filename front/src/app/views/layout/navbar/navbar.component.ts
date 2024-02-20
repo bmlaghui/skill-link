@@ -21,7 +21,7 @@ export class NavbarComponent {
     "firstName": null,
     "lastName": null,
     "email": null,
-    "username": null,
+    "userName": null,
     "phoneNumber": null,
     "role": null,
     "address": null,

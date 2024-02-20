@@ -19,8 +19,8 @@ export class AuthService {
 
   constructor(private http: HttpClient, private tokenService: TokenService) { }
 
-  login(username: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, { username, password }).pipe(
+  login(userName: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/login`, { userName, password }).pipe(
       map((response) => {
         if (response && response.token) {
           // Store the token securely (consider using HttpOnly cookies for better security).

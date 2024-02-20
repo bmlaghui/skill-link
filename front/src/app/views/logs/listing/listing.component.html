@@ -1,0 +1,51 @@
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-12 grid-margin">
+            <div class="row">
+                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                    <h3 class="font-weight-bold">Gestion des logs</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12">
+                      <div class="table-responsive">
+                        <table class="table no-footer">
+                            <thead>
+                                <tr role="row">
+                                    <th>Level</th>
+                                    <th>Message</th>
+                                    <th>Created AT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (log of logs; track log){   
+                                    <tr class="odd">
+                                        <td class="sorting_1">{{log.level}} </td>
+                                        <td class="sorting_1">{{log.message}}</td>
+                                        <td class="sorting_1">{{log.timestamp|timeAgo}}</td>
+                                    </tr>
+                            }
+                            @empty {
+                                    <tr>
+                                        <td colspan="10" class="text-center">No logs Found</td>
+                                    </tr>
+                                }
+                                
+                            </tbody>
+                        </table>                         
+                    </div>
+                </div>
+                </div>
+              </div>
+              <div class="footer">
+                  <div class="d-flex justify-content-center">
+                      <pagination-controls (pageChange)="pageChangeEvent($event)"></pagination-controls>
+                    </div>
+              </div>
+        </div>
+    </div>
+</div>

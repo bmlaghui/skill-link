@@ -9,12 +9,12 @@ import { loggerInterceptor } from './core/interceptors/logger.interceptor';
 export const appConfig: ApplicationConfig = {
 
   providers: [
-      provideRouter(routes),
-      provideAnimations(), // required animations providers
-      provideToastr(), // Toastr providers
-      provideHttpClient(withInterceptors([loggerInterceptor])), 
-      
-  ]
+    provideRouter(routes),
+    provideAnimations(), // required animations providers
+    provideToastr(), // Toastr providers
+    provideHttpClient(withInterceptors([loggerInterceptor])),
+    provideAnimations()
+]
 };
 
 

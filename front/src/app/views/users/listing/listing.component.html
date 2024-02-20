@@ -38,11 +38,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @for (candidate of candidatesList(); track candidate.username){  
+                            @for (candidate of candidatesList(); track candidate){  
                                 <tr class="odd">
-                                    <img class="img-user" [src]="candidate.image ? candidate.image : 'assets/images/auth/user.jpeg'" [alt]="candidate.username + ' Image'" />                                    <td class="sorting_1">{{candidate.firstName}}</td>
+                                    <img class="img-user" [src]="candidate.image ? candidate.image : 'assets/images/auth/user.jpeg'" [alt]="candidate.userName + ' Image'" />                                    <td class="sorting_1">{{candidate.firstName}}</td>
                                     <td class="sorting_1">{{candidate.lastName}}</td>
-                                    <td class="sorting_1">{{candidate.username}}</td>
+                                    <td class="sorting_1">{{candidate.userName}}</td>
                                     <td class="sorting_1">{{candidate.email}}</td>
                                     <td class="sorting_1">{{candidate.phoneNumber}}</td>
                                     <td class="sorting_1">{{candidate.adress}}</td>

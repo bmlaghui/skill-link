@@ -18,6 +18,14 @@ export class UsersService {
     return this.http.post<User>(`${environment.apiUrl}/users`, user);
   }
 
+  deleteUser(id: number) {
+    return this.http.delete<User>(`${environment.apiUrl}/users/${id}`);
+  }
+
+  updateUser(user: User) {
+    return this.http.put<User>(`${environment.apiUrl}/users/${user._id}`, user);
+  }
+
   
  
 }

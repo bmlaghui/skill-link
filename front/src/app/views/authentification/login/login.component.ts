@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit{
   loginForm!:FormGroup
   
   isLoggedIn = false;
-  username = '';
+  userName = '';
   
   
   connected: Observable<boolean> = new Observable<boolean>(); // Initialize connected as an Observable<boolean>
@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit{
 
   setForm(){
     this.loginForm = new FormGroup({
-      username: new FormControl('', [Validators.required]),
+      userName: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
     })
   }
@@ -52,16 +52,16 @@ export class LoginComponent implements OnInit{
   submit(){
     if(this.loginForm.valid)
     {
-      this.authService.login(this.loginForm.value.username, this.loginForm.value.password)
+      this.authService.login(this.loginForm.value.userName, this.loginForm.value.password)
       .subscribe(
         response => {
           this.isLoggedIn = true,
-          this.username = response.username
+          this.userName = response.userName
           this.toaster.success("User logged in succefully", "Success")
           this._router.navigate(['/dashboard'])
       },
       error => {
-        this.toaster.error("Bad crediantials!","Error")
+        this.toaster.error(error.error.err,"Error")
       }
       )
 

@@ -13,48 +13,48 @@
                         <fieldset>
                             <div class="row">
                                 <div class="form-group col-md-4 col-sm-12">
-                                    <label for="firstname">Nom</label>
+                                    <label for="firstName">Nom</label>
                                     <input
-                                    id="firstname"
+                                    id="firstName"
                                     class="form-control valid"
-                                    name="firstname"
+                                    name="firstName"
                                     type="text"
-                                    formControlName="firstname"
+                                    formControlName="firstName"
                                     />
-                                    @if(myGroup.controls['firstname'].hasError('required') &&
-                                    myGroup.controls['firstname'].touched) {
+                                    @if(myGroup.controls['firstName'].hasError('required') &&
+                                    myGroup.controls['firstName'].touched) {
                                         <div class="text-danger">Le nom est requis</div>
                                     } 
                                 </div>
                                 <div class="form-group col-md-4 col-sm-12">
-                                    <label for="lastname">Prénom</label>
+                                    <label for="lastName">Prénom</label>
                                     <input
-                                    id="lastname"
+                                    id="lastName"
                                     class="form-control valid"
-                                    name="lastname"
+                                    name="lastName"
                                     type="text"
-                                    formControlName="lastname"
+                                    formControlName="lastName"
                                     />
-                                    @if(myGroup.controls['lastname'].hasError('required') &&
-                                    myGroup.controls['lastname'].touched) {
+                                    @if(myGroup.controls['lastName'].hasError('required') &&
+                                    myGroup.controls['lastName'].touched) {
                                         <div class="text-danger">Le prénom est requis</div>
                                     } 
                                 </div>
                                 <div class="form-group col-md-4 col-sm-12">
-                                    <label for="username">Nom d'utilisateur</label>
+                                    <label for="userName">Nom d'utilisateur</label>
                                     <input
-                                    id="username"
+                                    id="userName"
                                     class="form-control"
-                                    name="username"
+                                    name="userName"
                                     type="text"
-                                    formControlName="username"
+                                    formControlName="userName"
                                     />
-                                    @if(myGroup.controls['username'].hasError('required') &&
-                                    myGroup.controls['username'].touched) {
+                                    @if(myGroup.controls['userName'].hasError('required') &&
+                                    myGroup.controls['userName'].touched) {
                                         <div class="text-danger">Le nom d'utilisateur est requis</div>
                                     } 
-                                    @if(myGroup.controls['firstname'].valid && myGroup.controls['lastname'].valid) {
-                                        {{myGroup.controls['username'].setValue(myGroup.controls['lastname'].value[0] + '.' + myGroup.controls['firstname'].value)}}
+                                    @if(myGroup.controls['firstName'].valid && myGroup.controls['lastName'].valid) {
+                                        {{myGroup.controls['userName'].setValue(myGroup.controls['lastName'].value[0] + '.' + myGroup.controls['firstName'].value)}}
                                         
                                     }
                                     
@@ -128,7 +128,7 @@
                                     class="form-control"
                                     name="phone"
                                     type="text"
-                                    formControlName="telephone"
+                                    formControlName="phoneNumber"
                                     />
                                 </div>
 

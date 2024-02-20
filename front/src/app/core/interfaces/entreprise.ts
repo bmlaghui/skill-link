@@ -5,7 +5,7 @@ export interface Entreprise {
     linkLinkedin?: string;
     linkWebsite?: string;
     logo?: string;
-    adress?: string;
+    address?: string;
     phoneNumber?: string;
     email?: string;
     category: 'startup' | 'company';

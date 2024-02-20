@@ -3,6 +3,7 @@ import { Entreprise } from '../../../../core/interfaces/entreprise';
 import { DataTablesComponent } from "../../../../shared/data-tables/data-tables.component";
 import { RouterLink } from '@angular/router';
 import { EntreprisesService } from '../../../../core/services/entreprises.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-listing',
@@ -15,12 +16,5 @@ export class ListingComponent {
   data: Entreprise[] = [];
   entreprisesService = inject(EntreprisesService);
   //candidats = toSignal(this.candidatesService.getUsers());
-  entreprisesList = this.entreprisesService.getEntreprises().subscribe(data => {
-    if(data) {
-      this.data = data;
-    }
-    else {
-      this.data = [];
-    }
-  });
+  entreprisesList = toSignal(this.entreprisesService.getEntreprises());
 }

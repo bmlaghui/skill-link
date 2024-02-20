@@ -3,7 +3,7 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
-  username: string;
+  userName: string;
   phoneNumber: string;
   role: 'candidat' | 'entreprise' | 'admin';
   _idEntreprise?: string; // Assuming _idEntreprise is a reference to another entity
@@ -23,4 +23,6 @@ export interface User {
   verified?: boolean;
   missions?: string[]; // Assuming missions is a reference to another entity
   applications?: string[]; // Assuming applications is a reference to another entity
+  createdAt: Date;
+  updatedAt: Date;
 }

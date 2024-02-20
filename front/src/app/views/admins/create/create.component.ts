@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { UsersService } from '../../../core/services/users.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create',
@@ -12,16 +13,17 @@ import { UsersService } from '../../../core/services/users.service';
 })
 export class CreateComponent implements OnInit{
   usersService = inject(UsersService);
+  toaster = inject(ToastrService)
   myGroup!:FormGroup;
   setForm(){
     this.myGroup = new FormGroup({
-      firstname: new FormControl('', [Validators.required]),
-      lastname: new FormControl('', [Validators.required]),
-      username: new FormControl('', [Validators.required]),
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
+      userName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]),
       passwordConfirm: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]),
-      telephone: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
+      phoneNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
       photo: new FormControl('')
     }
     )
@@ -51,7 +53,19 @@ export class CreateComponent implements OnInit{
      if(this.myGroup.valid)
       {
         const user = this.myGroup.value;
-        this.usersService.createUser(user);
+        user.role = 'admin';
+
+        console.log("USER", user);
+        this.usersService.createUser(user).subscribe(
+          (response) => {
+            this.toaster.success("User created successfully", "Success")
+            
+          },
+          (error) => {
+            this.toaster.error("Error while creating user: "+error.error.err, "Error")
+          }
+        )
+
       }
     
   }
