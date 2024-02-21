@@ -36,7 +36,12 @@ export const routes: Routes = [
             {
                 path: 'offres',
                 canActivate: [authGuard],
-                loadComponent: () => import('./views/users/listing/listing.component').then(m => m.ListingComponent)
+                loadComponent: () => import('./views/missions/listing/listing.component').then(m => m.ListingComponent)
+            },
+            {
+                path: 'offres/add',
+                canActivate: [authGuard],
+                loadComponent: () => import('./views/missions/create/create.component').then(m => m.CreateComponent)
             },
             {
                 path: 'candidatures',

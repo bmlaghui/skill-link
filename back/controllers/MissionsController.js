@@ -36,13 +36,36 @@ exports.createMission = async (req, res) => {
 
 exports.getMissions = async (req, res) => {
     try {
-        const Missions = await Mission.find({}, { __v: 0, _id: 0 });
-        return res.json(Missions);
-    }
-    catch (err) {
-        return res.status(500).json({ err });
+        const page = parseInt(req.query.page) || 1; // Page number, default is 1
+        const limit = parseInt(req.query.limit) || 10; // Number of documents per page, default is 10
+
+        const skip = (page - 1) * limit; // Number of documents to skip
+
+        const totalMissionsCount = await Mission.countDocuments(); // Total number of Missions
+
+        const missions = await Mission.find({}, { __v: 0, _id: 0 })
+                                      .skip(skip)
+                                      .limit(limit)
+                                      .populate('entreprise', '-_id -__v') // Exclude _id and __v fields from populated enterprise
+                                      .populate('candidates', '-_id -__v') 
+                                      .populate('selectedCandidates', '-_id -__v')
+                                      .populate('rejectedCandidates', '-_id -__v')
+                                      .populate('pendingCandidates', '-_id -__v')
+                                      .populate('retainedCandidates', '-_id -__v')
+                                      .populate('missionEntreprise', '-_id -__v');
+
+
+        return res.json({
+            currentPage: page,
+            totalPages: Math.ceil(totalMissionsCount / limit),
+            totalMissionsCount: totalMissionsCount,
+            missions
+        });
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
     }
 };
+
 
 exports.getMission = async (req, res) => {
     try {

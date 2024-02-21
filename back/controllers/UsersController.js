@@ -10,6 +10,7 @@ const { sendEmail } = require('../services/emailService'); // Assuming you move 
 
 exports.createUser = async (req, res) => {
     try {
+        console.log(req.body);
         // Validate request body
         if(!req.body.firstName) {
             return res.status(422).json({ err: 'first name is required'  });
@@ -24,12 +25,12 @@ exports.createUser = async (req, res) => {
         if(emailCheck) {
             return res.status(422).json({ err: 'email is already used' });
         }
-        if(!req.body.username) {
-            return res.status(422).json({ err: 'username is required' });
+        if(!req.body.userName) {
+            return res.status(422).json({ err: 'userName is required' });
         }
-        let usernameCheck = await User.findOne({ username : req.body.username});
-        if(usernameCheck) {
-            return res.status(422).json({ err: 'username is already used' });
+        let userNameCheck = await User.findOne({ userName : req.body.userName});
+        if(userNameCheck) {
+            return res.status(422).json({ err: 'userName is already used' });
         }
 
         if(!req.body.role) {
@@ -47,6 +48,9 @@ exports.createUser = async (req, res) => {
         // Hash the password
         const salt = await bcrypt.genSalt(10);
         req.body.password = await bcrypt.hash(req.body.password, salt);
+
+        // Create a id 
+        req.body._id = new mongoose.Types.ObjectId();
 
         // Create a new user
         const user = new User(req.body);
@@ -149,16 +153,27 @@ exports.updateUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
     try {
-        if(!mongoose.isValidObjectId(req.params.id)) {
-            return res.status(422).json({ err: 'Invalid User ID' });
+        // Check if the provided ID is a valid MongoDB ObjectID
+        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+            return res.status(422).json({ error: 'Invalid User ID' });
         }
-        await User.findByIdAndRemove(req.params.id);
-        return res.json({ msg: 'User deleted successfully' });
-    }
-    catch (err) {
-        return res.status(500).json({ err });
+
+        // Find the user by ID and remove it
+        const deletedUser = await User.findOneAndDelete({ _id: req.params.id });
+
+        // Check if the user exists
+        if (!deletedUser) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Return a success message
+        return res.json({ message: 'User deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
 
 exports.getMissions = async (req, res) => {
     try {
@@ -223,7 +238,9 @@ exports.deleteMission = async (req, res) => {
         return res.json({ msg: 'Mission deleted successfully' });
     }
     catch (err) {
+        console.log(err);
         return res.status(500).json({ err });
+
     }
 }
 
@@ -395,19 +412,19 @@ exports.verify = async (req, res) => {
 // Auth
 exports.login = async (req, res) => {
     try {
-        if (!req.body.username) {
-            return res.status(422).json({ err: 'username is required' });
+        console.log(req.body);
+        if (!req.body.userName) {
+            return res.status(422).json({ err: 'userName is required' });
         }
         if (!req.body.password) {
             return res.status(422).json({ err: 'password is required' });
         }
-
-        const user = await User.findOne({ username: req.body.username });
+        
+        const user = await User.findOne({ userName: req.body.userName });
 
         if (!user) {
             return res.status(422).json({ err: 'user is not valid' });
         }
-
         const isMatch = await bcrypt.compare(req.body.password, user.password);
 
         if (!isMatch) {

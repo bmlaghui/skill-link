@@ -10,6 +10,8 @@ const User = require('./models/User');
 const Entreprise = require('./models/Entreprise');
 const Mission = require('./models/Mission');
 const Application = require('./models/Application');
+const logMiddleware = require('./middleware/loggerMiddelware');
+const Log = require('./models/Log');
 
 // Create the server
 const app = express();
@@ -29,6 +31,10 @@ app.use(require('./routes/missionRoutes.js'));
 app.use(require('./routes/userRoutes.js'));
 // Dashboard Routes
 app.use(require('./routes/dashboardRoutes.js'));
+// Logs Routes
+app.use(require('./routes/logRoutes.js'));
+// Middleware Logger
+app.use(logMiddleware);
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI);

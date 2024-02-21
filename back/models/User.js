@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    username: {
+    userName: {
         type:String,
         required: true,
         unique: true
@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema({
     },
     description: String,
     linkLinkedin: { 
-        type:String, required: true
+        type:String
     },
     linkGithub: String,
     linkWebsite: String,
@@ -49,23 +49,18 @@ const userSchema = new mongoose.Schema({
     image: String,
     skills: [{
         type: String,
-        required: true
     }],
     experiences: [{
         type: String,
-        required: true
     }],
     diplomas: [{
         type: String,
-        required: true
     }],
     languages: [{
         type: String,
-        required: true
     }],
     interests: [{
         type: String,
-        required: true
     }],
     verified: {
         type: Boolean,

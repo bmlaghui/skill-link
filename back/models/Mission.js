@@ -10,9 +10,9 @@ const missionSchema = new mongoose.Schema({
         type: [String],
         required: true
     },
-    _idEntreprise: {
+    entreprise: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'entreprise',
+        ref: 'Entreprise',
         required: true
     },
     isFinalClient: {
@@ -31,7 +31,11 @@ const missionSchema = new mongoose.Schema({
         required: true
     },
 
-    _idMissionEntreprise : mongoose.Schema.Types.ObjectId,
+    missionEntreprise : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Entreprise',
+        required: true
+    },
 
     dateDebut: {
         type: Date,
@@ -41,9 +45,8 @@ const missionSchema = new mongoose.Schema({
     renumeration: Number,
     previleges: [String],
     status: {
-        type: String,
-        enum: ['draft', 'published', 'archived'],
-        default: 'draft'
+        type: Boolean,
+        default: false
     },
     candidates: [{
         type: mongoose.Schema.Types.ObjectId,
