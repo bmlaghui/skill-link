@@ -47,11 +47,7 @@ exports.getMissions = async (req, res) => {
                                       .skip(skip)
                                       .limit(limit)
                                       .populate('entreprise', '-_id -__v') // Exclude _id and __v fields from populated enterprise
-                                      .populate('candidates', '-_id -__v') 
-                                      .populate('selectedCandidates', '-_id -__v')
-                                      .populate('rejectedCandidates', '-_id -__v')
-                                      .populate('pendingCandidates', '-_id -__v')
-                                      .populate('retainedCandidates', '-_id -__v')
+                                      .populate('applications', '-_id -__v')
                                       .populate('missionEntreprise', '-_id -__v');
 
 

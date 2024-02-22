@@ -431,6 +431,7 @@ router.post('/users', usersController.createUser );
 
 router.get('/users', verifyToken, usersController.getUsers);
 
+
 router.get('/users/:id', verifyToken, usersController.getUser);
 
 router.put('/users/:id', verifyToken, usersController.updateUser);
@@ -457,4 +458,5 @@ router.delete('/users/:id/applications/:idApplication', verifyToken, usersContro
 
 //Get Users by role
 router.get('/users/role/:role', verifyToken, usersController.getUsersByRole);
+router.get('/users/roles/:role', verifyToken, usersController.getUsersByRolePaginated);
 module.exports = router;

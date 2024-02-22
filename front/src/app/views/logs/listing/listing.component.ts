@@ -13,7 +13,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     styleUrls: ['./listing.component.scss'],
     imports: [CommonModule, TimeAgoPipe, NgxPaginationModule]
 })
-export class ListingComponent {
+export class ListingComponent implements OnInit {
   
   logsService = inject(LogService);
   toaster = inject(ToastrService);

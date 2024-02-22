@@ -27,7 +27,16 @@ export class ListingComponent {
   toaster = inject(ToastrService);
   adminsList = toSignal (this.usersService.getUsersByRole('admin'));
   toggleVerificationStatus(admin: any): void {
-    admin.verified = !admin.verified;
+    if (admin.verified) {
+     this.desactivateAdmin(admin._id);
+     admin.verified = !admin.verified;
+    }
+    else {
+      this.activateAdmin(admin._id);
+      admin.verified = !admin.verified;
+
+    }
+    
   }
   toggleActivationStatus(admin: any): void {
     admin.active = !admin.active;
@@ -73,8 +82,35 @@ export class ListingComponent {
 
       }
     );
-
   }
+
+  activateAdmin(id: number): void {
+    this.usersService.activateUser(id).subscribe(
+      (response) => {
+        this.adminsList = toSignal(this.usersService.getUsersByRole('admin'));
+        this.toaster.success('Admin activated successfully');
+      },
+      (error) => {
+        console.log('Error activating admin', error);
+        this.toaster.error('Error activating admin', error.message);
+      }
+    );
+  }
+
+  desactivateAdmin(id: number): void {
+    this.usersService.deactivateUser(id).subscribe(
+      (response) => {
+        
+        this.adminsList = toSignal(this.usersService.getUsersByRole('admin'));
+        this.toaster.success('Admin desactivated successfully');
+      },
+      (error) => {
+        console.log('Error desactivating admin', error);
+        this.toaster.error('Error desactivating admin', error.message);
+      }
+    );
+  }
+
   
 }
 

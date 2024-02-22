@@ -9,7 +9,7 @@
                 <div class="justify-content-end d-flex">
                 <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
                     <button class="btn btn-sm btn-light bg-white" [routerLink]="['/candidats/add']">
-                        <i class="ti ti-plus"></i> Add User
+                        <i class="ti ti-plus"></i> Add Candidate
                     </button>
                 </div>
                 </div>
@@ -56,11 +56,89 @@
                                         </button>
                                       </td>
                                       
-                                <td>
-                                    <a class="btn btn-info" [routerLink]="['/candidats/', candidate._id]"><i class="ti ti-eye"></i></a>
-                                    <a class="btn btn-primary ml-1" [routerLink]="['/candidates/edit', 1]"><i class="ti ti-pencil"></i></a>
-                                    <a class="btn btn-danger ml-1" [routerLink]="['/candidates/delete', 1]"><i class="ti ti-trash"></i></a>
-                                </td>
+                                      <td>
+                                        <!-- View Modal -->
+                                        <button class="btn btn-info"  data-bs-toggle="modal" [attr.data-bs-target]="'#viewModal' + candidate.userName"><i class="ti ti-eye"></i></button>
+                                        <div class="modal fade" [id]="'viewModal' + candidate.userName" tabindex="-1" aria-labelledby="viewModal" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <div class="d-flex align-items-center">
+                                                        <img class="img-user" [src]="candidate.image ? candidate.image : 'assets/images/auth/user.jpeg'" [alt]="candidate.userName + ' Image'" />
+                                                        <h3>{{candidate.lastName|uppercase}} {{candidate.firstName|uppercase}}</h3>
+                                                    </div>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                   <div class="row">
+                                                       <div class="col-md-6">
+                                                         <h5>General informations</h5>
+                                                         <p><strong>First Name:</strong> {{candidate.firstName}}</p>
+                                                         <p><strong>Last Name:</strong> {{candidate.lastName}}</p>
+                                                         <p><strong>User Name:</strong> {{candidate.userName}}</p>
+                                                         <p><strong>E-mail:</strong> {{candidate.email}}</p>
+                                                         <p><strong>Phone Number:</strong> {{candidate.phoneNumber}}</p>
+                                                         <p><strong>State:</strong> {{candidate.verified ? 'Verified' : 'Not Verified'}}</p>
+                                                         <p><strong>Registred:</strong>{{candidate.createdAt|timeAgo}}</p>
+                                                       </div>
+                                                        <div class="col-md-6">
+                                                           
+                                                          </div>
+                                                   </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End View Modal -->
+
+                                        <!-- Edit Modal -->
+                                        <button class="btn btn-primary"  data-bs-toggle="modal" [attr.data-bs-target]="'#editModal' + candidate.userName"><i class="ti ti-pencil"></i></button>
+                                        <div class="modal fade" [id]="'editModal' + candidate.userName" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Edit candidate {{candidate.lastName}} {{candidate.firstName}} </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    ...
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">Save Changes</button>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Edit Modal -->
+                                       
+                                        @if(candidate.userName != actualUser().userName) {
+                                            <!-- Delete Modal -->
+                                            <button class="btn btn-danger"  data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal' + candidate.userName"><i class="ti ti-trash"></i></button>
+                                            <div class="modal fade" [id]="'deleteModal' + candidate.userName" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure to delete this candidate : <b>{{candidate.lastName}} {{candidate.firstName}}</b> ?
+                                                        {{candidate._id}}
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-danger" (click)="deletecandidate(candidate._id)">Delete</button>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End Delete Modal -->
+                                        }
+                                    </td>
                             </tr>
                         } 
                         </tbody>

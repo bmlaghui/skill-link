@@ -48,25 +48,9 @@ const missionSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    candidates: [{
+    applications: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }],
-    selectedCandidates: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }],
-    rejectedCandidates: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }],
-    pendingCandidates: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }],
-    retainedCandidates: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'Application'
     }]
 
 }, 

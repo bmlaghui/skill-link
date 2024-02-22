@@ -58,8 +58,8 @@
                                         </td>
                                         <td>
                                             <!-- View Modal -->
-                                            <button class="btn btn-info"  data-bs-toggle="modal" data-bs-target="#viewModal"><i class="ti ti-eye"></i></button>
-                                            <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModal" aria-hidden="true">
+                                            <button class="btn btn-info"  data-bs-toggle="modal" [attr.data-bs-target]="'#viewModal' + admin.userName"><i class="ti ti-eye"></i></button>
+                                            <div class="modal fade" [id]="'viewModal' + admin.userName" tabindex="-1" aria-labelledby="viewModal" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                     <div class="modal-header">
@@ -95,8 +95,8 @@
                                             <!-- End View Modal -->
 
                                             <!-- Edit Modal -->
-                                            <button class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#editModal"><i class="ti ti-pencil"></i></button>
-                                            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
+                                            <button class="btn btn-primary"  data-bs-toggle="modal" [attr.data-bs-target]="'#editModal' + admin.userName"><i class="ti ti-pencil"></i></button>
+                                            <div class="modal fade" [id]="'editModal' + admin.userName" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                     <div class="modal-header">
@@ -117,8 +117,8 @@
                                            
                                             @if(admin.userName != actualUser().userName) {
                                                 <!-- Delete Modal -->
-                                                <button class="btn btn-danger"  data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="ti ti-trash"></i></button>
-                                                <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+                                                <button class="btn btn-danger"  data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal' + admin.userName"><i class="ti ti-trash"></i></button>
+                                                <div class="modal fade" [id]="'deleteModal' + admin.userName" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                         <div class="modal-header">

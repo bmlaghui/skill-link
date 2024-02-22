@@ -371,6 +371,7 @@ exports.getCandidats = async(req, res) => {
     }
 }
 
+
 exports.getEntreprises = async(req, res) => {
     try {
         const entreprises = await User.find({role: 'entreprise'}, { __v: 0, _id: 0, password: 0});
@@ -503,6 +504,38 @@ exports.getUsersByRole = async (req, res) => {
         return res.status(500).json({ err });
     }
 }
+
+exports.getUsersByRolePaginated = async (req, res) => {
+    try {
+        const page = parseInt(req.query.page) || 1; // Page number, default is 1
+        const limit = parseInt(req.query.limit) || 10; // Number of documents per page, default is 10
+
+        const skip = (page - 1) * limit; // Number of documents to skip
+
+        if (!req.params.role) {
+            return res.status(422).json({ err: 'Role is required' });
+        } else if (!User.schema.path('role').enumValues.includes(req.params.role)) {
+            return res.status(422).json({ err: `Role is not valid. It must be one of these options: ${User.schema.path('role').enumValues}` });
+        }
+
+        const users = await User.find({ role: req.params.role }, { __v: 0, password: 0 })
+                                .skip(skip)
+                                .limit(limit);
+
+        const totalUsersCount = await User.countDocuments({ role: req.params.role }); // Total number of users with the specified role
+
+        return res.json({
+            currentPage: page,
+            totalPages: Math.ceil(totalUsersCount / limit),
+            totalUsersCount: totalUsersCount,
+            users
+        });
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
+    }
+};
+
+
 
 exports.getNbCandidatesInLastSixMonths = async (req, res) => {
     const currentDate = new Date();

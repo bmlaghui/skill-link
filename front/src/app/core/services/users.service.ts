@@ -19,11 +19,21 @@ export class UsersService {
   }
 
   deleteUser(id: number) {
+    
     return this.http.delete<User>(`${environment.apiUrl}/users/${id}`);
+
   }
 
   updateUser(user: User) {
     return this.http.put<User>(`${environment.apiUrl}/users/${user._id}`, user);
+  }
+
+  activateUser(id: number) {
+    return this.http.put<User>(`${environment.apiUrl}/users/activate/${id}`, {});
+  }
+
+  deactivateUser(id: number) {
+    return this.http.put<User>(`${environment.apiUrl}/users/deactivate/${id}`, {});
   }
 
   

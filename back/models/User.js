@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         enum: ['candidat', 'entreprise', 'admin']
     },
-    _idEntreprise: {
+    entreprise: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Entreprise'
     },
