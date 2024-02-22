@@ -3,7 +3,6 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, Reac
 
 import { CommonModule } from '@angular/common';
 import { TagInputModule } from 'ngx-chips';
-import { ConnectableObservable } from 'rxjs';
 import { LineFormComponent } from '../../../shared/line-form/line-form.component';
 
 @Component({
@@ -38,7 +37,7 @@ export class CreateComponent implements OnInit{
     this.myGroup = new FormGroup({
       firstname: new FormControl('', [Validators.required]),
       lastname: new FormControl('', [Validators.required]),
-      userName: new FormControl('', [Validators.required]),
+      username: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]),
       passwordConfirm: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]),

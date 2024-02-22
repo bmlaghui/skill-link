@@ -36,6 +36,10 @@ export class UsersService {
     return this.http.put<User>(`${environment.apiUrl}/users/deactivate/${id}`, {});
   }
 
+  getUsersByRolePaginated(role: string, currentPage: number, pageSize: number) {
+    return this.http.get<User[]>(`${environment.apiUrl}/users/roles/${role}?page=${currentPage}&limit=${pageSize}`);
+  }
+
   
  
 }
