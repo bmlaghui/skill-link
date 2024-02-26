@@ -21,11 +21,27 @@ exports.createApplication = async (req, res) => {
 
 exports.getApplications = async (req, res) => {
     try {
-        const Applications = await Application.find({}, { __v: 0, _id: 0 });
-        return res.json(Applications);
-    }
-    catch (err) {
-        return res.status(500).json({ err });
+        const page = parseInt(req.query.page) || 1; // Page number, default is 1
+        const limit = parseInt(req.query.limit) || 10; // Number of documents per page, default is 10
+
+        const skip = (page - 1) * limit; // Number of documents to skip
+
+        const totalApplicationsCount = await Application.countDocuments(); // Total number of Applications
+
+        const applications = await Application.find({}, { __v: 0, _id: 0 })
+                                      .skip(skip)
+                                      .limit(limit)
+                                      .populate('candidate', '-_id -__v') // Exclude _id and __v fields from populated candidate
+                                      .populate('mission', '-_id -__v');
+
+        return res.json({
+            currentPage: page,
+            totalPages: Math.ceil(totalApplicationsCount / limit),
+            totalApplicationsCount: totalApplicationsCount,
+            applications
+        });
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
     }
 };
 

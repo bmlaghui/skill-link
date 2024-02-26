@@ -1,20 +1,20 @@
 const mongoose = require('mongoose');
 
 const applicationSchema = new mongoose.Schema({
-    _idMission: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Mission',
-        required: true
-    }],
     coverLetter: String,
     statut: {
         type: String,
-        enum: ['draft', 'published', 'archived'],
+        enum: ["received", "under_review", "in_progress", "shortlisted", "interview_scheduled", "interviewed", "pending_decision", "offer_extended", "offer_accepted", "offer_declined", "withdrawn", "not_selected", "on_hold", "hired"],
         default: 'draft'
     },
-    _idUser: [{
+    candidate: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
+        required: true
+    }],
+    mission: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Mission',
         required: true
     }]
 }, 

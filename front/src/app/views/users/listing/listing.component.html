@@ -38,7 +38,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @for (candidate of candidatesList(); track candidate){  
+                            @for (candidate of candidatesList | paginate : {
+                                itemsPerPage: usersPerPage,
+                                currentPage: currentPage,
+                                totalItems: totalusersCount
+                              }; track candidate) { 
                                 <tr class="odd">
                                     <img class="img-user" [src]="candidate.image ? candidate.image : 'assets/images/auth/user.jpeg'" [alt]="candidate.userName + ' Image'" />                                    <td class="sorting_1">{{candidate.firstName}}</td>
                                     <td class="sorting_1">{{candidate.lastName}}</td>
@@ -131,7 +135,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-danger" (click)="deletecandidate(candidate._id)">Delete</button>
+                                                        <button type="button" class="btn btn-danger" (click)="deleteCandidate(candidate._id)">Delete</button>
                                                     </div>
                                                     </div>
                                                 </div>
@@ -147,6 +151,15 @@
                   </div>
                 </div>
               </div>
+              <div class="footer">
+                <div class="d-flex justify-content-center">
+                  <pagination-controls
+                      previousLabel="Prev"
+                      nextLabel="Next"
+                      (pageChange)="pageChangeEvent($event)"
+                      ></pagination-controls>
+                  </div>
+            </div>
             </div>
         </div>
 </div>

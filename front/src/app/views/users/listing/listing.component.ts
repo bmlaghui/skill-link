@@ -8,22 +8,73 @@ import { UsersService } from '../../../core/services/users.service';
 import { TimeAgoPipe } from "../../../core/pipes/time-ago.pipe";
 import { AuthService } from '../../../core/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
     selector: 'app-listing',
     standalone: true,
     templateUrl: './listing.component.html',
     styleUrl: './listing.component.scss',
-    imports: [DataTablesComponent, RouterLink, CommonModule, TimeAgoPipe]
+    imports: [DataTablesComponent, RouterLink, CommonModule, TimeAgoPipe, NgxPaginationModule]
 })
 export class ListingComponent {
   usersService = inject(UsersService);
-  authService = inject(AuthService);
   toaster = inject(ToastrService);
-  candidatesList = toSignal(this.usersService.getUsersByRole('candidat'));
+  currentPage : number = 1;
+  usersPerPage : number = 10;
+  totalusersCount : number = 0;
+  totalPages : number = 0;
+  candidatesList: any = [];
+  getusers(){
+    this.usersService.getUsersByRolePaginated("candidat",this.currentPage, this.usersPerPage)
+      .subscribe((response: any) => {
+        this.candidatesList = response.users;
+        this.totalusersCount = response.totalusersCount;
+        this.totalPages = Math.ceil(this.totalusersCount / this.usersPerPage);
+      });
+  } 
+  ngOnInit(): void {
+    this.getusers();
+  }
+  pageChangeEvent(event: number){
+    this.currentPage = event;
+    this.getusers();
+  }
 
-
-  actualUser = toSignal(this.authService.connectedUser(), { initialValue: {
+  deleteCandidate(id: number): void {
+    this.usersService.deleteUser(id).subscribe(
+      (response) => {
+        this.toaster.success('Candidate deleted successfully');
+        this.getusers();
+      },
+      (error) => {
+        this.toaster.error('Error deleting Candidate');
+      }
+    );
+  }
+  activateCandidate(id: number): void {
+    this.usersService.activateUser(id).subscribe(
+      (response) => {
+        this.toaster.success('Candidate activated successfully');
+        this.getusers();
+      },
+      (error) => {
+        this.toaster.error('Error activating Candidate');
+      }
+    );
+  }
+  deactivateCandidate(id: number): void {
+    this.usersService.deactivateUser(id).subscribe(
+      (response) => {
+        this.toaster.success('Candidate deactivated successfully');
+        this.getusers();
+      },
+      (error) => {
+        this.toaster.error('Error deactivating Candidate');
+      }
+    );
+  }
+  actualUser = toSignal(inject(AuthService).connectedUser(), { initialValue: {
     "languages": [],
     "interests": [],
     "firstName": null,
@@ -49,21 +100,7 @@ export class ListingComponent {
     "createdAt": null,
     "updatedAt": null
   }  });
-
-  toggleVerificationStatus(candidate: any): void {
-    candidate.verified = !candidate.verified;
-    
-  }
-
-  deletecandidate(id: number): void {
-    this.usersService.deleteUser(id).subscribe(
-      (response) => {
-        this.toaster.success('Candidat supprimé avec succès');
-      },
-      (error) => {
-        console.log('Error deleting admin', error);
-        this.toaster.error('Erreur lors de la suppression du candidat', error.error.error);
-      }
-    );
+  toggleVerificationStatus(Candidate: any): void {
+    Candidate.verified = !Candidate.verified;
   }
 }

@@ -513,9 +513,9 @@ exports.getUsersByRolePaginated = async (req, res) => {
         const skip = (page - 1) * limit; // Number of documents to skip
 
         if (!req.params.role) {
-            return res.status(422).json({ err: 'Role is required' });
-        } else if (!User.schema.path('role').enumValues.includes(req.params.role)) {
-            return res.status(422).json({ err: `Role is not valid. It must be one of these options: ${User.schema.path('role').enumValues}` });
+            return res.status(422).json({ error: 'Role is required' });
+        } else if (!User.schema.paths.role.enumValues.includes(req.params.role)) {
+            return res.status(422).json({ error: `Role is not valid. It must be one of these options: ${User.schema.paths.role.enumValues}` });
         }
 
         const users = await User.find({ role: req.params.role }, { __v: 0, password: 0 })
@@ -534,7 +534,6 @@ exports.getUsersByRolePaginated = async (req, res) => {
         return res.status(500).json({ error: err.message });
     }
 };
-
 
 
 exports.getNbCandidatesInLastSixMonths = async (req, res) => {

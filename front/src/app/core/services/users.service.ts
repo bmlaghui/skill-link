@@ -14,6 +14,10 @@ export class UsersService {
     return this.http.get<User[]>(`${environment.apiUrl}/users/role/${role}`);
   }
 
+  getUsersByRolePaginated(role: string, page: number, limit: number) {
+    return this.http.get<User[]>(`${environment.apiUrl}/users/roles/${role}?page=${page}&limit=${limit}`);
+  }
+
   createUser(user: User) {
     return this.http.post<User>(`${environment.apiUrl}/users`, user);
   }
@@ -36,6 +40,4 @@ export class UsersService {
     return this.http.put<User>(`${environment.apiUrl}/users/deactivate/${id}`, {});
   }
 
-  
- 
 }

@@ -1,6 +1,6 @@
 export interface Application {
-    _idMission: String[];
+    mission: String;
     coverLetter?: string;
-    statut: 'draft' | 'published' | 'archived';
-    _idUser: String[];
+    statut: 'trash' | 'published' | 'archived';
+    candidate: String;
 }

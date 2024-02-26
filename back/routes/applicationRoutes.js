@@ -2,18 +2,17 @@ const express = require('express');
 const router = express.Router();
 const Application = require('../models/Application');
 const mongoose = require('mongoose');
-const applicationsController = require('../controllers/MissionsController');
+const applicationsController = require('../controllers/ApplicationsController');
 const verifyToken = require('../middleware/authMiddleware');
 
-router.post('/applications', verifyToken, applicationsController.createMission );
 
-router.get('/applications', verifyToken, applicationsController.getMissions);
+router.get('/applications', verifyToken, applicationsController.getApplications);
 
-router.get('/applications/:id', verifyToken, applicationsController.getMission);
+router.get('/applications/:id', verifyToken, applicationsController.getApplication);
 
-router.put('/applications/:id', verifyToken, applicationsController.updateMission);
+router.put('/applications/:id', verifyToken, applicationsController.updateApplication);
 
-router.delete('/applications/:id', verifyToken, applicationsController.deleteMission);
+router.delete('/applications/:id', verifyToken, applicationsController.deleteApplication);
 
 
 

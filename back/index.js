@@ -33,6 +33,8 @@ app.use(require('./routes/userRoutes.js'));
 app.use(require('./routes/dashboardRoutes.js'));
 // Logs Routes
 app.use(require('./routes/logRoutes.js'));
+// Applications Routes
+app.use(require('./routes/applicationRoutes.js'));
 // Middleware Logger
 app.use(logMiddleware);
 

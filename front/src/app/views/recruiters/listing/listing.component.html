@@ -3,19 +3,171 @@
         <div class="col-md-12 grid-margin">
             <div class="row">
                 <div class="col-12 col-xl-8 mb-4 mb-xl-0">
-                    <h3 class="font-weight-bold">Gestion des candidats</h3>
+                    <h3 class="font-weight-bold">Gestion des recruiteristrateurs</h3>
                 </div>
                 <div class="col-12 col-xl-4">
-                <div class="justify-content-end d-flex">
-                <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
-                    <button class="btn btn-sm btn-light bg-white" [routerLink]="['/candidats/add']">
-                        <i class="ti ti-plus"></i> Add User
-                    </button>
-                </div>
-                </div>
+                    <div class="justify-content-end d-flex">
+                        <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+                            <button class="btn btn-sm btn-light bg-white" [routerLink]="['/recruiteristrateurs/add']">
+                                <i class="ti ti-plus"></i> Add Recruiter
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    <app-data-tables [data]="data"></app-data-tables>
-</div>
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table no-footer">
+                            <thead>
+                                <tr role="row">
+                                    <th></th>
+                                    <th>Name</th>
+                                    <th>Created At</th>
+                                    <th>User Name</th>
+                                    <th>E-mail</th>
+                                    <th>Phone Number</th>
+                                    <th>State</th>  
+                                    <th colspan="3">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (recruiter of recruitersList | paginate : {
+                                    itemsPerPage: usersPerPage,
+                                    currentPage: currentPage,
+                                    totalItems: totalusersCount
+                                  }; track recruiter) { 
+                                    <tr class="odd">
+                                        <td><img class="img-user" [src]="recruiter.image ? recruiter.image : 'assets/images/auth/user.jpeg'" [alt]="recruiter.userName + ' Image'" /></td>
+                                        <td class="sorting_1">{{recruiter.firstName}} {{recruiter.lastName}}</td>
+                                        <td class="sorting_1">{{recruiter.createdAt|timeAgo}}</td>
+                                        <td class="sorting_1">{{recruiter.userName}}</td>
+                                        <td class="sorting_1">{{recruiter.email}}</td>
+                                        <td class="sorting_1">{{recruiter.phoneNumber}}</td>
+                                        <td class="sorting_1">
+                                            @if(recruiter.userName != actualUser().userName) {
+                                                <button class="btn btn-sm" 
+                                                [ngClass]="{'btn-success': recruiter.verified, 'btn-danger': !recruiter.verified}" 
+                                                (click)="toggleVerificationStatus(recruiter)"
+                                                >
+                                                    {{ recruiter.verified ? 'Verified' : 'Not Verified' }}
+                                                </button>
+                                            }
+                                            @else {  
+                                                <span class="btn btn-sm" [ngClass]="{'btn-success': recruiter.verified, 'btn-danger': !recruiter.verified}" style="cursor: not-allowed;" title="It's you. You can't desactivate yourself !">
+                                                    {{ recruiter.verified ? 'Verified' : 'Not Verified' }}
+                                                </span>
+                                            }
+                                        </td>
+                                        <td>
+                                            <!-- View Modal -->
+                                            <button class="btn btn-info"  data-bs-toggle="modal" [attr.data-bs-target]="'#viewModal' + recruiter.userName"><i class="ti ti-eye"></i></button>
+                                            <div class="modal fade" [id]="'viewModal' + recruiter.userName" tabindex="-1" aria-labelledby="viewModal" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <div class="d-flex align-items-center">
+                                                            <img class="img-user" [src]="recruiter.image ? recruiter.image : 'assets/images/auth/user.jpeg'" [alt]="recruiter.userName + ' Image'" />
+                                                            <h3>{{recruiter.lastName|uppercase}} {{recruiter.firstName|uppercase}}</h3>
+                                                        </div>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                       <div class="row">
+                                                           <div class="col-md-6">
+                                                             <h5>General informations</h5>
+                                                             <p><strong>First Name:</strong> {{recruiter.firstName}}</p>
+                                                             <p><strong>Last Name:</strong> {{recruiter.lastName}}</p>
+                                                             <p><strong>User Name:</strong> {{recruiter.userName}}</p>
+                                                             <p><strong>E-mail:</strong> {{recruiter.email}}</p>
+                                                             <p><strong>Phone Number:</strong> {{recruiter.phoneNumber}}</p>
+                                                             <p><strong>State:</strong> {{recruiter.verified ? 'Verified' : 'Not Verified'}}</p>
+                                                             <p><strong>Registred:</strong>{{recruiter.createdAt|timeAgo}}</p>
+                                                           </div>
+                                                            <div class="col-md-6">
+                                                               
+                                                              </div>
+                                                       </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End View Modal -->
 
+                                            <!-- Edit Modal -->
+                                            <button class="btn btn-primary"  data-bs-toggle="modal" [attr.data-bs-target]="'#editModal' + recruiter.userName"><i class="ti ti-pencil"></i></button>
+                                            <div class="modal fade" [id]="'editModal' + recruiter.userName" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Edit Recruiter {{recruiter.lastName}} {{recruiter.firstName}} </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        ...
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary">Save Changes</button>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End Edit Modal -->
+                                           
+                                            @if(recruiter.userName != actualUser().userName) {
+                                                <!-- Delete Modal -->
+                                                <button class="btn btn-danger"  data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal' + recruiter.userName"><i class="ti ti-trash"></i></button>
+                                                <div class="modal fade" [id]="'deleteModal' + recruiter.userName" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation </h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Are you sure to delete this recruiter : <b>{{recruiter.lastName}} {{recruiter.firstName}}</b> ?
+                                                            {{recruiter._id}}
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-danger" (click)="deleteRecruiter(recruiter._id)">Delete</button>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End Delete Modal -->
+                                            }
+                                        </td>
+                                    </tr>
+                            }
+                                @empty {
+                                    <tr>
+                                        <td colspan="10" class="text-center">No Recruiters Found</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>                         
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="footer">
+                <div class="d-flex justify-content-center">
+                  <pagination-controls
+                      previousLabel="Prev"
+                      nextLabel="Next"
+                      (pageChange)="pageChangeEvent($event)"
+                      ></pagination-controls>
+                  </div>
+            </div>
+            </div>
+        </div>
+</div>

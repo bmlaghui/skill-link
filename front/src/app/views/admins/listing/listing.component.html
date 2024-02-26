@@ -36,7 +36,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @for (admin of adminsList(); track admin){  
+                                @for (admin of adminsList | paginate : {
+                                    itemsPerPage: usersPerPage,
+                                    currentPage: currentPage,
+                                    totalItems: totalUsersCount
+                                  }; track admin) { 
                                     <tr class="odd">
                                         <td><img class="img-user" [src]="admin.image ? admin.image : 'assets/images/auth/user.jpeg'" [alt]="admin.userName + ' Image'" /></td>
                                         <td class="sorting_1">{{admin.firstName}} {{admin.lastName}}</td>
@@ -46,7 +50,10 @@
                                         <td class="sorting_1">{{admin.phoneNumber}}</td>
                                         <td class="sorting_1">
                                             @if(admin.userName != actualUser().userName) {
-                                                <button class="btn btn-sm" [ngClass]="{'btn-success': admin.verified, 'btn-danger': !admin.verified}" (click)="toggleVerificationStatus(admin)">
+                                                <button class="btn btn-sm" 
+                                                [ngClass]="{'btn-success': admin.verified, 'btn-danger': !admin.verified}" 
+                                                (click)="toggleVerificationStatus(admin)"
+                                                >
                                                     {{ admin.verified ? 'Verified' : 'Not Verified' }}
                                                 </button>
                                             }
@@ -152,6 +159,21 @@
                   </div>
                 </div>
               </div>
+              <div class="footer">
+                <div class="d-flex justify-content-center">
+                  <pagination-controls
+                      previousLabel="Prev"
+                      nextLabel="Next"
+                      (pageChange)="pageChangeEvent($event)"
+                      ></pagination-controls>
+                  </div>
+            </div>
+            Total Pages = {{totalPages}}
+            totalusersCount = {{totalUsersCount}}
+            Current Page = {{currentPage}}
+            usersPerPage = {{usersPerPage}}
+
+
             </div>
         </div>
 </div>

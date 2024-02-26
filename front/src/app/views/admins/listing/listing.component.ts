@@ -12,38 +12,74 @@ import { TimeAgoPipe } from "../../../core/pipes/time-ago.pipe";
 import { PiechartComponent } from '../../../shared/piechart/piechart.component';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../core/services/auth.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
     selector: 'app-listing',
     standalone: true,
     templateUrl: './listing.component.html',
     styleUrl: './listing.component.scss',
-    imports: [DataTablesComponent, RouterLink, CommonModule, TimeAgoPipe, PiechartComponent]
+    imports: [DataTablesComponent, RouterLink, CommonModule, TimeAgoPipe, PiechartComponent, NgxPaginationModule]
 })
 export class ListingComponent {
 
-  data: User[] = [];
   usersService = inject(UsersService);
   toaster = inject(ToastrService);
-  adminsList = toSignal (this.usersService.getUsersByRole('admin'));
-  toggleVerificationStatus(admin: any): void {
-    if (admin.verified) {
-     this.desactivateAdmin(admin._id);
-     admin.verified = !admin.verified;
-    }
-    else {
-      this.activateAdmin(admin._id);
-      admin.verified = !admin.verified;
-
-    }
-    
+  currentPage : number = 1;
+  usersPerPage : number = 10;
+  totalUsersCount : number = 0;
+  totalPages : number = 0;
+  adminsList: any = [];
+  getusers(){
+    this.usersService.getUsersByRolePaginated("admin",this.currentPage, this.usersPerPage)
+      .subscribe((response: any) => {
+        this.adminsList = response.users;
+        this.totalUsersCount = response.totalUsersCount;
+        this.totalPages = Math.ceil(this.totalUsersCount / this.usersPerPage);
+      });
+  } 
+  ngOnInit(): void {
+    this.getusers();
   }
-  toggleActivationStatus(admin: any): void {
-    admin.active = !admin.active;
+  pageChangeEvent(event: number){
+    this.currentPage = event;
+    this.getusers();
   }
 
-  authService = inject(AuthService);
-  actualUser = toSignal(this.authService.connectedUser(), { initialValue: {
+  deleteAdmin(id: number): void {
+    this.usersService.deleteUser(id).subscribe(
+      (response) => {
+        this.toaster.success('Admin deleted successfully');
+        this.getusers();
+      },
+      (error) => {
+        this.toaster.error('Error deleting admin');
+      }
+    );
+  }
+  activateAdmin(id: number): void {
+    this.usersService.activateUser(id).subscribe(
+      (response) => {
+        this.toaster.success('Admin activated successfully');
+        this.getusers();
+      },
+      (error) => {
+        this.toaster.error('Error activating admin');
+      }
+    );
+  }
+  deactivateAdmin(id: number): void {
+    this.usersService.deactivateUser(id).subscribe(
+      (response) => {
+        this.toaster.success('Admin deactivated successfully');
+        this.getusers();
+      },
+      (error) => {
+        this.toaster.error('Error deactivating admin');
+      }
+    );
+  }
+  actualUser = toSignal(inject(AuthService).connectedUser(), { initialValue: {
     "languages": [],
     "interests": [],
     "firstName": null,
@@ -69,47 +105,11 @@ export class ListingComponent {
     "createdAt": null,
     "updatedAt": null
   }  });
-
-  deleteAdmin(id: number): void {
-    this.usersService.deleteUser(id).subscribe(
-      (response) => {
-        this.adminsList = toSignal(this.usersService.getUsersByRole('admin'));
-        this.toaster.success('Admin deleted successfully');
-      },
-      (error) => {
-        console.log('Error deleting admin', error);
-        this.toaster.error('Error deleting admin', error.message);
-
-      }
-    );
+  toggleVerificationStatus(admin: any): void {
+    admin.verified = !admin.verified;
   }
-
-  activateAdmin(id: number): void {
-    this.usersService.activateUser(id).subscribe(
-      (response) => {
-        this.adminsList = toSignal(this.usersService.getUsersByRole('admin'));
-        this.toaster.success('Admin activated successfully');
-      },
-      (error) => {
-        console.log('Error activating admin', error);
-        this.toaster.error('Error activating admin', error.message);
-      }
-    );
-  }
-
-  desactivateAdmin(id: number): void {
-    this.usersService.deactivateUser(id).subscribe(
-      (response) => {
-        
-        this.adminsList = toSignal(this.usersService.getUsersByRole('admin'));
-        this.toaster.success('Admin desactivated successfully');
-      },
-      (error) => {
-        console.log('Error desactivating admin', error);
-        this.toaster.error('Error desactivating admin', error.message);
-      }
-    );
-  }
+  
+  
 
   
 }
