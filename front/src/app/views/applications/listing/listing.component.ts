@@ -6,11 +6,12 @@ import { RouterLink } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TimeAgoPipe } from '../../../core/pipes/time-ago.pipe';
 import { DataTablesComponent } from '../../../shared/data-tables/data-tables.component';
+import { RemoveSpecialCharactersPipe } from '../../../core/pipes/remove-special-characters.pipe';
 
 @Component({
   selector: 'app-listing',
   standalone: true,
-  imports: [CommonModule, NgxPaginationModule, DataTablesComponent, RouterLink, TimeAgoPipe],
+  imports: [CommonModule, NgxPaginationModule, DataTablesComponent, RouterLink, TimeAgoPipe, RemoveSpecialCharactersPipe],
   templateUrl: './listing.component.html',
   styleUrl: './listing.component.scss'
 })
@@ -44,4 +45,51 @@ export class ListingComponent {
     this.currentPage = event;
     this.getApplications();
   }
+  getStepsLabels(statut: string): { nextSteps: string[] } {
+  switch (statut) {
+    case 'received':
+      return { nextSteps: ['under_review'] };
+    case 'under_review':
+      return { nextSteps: ['in_progress'] };
+    case 'in_progress':
+      return { nextSteps: ['shortlisted', 'application_declined'] };
+    case 'shortlisted':
+      return { nextSteps: ['rh_interview_scheduled'] };
+    case 'rh_interview_scheduled':
+      return { nextSteps: ['rh_interviewed'] };
+    case 'rh_interviewed':
+      return { nextSteps: ['pending_decision', 'technical_interview_scheduled'] };
+    case 'technical_interview_scheduled':
+      return { nextSteps: ['technical_interviewed'] };
+    case 'technical_interviewed':
+      return { nextSteps: ['pending_decision', 'application_declined'] };
+    case 'pending_decision':
+      return { nextSteps: ['application_accepted', 'application_declined'] };
+    case 'application_accepted':
+      return { nextSteps: ['offer_sended'] };
+    case 'offer_sended':
+      return { nextSteps: ['offer_accepted', 'offer_declined'] };
+    case 'offer_accepted':
+      return { nextSteps: ['hired'] };
+    default:
+      return { nextSteps: [] }; // Default case
+  }
+}
+
+setNextStep(applicationId: string): void {
+  this.applicationsService.nextStep(applicationId).subscribe(
+    (response: any) => {
+      this.toaster.success('Next step set successfully');
+      this.getApplications();
+    },
+    (error: any) => {
+      this.toaster.error('An error occurred while setting the next step');
+    }
+  );
+}
+
+
+
+
+  
 }

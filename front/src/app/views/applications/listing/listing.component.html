@@ -36,17 +36,59 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @for (application of applications | paginate : {
+                                    @for (application of applications | paginate : {
                                     itemsPerPage: applicationsPerPage,
                                     currentPage: currentPage,
                                     totalItems: totalApplicationsCount
                                   }; track application) { 
                                     <tr class="odd">
-                                        {{application.candidate|json}}
-                                        <td>{{application.candidate.firstName}} </td>
+                                        <td>{{application.candidate.firstName}} {{application.candidate.lastName}}</td>
                                         <td>{{application.mission.title}}</td>
-                                        <td>{{ application.statut }}</td>
-                                        
+                                        <td>
+                                            <button class="btn btn-sm" [ngClass]="'status-'+application.statut">
+                                                {{ application.statut|removeSpecialCharacters }}
+                                            </button>
+                                            <button class="btn btn-info"  data-bs-toggle="modal" data-bs-target="#viewModal"><i class="ti ti-eye"></i></button>
+                                            <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModal" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <div class="d-flex align-items-center">
+                                                                <h4>Application RoadMap</h4>
+                                                            </div>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <h4>Passed steps</h4>
+                                                                <div class="d-inline-flex align-items-center">
+                                                                    @for(passedStep of application.steps; track passedStep) {
+                                                                        <span class="btn btn-sm btn-success"><i class="ti ti-check-box"></i>{{passedStep.step|removeSpecialCharacters}}</span> <i class="ti-arrow-circle-right"></i> 
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <h4>Next steps</h4>
+                                                                <p> You have to click on a step</p>
+                                                                <div class="d-inline-flex align-items-center">
+                                                                @for(step of getStepsLabels(application.statut).nextSteps; track step; let i = $index) {
+                                                                    @if(getStepsLabels(application.statut).nextSteps.length > 1) {
+                                                                        <button class="btn btn btn-warning ml-1" [ngClass]="'status-'+step" >{{step|removeSpecialCharacters}}</button>
+                                                                    } @else {
+                                                                        <button  class="btn btn btn-warning" [ngClass]="'status-'+step">{{step|removeSpecialCharacters}}</button>
+                                                                    }  
+                                                                }
+                                                            </div>
+                                                            </div>
+                                                        </div>  
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </td>
                                         <td>
                                             <!-- View Modal -->
                                             <button class="btn btn-info"  data-bs-toggle="modal" data-bs-target="#viewModal"><i class="ti ti-eye"></i></button>
@@ -89,29 +131,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- End Edit Modal -->
-                                           
-                                            <!-- Delete Modal -->
-                                            <button class="btn btn-danger"  data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="ti ti-trash"></i></button>
-                                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModal" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation </h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        Are you sure to delete this application : ?
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-danger" (click)="deleteapplication(application._id)">Delete</button>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- End Delete Modal -->
-                                            
+                                            <!-- End Edit Modal --> 
                                         </td>
                                     </tr>
                             }
