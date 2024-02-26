@@ -62,10 +62,8 @@ const userSchema = new mongoose.Schema({
     interests: [{
         type: String,
     }],
-    verified: {
-        type: Boolean,
-        default: false
-    },
+    verified: Boolean,
+    
     missions: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Mission'

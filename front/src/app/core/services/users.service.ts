@@ -40,4 +40,6 @@ export class UsersService {
     return this.http.put<User>(`${environment.apiUrl}/users/deactivate/${id}`, {});
   }
 
+
+
 }
