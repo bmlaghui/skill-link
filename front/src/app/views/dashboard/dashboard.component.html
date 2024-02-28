@@ -4,12 +4,12 @@
       <div class="row">
         <div class="col-12 col-xl-8 mb-4 mb-xl-0">
           <h3 class="font-weight-bold">
-            Welcome {{ actualUser().firstName }} {{ actualUser().lastName }}
+            {{"welcome"|translate}} {{ actualUser().firstName }} {{ actualUser().lastName }}
           </h3>
           <h6 class="font-weight-normal mb-0">
-            All systems are running smoothly! You have
+            {{"alertes_number"|translate}}
             <span class="text-primary"
-              >{{ actualUser().notifications.length }} unread alerts!</span
+              >{{ actualUser().notifications.length }} {{"unread_messages"|translate}}</span
             >
           </h6>
         </div>
@@ -17,7 +17,7 @@
           <div class="justify-content-end d-flex">
             <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
               <button class="btn btn-sm btn-dark" type="button">
-                <i class="ti-download menu-icon"></i> Export as PDF
+                <i class="ti-download menu-icon"></i> {{"export"|translate}}
               </button>
             </div>
           </div>
@@ -52,16 +52,16 @@
               <div class="d-flex align-items-center">
                 <i class="ti ti-user  fs-30 text-white icon-md"></i>
                 <div class="px-3">
-                  <p class="font-weight-bold fs-6">Total Users</p>
+                  <p class="font-weight-bold fs-6">Total {{"users"|translate}}</p>
                   <p class="">
-                    <span class="mb-3">{{ nbCandidates() }} Candidates </span> &
-                    <span class="mb-3">{{ nbRecruiters() }} Recruiters </span> &
-                    <span class="mb-3">{{ nbAdmins() }} Admins</span>
+                    <span class="mb-3">{{ nbCandidates() }} {{"candidates"|translate}} </span> &
+                    <span class="mb-3">{{ nbRecruiters() }} {{"recruiters"|translate}} </span> &
+                    <span class="mb-3">{{ nbAdmins() }} {{"administrators"|translate}}</span>
                   </p>
                 </div>
               </div>
               <div class="card-footer bg-transparent border-white">
-                <a href="#" class="text-white text-decoration-none float-right"><i class="ti-eye mr-1"></i>View all</a>
+                <a href="#" class="text-white text-decoration-none float-right"><i class="ti-eye mr-1"></i>{{"view_all"|translate}}</a>
               </div>
             </div>
           </div>
@@ -72,19 +72,19 @@
               <div class="d-flex align-items-center">
                 <i class="ti ti-briefcase  fs-30 text-white icon-md"></i>
                 <div class="px-3">
-                  <p class="font-weight-bold fs-6">Total Entreprises</p>
+                  <p class="font-weight-bold fs-6">Total {{"entreprises"|translate}}</p>
                   <p class="">
                     <span class="mb-3">
-                      {{ nbCompanies() }} Compagnie
-                      @if(nbCompanies() > 1) {s} </span> &
+                      {{ nbCompanies() }} {{ "company" | translate }}
+                     </span> &
                     <span class="mb-3">
                       {{ nbStartups() }} Startup
-                      @if(nbStartups() > 1) {s} </span> 
+                    </span> 
                   </p>
                 </div>
               </div>
               <div class="card-footer bg-transparent border-white">
-                <a href="#" class="text-white text-decoration-none float-right"><i class="ti-eye mr-1"></i>View all</a>
+                <a href="#" class="text-white text-decoration-none float-right"><i class="ti-eye mr-1"></i>{{"view_all"|translate}}</a>
               </div>
             </div>
           </div>
@@ -97,16 +97,15 @@
               <div class="d-flex align-items-center">
                 <i class="ti ti-briefcase  fs-30 text-white icon-md"></i>
                 <div class="px-3">
-                  <p class="font-weight-bold fs-6">Total Missions</p>
+                  <p class="font-weight-bold fs-6">Total {{"jobs"|translate}}</p>
                   <p class="">
-                    <span class="mb-3">{{ nbMissions() }} Mission
-                      @if(nbMissions() >1) {s} 
+                    <span class="mb-3">{{ nbMissions() }} {{"jobs"|translate}}
                     </span> 
                   </p>
                 </div>
               </div>
               <div class="card-footer bg-transparent border-white">
-                <a href="#" class="text-white text-decoration-none float-right"><i class="ti-eye mr-1"></i>View all</a>
+                <a href="#" class="text-white text-decoration-none float-right"><i class="ti-eye mr-1"></i>{{"view_all"|translate}}</a>
               </div>
             </div>
           </div>
@@ -117,16 +116,15 @@
               <div class="d-flex align-items-center">
                 <i class="ti ti-file  fs-30 text-white icon-md"></i>
                 <div class="px-3">
-                  <p class="font-weight-bold fs-6">Total Applications</p>
+                  <p class="font-weight-bold fs-6">Total {{"applications"|translate}}</p>
                   <p class="">
-                    <span class="mb-3">{{ nbApplications() }} Application
-                      @if(nbApplications() >1) {s} 
+                    <span class="mb-3">{{ nbApplications() }} {{"applications"|translate}}
                     </span> 
                   </p>
                 </div>
               </div>
               <div class="card-footer bg-transparent border-white">
-                <a href="#" class="text-white text-decoration-none float-right"><i class="ti-eye mr-1"></i>View all</a>
+                <a href="#" class="text-white text-decoration-none float-right"><i class="ti-eye mr-1"></i>{{"view_all"|translate}}</a>
               </div>
             </div>
           </div>
@@ -139,7 +137,7 @@
       <div class="card">
         <div class="card-body">
           <div class="d-flex justify-content-between">
-            <p class="card-title">Users Report</p>
+            <p class="card-title">{{"users"|translate}}</p>
           </div>
           <app-piechart
             [chartData]="usersByTypeData()"
@@ -154,7 +152,7 @@
       <div class="card">
         <div class="card-body">
           <div class="d-flex justify-content-between">
-            <p class="card-title">Entreprises Report</p>
+            <p class="card-title">{{"entreprises"|translate}}</p>
           </div>
           <app-piechart
             [chartData]="entreprisesByCategory()"
@@ -169,7 +167,7 @@
       <div class="card">
         <div class="card-body">
           <div class="d-flex justify-content-between">
-            <p class="card-title">Missions Report</p>
+            <p class="card-title">{{"jobs"|translate}}</p>
           </div>
           <app-piechart
             [chartData]="missionsByCategory()"
@@ -184,7 +182,7 @@
       <div class="card">
         <div class="card-body">
           <div class="d-flex justify-content-between">
-            <p class="card-title">Applications Report</p>
+            <p class="card-title">{{"applications"|translate}}</p>
           </div>
           <app-piechart
             [chartData]="applicationsByStatus()"
@@ -205,9 +203,7 @@
               <div class="carousel-item active">
                 <div class="row">
                   <div class="col-md-12 d-flex flex-column justify-content-start">
-                      <h1 class="text-primary">{{ nbUsersTotal() }}
-                        <span class="font-weight-500 mb-xl-12 text-primary">Users registred</span> in last 6 months
-                    </h1>
+                      <h1 class="text-primary">{{ nbUsersTotal() }} {{"label_users"|translate}}</h1>
                   </div>
                   <div class="row align-items-center">
                     <div class="col-md-6">

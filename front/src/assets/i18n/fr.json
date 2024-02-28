@@ -1,0 +1,32 @@
+{
+    "dashboard": "Accueil",
+    "candidates": "Candidats",
+    "recruiters": "Recruteurs",
+    "administrators": "Administrateurs",
+    "jobs": "Offres",
+    "entreprises": "Entreprises",
+    "applications": "Candidatures",
+    "statistics": "Statistiques",
+    "logs": "Logs",
+    "settings": "Paramètres",
+    "logout": "Déconnexion",
+    "search": "Rechercher",
+    "add": "Ajouter",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "yes": "Oui",
+    "no": "Non",
+    "welcome": "Bienvenue",
+    "profile": "Profil",
+    "alertes_number": "Tous les systèmes fonctionnent correctement ! Tu as",
+    "unread_messages": "notifications non lus!",
+    "export": "Exporter comme PDF",
+    "users": "Utilisateurs",
+    "company": "Entreprise",
+    "view_all": "Voir tout",
+    "label_users": "Utilisateurs enregistrés dans les 6 derniers mois"
+
+
+}

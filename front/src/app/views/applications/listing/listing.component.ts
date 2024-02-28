@@ -7,11 +7,12 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { TimeAgoPipe } from '../../../core/pipes/time-ago.pipe';
 import { DataTablesComponent } from '../../../shared/data-tables/data-tables.component';
 import { RemoveSpecialCharactersPipe } from '../../../core/pipes/remove-special-characters.pipe';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-listing',
   standalone: true,
-  imports: [CommonModule, NgxPaginationModule, DataTablesComponent, RouterLink, TimeAgoPipe, RemoveSpecialCharactersPipe],
+  imports: [CommonModule, NgxPaginationModule, DataTablesComponent, RouterLink, TimeAgoPipe, RemoveSpecialCharactersPipe, TranslateModule],
   templateUrl: './listing.component.html',
   styleUrl: './listing.component.scss'
 })
@@ -76,7 +77,7 @@ export class ListingComponent {
   }
 }
 
-setNextStep(applicationId: string): void {
+extStep(applicationId: string): void {
   this.applicationsService.nextStep(applicationId).subscribe(
     (response: any) => {
       this.toaster.success('Next step set successfully');

@@ -19,6 +19,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { Subscription } from 'rxjs';
 import { IdleService } from './core/services/idle.service';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -38,11 +39,16 @@ import { NgxPaginationModule } from 'ngx-pagination';
               SettingsPanelComponent,
               NavbarComponent,
               TagInputModule,
+              TranslateModule
             ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'Skills Link';
+  constructor(private translateService: TranslateService) {
+    this.translateService.setDefaultLang("en");
+    this.translateService.use(localStorage.getItem('lang') || 'en');
+  }
   
 }

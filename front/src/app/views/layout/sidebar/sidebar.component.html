@@ -3,67 +3,57 @@
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/dashboard']">
           <i class="ti-home menu-icon"></i>
-          <span class="menu-title">Dashboard</span>
+          <span class="menu-title">{{"dashboard" | translate}}</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/candidats']">
           <i class="ti-user menu-icon"></i>
-          <span class="menu-title">Candidats</span>
+          <span class="menu-title">{{"candidates"|translate}}</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/recuiters']">
           <i class="ti-user menu-icon"></i>
-          <span class="menu-title">Recruteurs</span>
+          <span class="menu-title">{{"recruiters"|translate}}</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/administrateurs']">
           <i class="ti-briefcase menu-icon"></i>
-          <span class="menu-title">Administrateurs</span>
+          <span class="menu-title">{{"administrators"|translate}}</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/offres']">
           <i class="ti-announcement menu-icon"></i>
-          <span class="menu-title">Offres</span>
+          <span class="menu-title">{{"jobs"|translate}}</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/entreprises']">
           <i class="ti-light-bulb menu-icon"></i>
-          <span class="menu-title">Entreprises</span>
+          <span class="menu-title">{{"entreprises"|translate}}</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/applications']">
           <i class="ti-list menu-icon"></i>
-          <span class="menu-title">Candidatures</span>
+          <span class="menu-title">{{"applications"|translate}}</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/stats']">
           <i class="ti-bar-chart  menu-icon"></i>
-          <span class="menu-title">Statistiques</span>
+          <span class="menu-title">{{"statistics"|translate}}</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+        <a class="nav-link" [routerLink]="['/logs']">
           <i class="ti-settings menu-icon"></i>
-          <span class="menu-title">Configuration</span>
-          <i class="menu-arrow"></i>
+          <span class="menu-title">{{"logs"|translate}}</span>
         </a>
-        <div class="collapse" id="ui-basic">
-          <ul class="nav flex-column sub-menu">
-            <li class="nav-item">
-              <a class="nav-link" [routerLink]="['/logs']">
-              <span class="menu-title">Logs</span>
-            </a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
-          </ul>
-        </div>
       </li>
+
     </ul>
   </nav>

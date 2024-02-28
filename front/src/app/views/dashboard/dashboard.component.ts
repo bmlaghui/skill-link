@@ -8,17 +8,20 @@ import { CommonModule } from '@angular/common';
 import { DashboardService } from '../../core/services/dashboard.service';
 import { PiechartComponent } from "../../shared/piechart/piechart.component";
 import { BarchartComponent } from '../../shared/barchart/barchart.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-dashboard',
     standalone: true,
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.scss',
-    imports: [CommonModule, PiechartComponent, BarchartComponent]
+    imports: [CommonModule, PiechartComponent, BarchartComponent, TranslateModule]
 })
 export class DashboardComponent {
 
   private weatherService = inject(WeatherService);
+
+  private translateService = inject(TranslateService);
   
   private authService = inject(AuthService);
 
